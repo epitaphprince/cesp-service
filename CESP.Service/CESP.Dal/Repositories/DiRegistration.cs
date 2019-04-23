@@ -1,6 +1,8 @@
 using AutoMapper;
 using CESP.Core.Contracts;
 using CESP.Dal.Infrastructure;
+using CESP.Dal.Mapping;
+using CESP.Dal.Providers;
 using CESP.Dal.Repositories.Cesp;
 using CESP.Dal.Repositories.Files;
 using CESP.Database.Context;
@@ -17,11 +19,14 @@ namespace CESP.Dal.Repositories
             this IServiceCollection services, IConfiguration configuration)
         {
             var mappingConfig = new MapperConfiguration(
-                mc => { mc.AddProfile(new CespMappingProfile()); });
+                mc =>
+                {
+                    mc.AddProfile(new TeachetMappingProfile());
+                    mc.AddProfile(new CourseMappingProfile());
+                });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-            //services.AddTransient<CespContext>();
             var cespConnectionString = configuration
                 .GetSection("ConnectionStrings")
                 .GetValue<string>("CespDb");
@@ -33,6 +38,8 @@ namespace CESP.Dal.Repositories
 
             services.AddScoped<ICespResourceProvider, CespResourceProvider>();
             services.AddScoped<ICespRepository, CespRepository>();
+            services.AddScoped<ICourseRepository, CourseProvider>();
+            services.AddScoped<ITeacherProvider, TeacherProvider>();
             
             services.AddScoped<IFolderProvider, FolderProvider>();
             services.AddScoped<IFileProvider, FileProvider>();

@@ -9,6 +9,7 @@ namespace CESP.Service
         public CespViewMappingProfile()
         {
             CreateMap<Teacher,TeacherResponse>();
+            CreateMap<Course, CourseResponse>();
         }
     }
 }

@@ -1,36 +1,36 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using CESP.Core.Managers.Teachers;
+using CESP.Core.Managers.Courses;
 using CESP.Service.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CESP.Service.Controllers
 {
-    [Route("teachers")]
-    public class TeacherController: Controller
+    [Route("courses")]
+    public class CourseController: Controller
     {
-        private readonly ITeacherManager _teacherManager;
+        private readonly ICourseManager _courseManager;
         private readonly IMapper _mapper;  
         
-        public TeacherController(
-            ITeacherManager teacherManager,
+        public CourseController(
+            ICourseManager courseManager,
             IMapper mapper)
         {
-            _teacherManager = teacherManager;
+            _courseManager = courseManager;
             _mapper = mapper;
         }
 
         [HttpGet]
         [Route("")]
-        public async Task<TeacherResponse[]> GetList(int? count)
+        public async Task<CourseResponse[]> GetList(int? count)
         {
             if (count < 0)
                 count = 0;
             
-            var teachers = await _teacherManager.GetList(count);
+            var courses = await _courseManager.GetList(count);
             
-            return teachers.Select(t => _mapper.Map<TeacherResponse>(t)).ToArray();
+            return courses.Select(t => _mapper.Map<CourseResponse>(t)).ToArray();
         }
         
         [HttpGet]
