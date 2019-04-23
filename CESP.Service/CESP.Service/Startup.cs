@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using CESP.Core.Managers;
 using CESP.Dal.Repositories;
-using CESP.Dal.Repositories.Cesp;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,8 +26,6 @@ namespace CESP.Service
                 mc => {
                             mc.AddProfile(
                                 new CespViewMappingProfile());
-                            mc.AddProfile(
-                                new CespMappingProfile());
                 });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);

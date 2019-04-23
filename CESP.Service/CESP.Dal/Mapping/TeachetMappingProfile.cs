@@ -2,11 +2,11 @@ using AutoMapper;
 using CESP.Core.Models;
 using CESP.Database.Context.Education.Models;
 
-namespace CESP.Dal.Repositories.Cesp
+namespace CESP.Dal.Mapping
 {
-    public class CespMappingProfile: Profile
+    public class TeachetMappingProfile: Profile
     {
-        public CespMappingProfile()
+        public TeachetMappingProfile()
         {
             CreateMap<TeacherDto,Teacher>()
                 .ForMember(dest => dest.Photo, 

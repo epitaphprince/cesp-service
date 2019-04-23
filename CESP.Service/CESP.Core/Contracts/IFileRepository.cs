@@ -1,7 +1,7 @@
 using System.IO;
 using System.Threading.Tasks;
 
-namespace CESP.Dal.Repositories.Files
+namespace CESP.Core.Contracts
 {
     public interface IFileRepository
     {

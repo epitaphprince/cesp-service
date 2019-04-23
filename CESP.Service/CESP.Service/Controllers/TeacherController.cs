@@ -23,18 +23,14 @@ namespace CESP.Service.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<TeacherResponse[]> GetList()
+        public async Task<TeacherResponse[]> GetList(int? count)
         {
-            var teachers = await _teacherManager.GetList();
+            if (count < 0)
+                count = 0;
+            
+            var teachers = await _teacherManager.GetList(count);
             
             return teachers.Select(t => _mapper.Map<TeacherResponse>(t)).ToArray();
-        }
-        
-        [HttpGet]
-        [Route("method")]
-        public IActionResult Method()
-        {
-            return new OkResult();
         }
     }
 }

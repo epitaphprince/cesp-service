@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
+using CESP.Core.Contracts;
 using CESP.Dal.Infrastructure;
 using Microsoft.Extensions.Options;
 
