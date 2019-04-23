@@ -16,7 +16,7 @@ namespace CESP.Dal.Mapping
                     opt => opt.MapFrom(src => src.course.Name))
                 .ForMember(dest => dest.CostInfo,
                     opt => opt.MapFrom(src => src.price.CostInfo))
-                .ForMember(dest => dest.DiscountPer,
+                .ForMember(dest => dest.DiscountPercent,
                     opt => opt.MapFrom((src => src.price.DiscountPer)))
                 .ForMember(dest => dest.Description,
                     opt => opt.MapFrom(src => src.course.Description))

@@ -32,12 +32,5 @@ namespace CESP.Service.Controllers
             
             return courses.Select(t => _mapper.Map<CourseResponse>(t)).ToArray();
         }
-        
-        [HttpGet]
-        [Route("method")]
-        public IActionResult Method()
-        {
-            return new OkResult();
-        }
     }
 }
