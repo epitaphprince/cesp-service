@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace CESP.Service
 {
@@ -32,6 +33,10 @@ namespace CESP.Service
             
             services.RegisterRepositories(_configuration);
             services.RegisterManagers(_configuration);
+
+            services.AddMvc()
+                .AddJsonOptions(options => { options.SerializerSettings.Formatting = Formatting.Indented; });
+            
             services.AddMvc();
         }
 
