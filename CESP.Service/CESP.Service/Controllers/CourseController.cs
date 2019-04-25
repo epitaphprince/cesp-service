@@ -23,14 +23,14 @@ namespace CESP.Service.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<CourseResponse[]> GetList(int? count)
+        public async Task<IActionResult> GetList(int? count)
         {
             if (count < 0)
                 count = 0;
             
             var courses = await _courseManager.GetList(count);
-            
-            return courses.Select(t => _mapper.Map<CourseResponse>(t)).ToArray();
+
+            return  Ok(courses.Select(t => _mapper.Map<CourseResponse>(t)));
         }
     }
 }
