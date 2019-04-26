@@ -4,8 +4,8 @@ using CESP.Core.Models;
 
 namespace CESP.Core.Contracts
 {
-    public interface ICourseRepository
+    public interface IFeedbackProvider
     {
-         Task<List<Course>> GetListCourse(int? count);
+        Task<List<Feedback>> GetListFeedback(int? count);
     }
 }

@@ -23,6 +23,7 @@ namespace CESP.Dal.Repositories
                 {
                     mc.AddProfile(new TeachetMappingProfile());
                     mc.AddProfile(new CourseMappingProfile());
+                    mc.AddProfile(new FeedbackMappingProfile());
                 });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
@@ -38,8 +39,9 @@ namespace CESP.Dal.Repositories
 
             services.AddScoped<ICespResourceProvider, CespResourceProvider>();
             services.AddScoped<ICespRepository, CespRepository>();
-            services.AddScoped<ICourseRepository, CourseProvider>();
+            services.AddScoped<ICourseProvider, CourseProvider>();
             services.AddScoped<ITeacherProvider, TeacherProvider>();
+            services.AddScoped<IFeedbackProvider, FeedbackProvider>();
             
             services.AddScoped<IFolderProvider, FolderProvider>();
             services.AddScoped<IFileProvider, FileProvider>();

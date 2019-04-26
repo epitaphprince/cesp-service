@@ -35,7 +35,11 @@ namespace CESP.Service
             services.RegisterManagers(_configuration);
 
             services.AddMvc()
-                .AddJsonOptions(options => { options.SerializerSettings.Formatting = Formatting.Indented; });
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.Formatting = Formatting.Indented;
+                    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                });
             
             services.AddMvc();
         }
