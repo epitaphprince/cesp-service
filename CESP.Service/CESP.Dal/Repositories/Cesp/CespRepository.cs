@@ -5,6 +5,7 @@ using CESP.Core.Contracts;
 using CESP.Database.Context;
 using CESP.Database.Context.Education.Models;
 using CESP.Database.Context.Payments.Models;
+using CESP.Database.Context.Users.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CESP.Dal.Repositories.Cesp
@@ -26,6 +27,18 @@ namespace CESP.Dal.Repositories.Cesp
                 : _context.Teachers.Take((int)count);
             
             return await teachers.Include(t => t.Photo).ToListAsync();
+        }
+
+        public async Task<List<FeedbackDto>> GetFeedbacks(int? count)
+        {
+            var feedbacks = count == null
+                ? _context.Feedbacks.OrderByDescending(f => f.Date)
+                : _context.Feedbacks.OrderByDescending(f => f.Date).Take((int)count);
+
+            return await feedbacks
+                .Include(f => f.Photo)
+                .Include(f => f.Source)
+                .ToListAsync();
         }
 
         public async Task<List<CourseDto>> GetCourses(int? count)

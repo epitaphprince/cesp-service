@@ -9,11 +9,11 @@ using CESP.Database.Context.Payments.Models;
 
 namespace CESP.Dal.Providers
 {
-    public class CourseProvider: ICourseRepository
+    public class CourseProvider : ICourseProvider
     {
         private ICespRepository _cespRepository;
         private readonly IMapper _mapper;
-        
+
         public CourseProvider(ICespRepository cespRepository, IMapper mapper)
         {
             _cespRepository = cespRepository;
@@ -23,25 +23,29 @@ namespace CESP.Dal.Providers
         public async Task<List<Course>> GetListCourse(int? count)
         {
             var courses = await _cespRepository.GetCourses(count);
-            
+
             var coursesWithPrice = new List<(CourseDto, PriceDto)>();
             foreach (var course in courses)
             {
-                PriceDto price = null;
                 var groups = await _cespRepository.GetStudentGroupsByCourseId(course.Id);
-                foreach (var group in groups)
-                {
-                    var pr = (await _cespRepository.GetPricesByGroupId(group.Id)).FirstOrDefault();
-                    if (pr != null)
-                    {
-                        price = pr;
-                        continue;
-                    }
-                }
+
+                var groupPricesTasks = groups.Select(gr => _cespRepository.GetPricesByGroupId(gr.Id));
+
+                var pricesList = await Task.WhenAll(groupPricesTasks);
+
+                var prices = pricesList.SelectMany(pr => pr);
+
+                var maxDiscount = prices.Max(pr => pr.DiscountPer);
+
+                var price =
+                    maxDiscount > 0 ?
+                    prices.FirstOrDefault(pr => pr.DiscountPer == maxDiscount)
+                    : prices.FirstOrDefault();
+
                 coursesWithPrice.Add((course, price));
             }
-            
-            return coursesWithPrice.Select(c => _mapper.Map<(CourseDto, PriceDto),Course>(c)).ToList();
+
+            return coursesWithPrice.Select(c => _mapper.Map<(CourseDto, PriceDto), Course>(c)).ToList();
         }
     }
 }

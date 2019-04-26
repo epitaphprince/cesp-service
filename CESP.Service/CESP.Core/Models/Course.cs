@@ -12,7 +12,7 @@ namespace CESP.Core.Models
 
         public string Photo { get; set; }
         
-        public int DiscountPercent { get; set; }
+        public int? DiscountPercent { get; set; }
         
         public string CostInfo { get; set; }
     }

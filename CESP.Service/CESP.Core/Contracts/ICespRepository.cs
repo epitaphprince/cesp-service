@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using CESP.Core.Models;
 using CESP.Database.Context.Education.Models;
 using CESP.Database.Context.Payments.Models;
+using CESP.Database.Context.Users.Models;
 
 namespace CESP.Core.Contracts
 {
@@ -14,5 +15,7 @@ namespace CESP.Core.Contracts
 
         Task<List<StudentGroupDto>> GetStudentGroupsByCourseId(int courseId);
         Task<List<PriceDto>> GetPricesByGroupId(int groupId);
+
+        Task<List<FeedbackDto>> GetFeedbacks(int? count);
     }
 }

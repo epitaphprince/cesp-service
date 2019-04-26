@@ -10,6 +10,7 @@ namespace CESP.Service
         {
             CreateMap<Teacher,TeacherResponse>();
             CreateMap<Course, CourseResponse>();
+            CreateMap<Feedback, FeedbackResponse>();
         }
     }
 }
