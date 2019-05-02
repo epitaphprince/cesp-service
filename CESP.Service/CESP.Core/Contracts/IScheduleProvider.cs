@@ -4,8 +4,8 @@ using CESP.Core.Models;
 
 namespace CESP.Core.Contracts
 {
-    public interface IFeedbackProvider
+    public interface IScheduleProvider
     {
-        Task<List<Feedback>> GetFeedbacks(int? count);
+        Task<List<Schedule>> GetSchedulesByBunchId(int bunchId);
     }
 }

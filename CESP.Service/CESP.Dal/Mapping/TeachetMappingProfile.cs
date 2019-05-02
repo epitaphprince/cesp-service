@@ -10,7 +10,10 @@ namespace CESP.Dal.Mapping
         {
             CreateMap<TeacherDto,Teacher>()
                 .ForMember(dest => dest.Photo, 
-                    opt => opt.MapFrom(src => src.Photo.Name));
+                    opt => opt.MapFrom(src => src.Photo.Name))
+                .ForMember(dest => dest.Position,
+                    opt => opt.MapFrom(
+                        src => src.Post));
         }
     }
 }

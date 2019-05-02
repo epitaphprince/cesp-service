@@ -20,7 +20,7 @@ namespace CESP.Dal.Providers
             _mapper = mapper;
         }
 
-        public async Task<List<Course>> GetListCourse(int? count)
+        public async Task<List<Course>> GetCourses(int? count)
         {
             var courses = await _cespRepository.GetCourses(count);
 

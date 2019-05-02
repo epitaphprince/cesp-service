@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CESP.Core.Managers;
-using CESP.Dal.Repositories;
+using CESP.Dal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;

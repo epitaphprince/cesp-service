@@ -22,7 +22,7 @@ namespace CESP.Core.Managers.Courses
 
         public async Task<List<Course>> GetList(int? count)
         {
-            var courses = await _courseProvider.GetListCourse(count);
+            var courses = await _courseProvider.GetCourses(count);
 
             courses.ForEach(
                 c =>

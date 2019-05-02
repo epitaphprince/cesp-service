@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace CESP.Dal.Repositories
+namespace CESP.Dal
 {
     public static class DiRegistration
     {
@@ -24,6 +24,10 @@ namespace CESP.Dal.Repositories
                     mc.AddProfile(new TeachetMappingProfile());
                     mc.AddProfile(new CourseMappingProfile());
                     mc.AddProfile(new FeedbackMappingProfile());
+                    mc.AddProfile(new ScheduleMappingProfile());
+                    mc.AddProfile(new PriceMappingProfile());
+                    mc.AddProfile(new DurationMappingProfile());
+                    mc.AddProfile(new LessonTimeMappingProfile());
                 });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
@@ -42,6 +46,7 @@ namespace CESP.Dal.Repositories
             services.AddScoped<ICourseProvider, CourseProvider>();
             services.AddScoped<ITeacherProvider, TeacherProvider>();
             services.AddScoped<IFeedbackProvider, FeedbackProvider>();
+            services.AddScoped<IScheduleProvider, ScheduleProvider>();
             
             services.AddScoped<IFolderProvider, FolderProvider>();
             services.AddScoped<IFileProvider, FileProvider>();
