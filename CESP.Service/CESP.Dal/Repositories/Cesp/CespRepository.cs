@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CESP.Dal.Repositories.Cesp
 {
-    public class CespRepository: ICespRepository
+    public class CespRepository : ICespRepository
     {
         private readonly CespContext _context;
 
@@ -24,11 +24,10 @@ namespace CESP.Dal.Repositories.Cesp
 
         public async Task<List<TeacherDto>> GetTeachers(int? count)
         {
-            
             var teachers = count == null
                 ? _context.Teachers
-                : _context.Teachers.Take((int)count);
-            
+                : _context.Teachers.Take((int) count);
+
             return await teachers.Include(t => t.Photo).ToListAsync();
         }
 
@@ -36,7 +35,7 @@ namespace CESP.Dal.Repositories.Cesp
         {
             var feedbacks = count == null
                 ? _context.Feedbacks.OrderByDescending(f => f.Date)
-                : _context.Feedbacks.OrderByDescending(f => f.Date).Take((int)count);
+                : _context.Feedbacks.OrderByDescending(f => f.Date).Take((int) count);
 
             return await feedbacks
                 .Include(f => f.Photo)
@@ -70,12 +69,29 @@ namespace CESP.Dal.Repositories.Cesp
                 .ToListAsync();
         }
 
+        public async Task<List<GroupBunchDto>> GetGroupBunches()
+        {
+            return await _context
+                .GroupBunches
+                .ToListAsync();
+        }
+
+        public async Task<int?> GetGroupBunchIdBySysNameOrNull(string sysName)
+        {
+            // todo SysName
+            var bunch = _context
+                .GroupBunches
+                .FirstOrDefault(gb => gb.Name == sysName);
+            
+            return bunch?.Id;
+        }
+
         public async Task<List<CourseDto>> GetCourses(int? count)
         {
             var courses = count == null
                 ? _context.Courses
-                : _context.Courses.Take((int)count);
-            
+                : _context.Courses.Take((int) count);
+
             return await courses.Include(c => c.Photo).ToListAsync();
         }
 
