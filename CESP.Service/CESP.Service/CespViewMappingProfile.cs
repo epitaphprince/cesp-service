@@ -11,6 +11,11 @@ namespace CESP.Service
             CreateMap<Teacher,TeacherResponse>();
             CreateMap<Course, CourseResponse>();
             CreateMap<Feedback, FeedbackResponse>();
+
+            CreateMap<Schedule, ScheduleResponse>();
+            CreateMap<Price, PriceResponse>();
+            CreateMap<GroupDuration, GroupDurationResponse>();
+            CreateMap<LessonTime, LessonTimeResponse>();
         }
     }
 }

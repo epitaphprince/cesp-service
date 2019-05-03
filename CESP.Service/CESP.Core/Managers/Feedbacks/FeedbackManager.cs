@@ -18,7 +18,7 @@ namespace CESP.Core.Managers.Feedbacks
 
         public async Task<List<Feedback>> GetList(int? count)
         {
-            var feedbacks = await _feedbackProvider.GetListFeedback(count);
+            var feedbacks = await _feedbackProvider.GetFeedbacks(count);
 
             feedbacks.ForEach(
                 c =>

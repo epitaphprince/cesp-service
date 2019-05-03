@@ -18,7 +18,7 @@ namespace CESP.Dal.Providers
             _mapper = mapper;
         }
 
-        public async Task<List<Feedback>> GetListFeedback(int? count)
+        public async Task<List<Feedback>> GetFeedbacks(int? count)
         {
             var feedbacks = await _cespRepository.GetFeedbacks(count);
             return feedbacks.Select(t => _mapper.Map<Feedback>(t)).ToList();
