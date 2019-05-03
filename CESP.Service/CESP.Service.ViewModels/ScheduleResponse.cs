@@ -8,7 +8,7 @@ namespace CESP.Service.ViewModels
 
         public LessonTimeResponse[] LessonTimes { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         public PriceResponse[] Prices { get; set; }
 

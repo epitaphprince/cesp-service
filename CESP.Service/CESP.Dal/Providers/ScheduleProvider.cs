@@ -44,7 +44,7 @@ namespace CESP.Dal.Providers
                     ((group, schedules, prices, durations)));
             }
             
-            return result;
+            return result.OrderBy(r => r.LevelRang).ToList();
         }
     }
 }

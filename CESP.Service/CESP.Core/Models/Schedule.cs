@@ -6,9 +6,11 @@ namespace CESP.Core.Models
     {
         public string Level { get; set; }
 
+        public int LevelRang { get; set; }
+
         public LessonTime[] LessonTimes { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         public Price[] Prices { get; set; }
         

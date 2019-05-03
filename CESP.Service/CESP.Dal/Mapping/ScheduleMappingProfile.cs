@@ -16,6 +16,9 @@ namespace CESP.Dal.Mapping
                     List<PriceDto> prices,
                     List<GroupDurationDto> durations),
                     Schedule>()
+                .ForMember(dest => dest.LevelRang,
+                    opt => opt.MapFrom(
+                        src => src.group.LanguageLevel.Rang))
                 .ForMember(dest => dest.IsAvailable,
                     opt => opt.MapFrom(
                         src => src.group.IsAvailable))
