@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CESP.Core.Models;
+using CESP.Database.Context.Activities.Models;
 using CESP.Database.Context.Education.Models;
+using CESP.Database.Context.Files.Models;
 using CESP.Database.Context.Payments.Models;
 using CESP.Database.Context.Schedules.Models;
 using CESP.Database.Context.StudentGroups.Models;
@@ -24,5 +26,11 @@ namespace CESP.Core.Contracts
         Task<List<ScheduleDto>> GetSchedulesByGroupId(int groupId);
 
         Task<List<GroupDurationDto>> GetDurationsByGroupId(int groupId);
+
+        Task<List<ActivityDto>> GetEvents(int? count);
+
+        Task<ActivityDto> GetEvent(string sysName);
+
+        Task<List<FileDto>> GetEventFiles(int eventId);
     }
 }

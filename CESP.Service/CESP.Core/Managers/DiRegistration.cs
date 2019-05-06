@@ -1,4 +1,5 @@
 using CESP.Core.Managers.Courses;
+using CESP.Core.Managers.Events;
 using CESP.Core.Managers.Feedbacks;
 using CESP.Core.Managers.Schedulers;
 using CESP.Core.Managers.Teachers;
@@ -17,6 +18,7 @@ namespace CESP.Core.Managers
             services.AddScoped<ICourseManager, CourseManager>();
             services.AddScoped<IFeedbackManager, FeedbackManager>();
             services.AddScoped<IScheduleManager, ScheduleManager>();
+            services.AddScoped<IEventManager, EventManager>();
             
             return services;
         }
