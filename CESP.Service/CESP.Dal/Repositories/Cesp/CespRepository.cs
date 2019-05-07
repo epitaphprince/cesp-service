@@ -4,7 +4,9 @@ using System.Threading.Tasks;
 using CESP.Core.Contracts;
 using CESP.Core.Models;
 using CESP.Database.Context;
+using CESP.Database.Context.Activities.Models;
 using CESP.Database.Context.Education.Models;
+using CESP.Database.Context.Files.Models;
 using CESP.Database.Context.Payments.Models;
 using CESP.Database.Context.Schedules.Models;
 using CESP.Database.Context.StudentGroups.Models;
@@ -78,10 +80,9 @@ namespace CESP.Dal.Repositories.Cesp
 
         public async Task<int?> GetGroupBunchIdBySysNameOrNull(string sysName)
         {
-            // todo SysName
-            var bunch = _context
+            var bunch = await _context
                 .GroupBunches
-                .FirstOrDefault(gb => gb.Name == sysName);
+                .FirstOrDefaultAsync(gb => gb.SysName == sysName);
             
             return bunch?.Id;
         }
@@ -107,6 +108,36 @@ namespace CESP.Dal.Repositories.Cesp
                 .Where(pr => pr.StudentGroupId == groupId)
                 .Include(pr => pr.Currency)
                 .ToListAsync();
+        }
+
+        public async Task<List<ActivityDto>> GetEvents(int? count)
+        {
+            var events = count == null
+                ? _context.Activities.OrderByDescending(f => f.Start)
+                : _context.Activities.OrderByDescending(f => f.Start).Take((int)count);
+            
+            return await events
+                .Include(e => e.Photo)
+                .ToListAsync();
+        }
+        
+        public async Task<ActivityDto> GetEvent(string sysName)
+        {
+            return await _context
+                .Activities
+                .Include(e => e.Photo)
+                .FirstOrDefaultAsync(e => e.SysName == sysName);
+        }
+        
+        public async Task<List<FileDto>> GetEventFiles(int eventId)
+        {
+
+            var files = from af in _context.ActivityFiles
+                join f in _context.Files on af.FileId equals f.Id
+                where af.ActivityId == eventId
+                select f;
+
+            return await files.ToListAsync();
         }
     }
 }
