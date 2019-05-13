@@ -4,6 +4,7 @@ using CESP.Core.Models;
 using CESP.Database.Context.Activities.Models;
 using CESP.Database.Context.Education.Models;
 using CESP.Database.Context.Files.Models;
+using CESP.Database.Context.Partners.Models;
 using CESP.Database.Context.Payments.Models;
 using CESP.Database.Context.Schedules.Models;
 using CESP.Database.Context.StudentGroups.Models;
@@ -32,5 +33,11 @@ namespace CESP.Core.Contracts
         Task<ActivityDto> GetEvent(string sysName);
 
         Task<List<FileDto>> GetEventFiles(int eventId);
+
+        Task<List<PartnerDto>> GetPartners(int? count);
+
+        Task<PartnerDto> GetPartner(string sysName);
+
+        Task<List<FileDto>> GetPartnerFiles(int partnerId);
     }
 }
