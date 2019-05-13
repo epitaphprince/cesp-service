@@ -32,5 +32,9 @@ namespace CESP.Core.Contracts
         Task<ActivityDto> GetEvent(string sysName);
 
         Task<List<FileDto>> GetEventFiles(int eventId);
+
+        Task<List<LanguageLevelDto>> GetLanguageLevels();
+
+        Task<LanguageLevelDto> GetLanguageLevel(string name);
     }
 }

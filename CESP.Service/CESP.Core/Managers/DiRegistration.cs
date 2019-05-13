@@ -1,6 +1,7 @@
 using CESP.Core.Managers.Courses;
 using CESP.Core.Managers.Events;
 using CESP.Core.Managers.Feedbacks;
+using CESP.Core.Managers.LanguageLevels;
 using CESP.Core.Managers.Schedulers;
 using CESP.Core.Managers.Teachers;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +20,7 @@ namespace CESP.Core.Managers
             services.AddScoped<IFeedbackManager, FeedbackManager>();
             services.AddScoped<IScheduleManager, ScheduleManager>();
             services.AddScoped<IEventManager, EventManager>();
-            
+            services.AddScoped<ILevelManager, LevelManager>();
             return services;
         }
     }
