@@ -1,5 +1,6 @@
 using AutoMapper;
 using CESP.Core.Models;
+using CESP.Database.Context.Education.Models;
 using CESP.Service.ViewModels;
 
 namespace CESP.Service
@@ -13,6 +14,8 @@ namespace CESP.Service
             CreateMap<Feedback, FeedbackResponse>();
             CreateMap<Event, EventResponse>();
             CreateMap<EventShort, EventShortResponse>();
+            CreateMap<SpeakingClubMeeting, SpeakingClubMeetingResponse>();
+            CreateMap<SpeakingClubMeetingShort, SpeakingClubMeetingShortResponse>();
 
             CreateMap<Schedule, ScheduleResponse>();
             CreateMap<Price, PriceResponse>();

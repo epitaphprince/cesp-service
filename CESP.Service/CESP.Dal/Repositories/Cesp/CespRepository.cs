@@ -116,13 +116,36 @@ namespace CESP.Dal.Repositories.Cesp
         
         public async Task<List<FileDto>> GetEventFiles(int eventId)
         {
-
             var files = from af in _context.ActivityFiles
                 join f in _context.Files on af.FileId equals f.Id
                 where af.ActivityId == eventId
                 select f;
 
             return await files.ToListAsync();
+        }
+
+        public async Task<List<SpeakingClubMeetingDto>> GetSpeakingClubMeetings(int? count)
+        {
+            var meetings = count == null
+                ? _context.SpeakingClubMeetings.OrderByDescending(m => m.Date)
+                : _context.SpeakingClubMeetings.OrderByDescending(m => m.Date).Take((int)count);
+            
+            return await meetings
+                .Include(e => e.Photo)
+                .Include(e => e.MinLanguageLevel)
+                .Include(e => e.MaxLanguageLevel)
+                .Include(e => e.Teacher)
+                .ToListAsync();
+        }
+        
+        public async Task<SpeakingClubMeetingDto> GetSpeakingClubMeeting(string sysName)
+        {
+            return await _context
+                .SpeakingClubMeetings
+                .Include(e => e.MinLanguageLevel)
+                .Include(e => e.MaxLanguageLevel)
+                .Include(e => e.Teacher)
+                .FirstOrDefaultAsync(e => e.SysName == sysName);
         }
     }
 }
