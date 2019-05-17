@@ -4,6 +4,6 @@ namespace CESP.Core.Models
     {
         public string Name { get; set; }
 
-        public bool HasDescription { get; set; }
+        public string SysName { get; set; }
     }
 }

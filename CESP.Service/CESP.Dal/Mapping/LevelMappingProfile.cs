@@ -9,9 +9,9 @@ namespace CESP.Dal.Mapping
         public LevelMappingProfile()
         {
             CreateMap<LanguageLevelDto, LevelShort>()
-                .ForMember(dest => dest.HasDescription,
+                .ForMember(dest => dest.SysName,
                     opt => opt.MapFrom(
-                        src => !string.IsNullOrEmpty(src.Description)));
+                        src => string.IsNullOrEmpty(src.Description) ? null : src.Name));
         }
     }
 }

@@ -1,6 +1,6 @@
 namespace CESP.Service.ViewModels
 {
-    public class LevelShortResponse
+    public class GroupBunchResponse
     {
         public string Name { get; set; }
 

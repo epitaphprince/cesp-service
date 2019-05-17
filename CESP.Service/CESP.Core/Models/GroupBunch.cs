@@ -1,6 +1,6 @@
-namespace CESP.Service.ViewModels
+namespace CESP.Core.Models
 {
-    public class LevelShortResponse
+    public class GroupBunch
     {
         public string Name { get; set; }
 
