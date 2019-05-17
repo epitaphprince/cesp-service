@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CESP.Core.Models;
 using CESP.Database.Context.Activities.Models;
 using CESP.Database.Context.Education.Models;
 using CESP.Database.Context.Files.Models;
@@ -39,5 +38,13 @@ namespace CESP.Core.Contracts
         Task<PartnerDto> GetPartner(string sysName);
 
         Task<List<FileDto>> GetPartnerFiles(int partnerId);
+
+        Task<List<LanguageLevelDto>> GetLanguageLevels();
+
+        Task<LanguageLevelDto> GetLanguageLevel(string name);
+
+        Task<List<GroupBunchDto>> GetGroupBunches();
+        
+        Task<int?> GetGroupBunchIdBySysNameOrNull(string sysName);
     }
 }

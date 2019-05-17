@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CESP.Core.Contracts;
-using CESP.Core.Models;
 using CESP.Database.Context;
 using CESP.Database.Context.Activities.Models;
 using CESP.Database.Context.Education.Models;
@@ -16,7 +15,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CESP.Dal.Repositories.Cesp
 {
-    public class CespRepository: ICespRepository
+    public class CespRepository : ICespRepository
     {
         private readonly CespContext _context;
 
@@ -27,11 +26,10 @@ namespace CESP.Dal.Repositories.Cesp
 
         public async Task<List<TeacherDto>> GetTeachers(int? count)
         {
-            
             var teachers = count == null
                 ? _context.Teachers
-                : _context.Teachers.Take((int)count);
-            
+                : _context.Teachers.Take((int) count);
+
             return await teachers.Include(t => t.Photo).ToListAsync();
         }
 
@@ -39,7 +37,7 @@ namespace CESP.Dal.Repositories.Cesp
         {
             var feedbacks = count == null
                 ? _context.Feedbacks.OrderByDescending(f => f.Date)
-                : _context.Feedbacks.OrderByDescending(f => f.Date).Take((int)count);
+                : _context.Feedbacks.OrderByDescending(f => f.Date).Take((int) count);
 
             return await feedbacks
                 .Include(f => f.Photo)
@@ -73,12 +71,28 @@ namespace CESP.Dal.Repositories.Cesp
                 .ToListAsync();
         }
 
+        public async Task<List<GroupBunchDto>> GetGroupBunches()
+        {
+            return await _context
+                .GroupBunches
+                .ToListAsync();
+        }
+
+        public async Task<int?> GetGroupBunchIdBySysNameOrNull(string sysName)
+        {
+            var bunch = await _context
+                .GroupBunches
+                .FirstOrDefaultAsync(gb => gb.SysName == sysName);
+            
+            return bunch?.Id;
+        }
+
         public async Task<List<CourseDto>> GetCourses(int? count)
         {
             var courses = count == null
                 ? _context.Courses
-                : _context.Courses.Take((int)count);
-            
+                : _context.Courses.Take((int) count);
+
             return await courses.Include(c => c.Photo).ToListAsync();
         }
 
@@ -117,7 +131,6 @@ namespace CESP.Dal.Repositories.Cesp
         
         public async Task<List<FileDto>> GetEventFiles(int eventId)
         {
-
             var files = from af in _context.ActivityFiles
                 join f in _context.Files on af.FileId equals f.Id
                 where af.ActivityId == eventId
@@ -125,7 +138,7 @@ namespace CESP.Dal.Repositories.Cesp
 
             return await files.ToListAsync();
         }
-        
+
         public async Task<List<PartnerDto>> GetPartners(int? count)
         {
             var partners = count == null
@@ -144,7 +157,7 @@ namespace CESP.Dal.Repositories.Cesp
                 .Include(e => e.Photo)
                 .FirstOrDefaultAsync(e => e.SysName == sysName);
         }
-        
+
         public async Task<List<FileDto>> GetPartnerFiles(int partnerId)
         {
             var files = from af in _context.PartnerFiles
@@ -153,6 +166,21 @@ namespace CESP.Dal.Repositories.Cesp
                 select f;
 
             return await files.ToListAsync();
+        }
+
+        public async Task<List<LanguageLevelDto>> GetLanguageLevels()
+        {
+            return await _context
+                .LanguageLevels
+                .OrderBy(l => l.Rang)
+                .ToListAsync();
+        }
+
+        public async Task<LanguageLevelDto> GetLanguageLevel(string name)
+        {
+            return await _context
+                .LanguageLevels
+                .FirstOrDefaultAsync(l => l.Name == name);
         }
     }
 }

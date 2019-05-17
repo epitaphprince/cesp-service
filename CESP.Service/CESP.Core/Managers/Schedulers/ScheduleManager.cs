@@ -16,9 +16,17 @@ namespace CESP.Core.Managers.Schedulers
 
         public async Task<List<Schedule>> GetList(int bunchId)
         {
-            var schedules = await _scheduleProvider.GetSchedulesByBunchId(bunchId);
+            return await _scheduleProvider.GetSchedulesByBunchId(bunchId);
+        }
+        
+        public async Task<List<Schedule>> GetList(string bunch)
+        {
+            return await _scheduleProvider.GetSchedulesByBunch(bunch);
+        }
 
-            return schedules;
+        public async Task<List<GroupBunch>> GetBunches()
+        {
+            return await _scheduleProvider.GetBunches();
         }
     }
 }

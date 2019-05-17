@@ -13,6 +13,7 @@ namespace CESP.Service
             CreateMap<Feedback, FeedbackResponse>();
             CreateMap<Event, EventResponse>();
             CreateMap<EventShort, EventShortResponse>();
+            CreateMap<Level, LevelResponse>();
 
             CreateMap<Schedule, ScheduleResponse>();
             CreateMap<Price, PriceResponse>();
