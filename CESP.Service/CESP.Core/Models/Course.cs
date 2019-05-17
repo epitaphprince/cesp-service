@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace CESP.Core.Models
 {
     public class Course
