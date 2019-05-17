@@ -11,6 +11,8 @@ namespace CESP.Dal.Mapping
     {
         public ScheduleMappingProfile()
         {
+            CreateMap<GroupBunchDto, GroupBunch>();
+            
             CreateMap<(StudentGroupDto group,
                     List<ScheduleDto> schedules,
                     List<PriceDto> prices,

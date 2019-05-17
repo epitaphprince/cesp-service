@@ -32,5 +32,11 @@ namespace CESP.Core.Contracts
         Task<ActivityDto> GetEvent(string sysName);
 
         Task<List<FileDto>> GetEventFiles(int eventId);
+        
+        Task<List<GroupBunchDto>> GetGroupBunches();
+        
+        Task<int?> GetGroupBunchIdBySysNameOrNull(string sysName);
+
+
     }
 }

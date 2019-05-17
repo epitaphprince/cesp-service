@@ -7,5 +7,9 @@ namespace CESP.Core.Managers.Schedulers
     public interface IScheduleManager
     {
         Task<List<Schedule>> GetList(int bunchId);
+        
+        Task<List<Schedule>> GetList(string bunch);
+
+        Task<List<GroupBunch>> GetBunches();
     }
 }
