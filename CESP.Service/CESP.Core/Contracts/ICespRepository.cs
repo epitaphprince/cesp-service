@@ -33,6 +33,10 @@ namespace CESP.Core.Contracts
 
         Task<List<FileDto>> GetEventFiles(int eventId);
 
+        Task<List<SpeakingClubMeetingDto>> GetSpeakingClubMeetings(int? count);
+
+        Task<SpeakingClubMeetingDto> GetSpeakingClubMeeting(string sysName);
+
         Task<List<PartnerDto>> GetPartners(int? count);
 
         Task<PartnerDto> GetPartner(string sysName);

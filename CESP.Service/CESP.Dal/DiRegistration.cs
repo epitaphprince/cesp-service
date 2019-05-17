@@ -9,6 +9,7 @@ using CESP.Database.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace CESP.Dal
 {
@@ -28,6 +29,7 @@ namespace CESP.Dal
                     mc.AddProfile(new DurationMappingProfile());
                     mc.AddProfile(new LessonTimeMappingProfile());
                     mc.AddProfile(new EventMappingProfile());
+                    mc.AddProfile(new SpeakingClubMappingProfile());
                     mc.AddProfile(new PartnerMappingProfile());
                     mc.AddProfile(new LevelMappingProfile());
                 });
@@ -50,6 +52,8 @@ namespace CESP.Dal
             services.AddScoped<IFeedbackProvider, FeedbackProvider>();
             services.AddScoped<IScheduleProvider, ScheduleProvider>();
             services.AddScoped<IEventProvider, EventProvider>();
+            services.AddScoped<ISpeakingClubProvider, SpeakingClubProvider>();
+            
             services.AddScoped<IPartnerProvider, PartnerProvider>();
             services.AddScoped<ILevelProvider, LevelProvider>();
 

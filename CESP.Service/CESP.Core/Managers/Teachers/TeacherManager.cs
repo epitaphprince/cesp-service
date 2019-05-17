@@ -10,21 +10,21 @@ namespace CESP.Core.Managers.Teachers
 {
     public class TeacherManager: ITeacherManager
     {
-        private readonly ITeacherProvider _teacheProvider;
+        private readonly ITeacherProvider _teacherProvider;
         private readonly ICespResourceProvider _cespResourceProvider;
         
         public TeacherManager(
-            ITeacherProvider teacheProvider,
+            ITeacherProvider teacherProvider,
             ICespResourceProvider resourceProvider )
         {
-            _teacheProvider = teacheProvider;
+            _teacherProvider = teacherProvider;
             _cespResourceProvider = resourceProvider;
 
         }
 
         public async Task<List<Teacher>> GetList(int? count)
         {
-            var teachers = await _teacheProvider.GetTeachers(count);
+            var teachers = await _teacherProvider.GetTeachers(count);
 
             teachers.ForEach(t => t.Photo = _cespResourceProvider.GetFullUrl(t.Photo));
             
