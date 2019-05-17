@@ -30,6 +30,8 @@ namespace CESP.Dal
                     mc.AddProfile(new LessonTimeMappingProfile());
                     mc.AddProfile(new EventMappingProfile());
                     mc.AddProfile(new SpeakingClubMappingProfile());
+                    mc.AddProfile(new PartnerMappingProfile());
+                    mc.AddProfile(new LevelMappingProfile());
                 });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
@@ -52,6 +54,9 @@ namespace CESP.Dal
             services.AddScoped<IEventProvider, EventProvider>();
             services.AddScoped<ISpeakingClubProvider, SpeakingClubProvider>();
             
+            services.AddScoped<IPartnerProvider, PartnerProvider>();
+            services.AddScoped<ILevelProvider, LevelProvider>();
+
             services.AddScoped<IFolderProvider, FolderProvider>();
             services.AddScoped<IFileProvider, FileProvider>();
             services.AddScoped<IFileRepository, FileRepository>();

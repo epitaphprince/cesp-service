@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CESP.Core.Contracts;
-using CESP.Core.Models;
 using CESP.Database.Context;
 using CESP.Database.Context.Activities.Models;
 using CESP.Database.Context.Education.Models;
 using CESP.Database.Context.Files.Models;
+using CESP.Database.Context.Partners.Models;
 using CESP.Database.Context.Payments.Models;
 using CESP.Database.Context.Schedules.Models;
 using CESP.Database.Context.StudentGroups.Models;
@@ -71,6 +71,22 @@ namespace CESP.Dal.Repositories.Cesp
                 .Include(sch => sch.TimeUnit)
                 .ToListAsync();
         }
+        
+        public async Task<List<GroupBunchDto>> GetGroupBunches()
+        {
+            return await _context
+                .GroupBunches
+                .ToListAsync();
+        }
+
+        public async Task<int?> GetGroupBunchIdBySysNameOrNull(string sysName)
+        {
+            var bunch = await _context
+                .GroupBunches
+                .FirstOrDefaultAsync(gb => gb.SysName == sysName);
+            
+            return bunch?.Id;
+        }
 
         public async Task<List<CourseDto>> GetCourses(int? count)
         {
@@ -116,6 +132,7 @@ namespace CESP.Dal.Repositories.Cesp
         
         public async Task<List<FileDto>> GetEventFiles(int eventId)
         {
+
             var files = from af in _context.ActivityFiles
                 join f in _context.Files on af.FileId equals f.Id
                 where af.ActivityId == eventId
@@ -123,7 +140,51 @@ namespace CESP.Dal.Repositories.Cesp
 
             return await files.ToListAsync();
         }
+        
+        public async Task<List<PartnerDto>> GetPartners(int? count)
+        {
+            var partners = count == null
+                ? _context.Partners
+                : _context.Partners.Take((int)count);
+            
+            return await partners
+                .Include(e => e.Photo)
+                .ToListAsync();
+        }
+        
+        public async Task<PartnerDto> GetPartner(string sysName)
+        {
+            return await _context
+                .Partners
+                .Include(e => e.Photo)
+                .FirstOrDefaultAsync(e => e.SysName == sysName);
+        }
 
+        public async Task<List<FileDto>> GetPartnerFiles(int partnerId)
+        {
+            var files = from af in _context.PartnerFiles
+                join f in _context.Files on af.FileId equals f.Id
+                where af.PartnerId == partnerId
+                select f;
+
+            return await files.ToListAsync();
+        }
+
+        public async Task<List<LanguageLevelDto>> GetLanguageLevels()
+        {
+            return await _context
+                .LanguageLevels
+                .OrderBy(l => l.Rang)
+                .ToListAsync();
+        }
+
+        public async Task<LanguageLevelDto> GetLanguageLevel(string name)
+        {
+            return await _context
+                .LanguageLevels
+                .FirstOrDefaultAsync(l => l.Name == name);
+        }
+        
         public async Task<List<SpeakingClubMeetingDto>> GetSpeakingClubMeetings(int? count)
         {
             var meetings = count == null

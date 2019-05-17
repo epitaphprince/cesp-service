@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CESP.Core.Models;
 using CESP.Database.Context.Activities.Models;
 using CESP.Database.Context.Education.Models;
 using CESP.Database.Context.Files.Models;
+using CESP.Database.Context.Partners.Models;
 using CESP.Database.Context.Payments.Models;
 using CESP.Database.Context.Schedules.Models;
 using CESP.Database.Context.StudentGroups.Models;
@@ -36,5 +36,19 @@ namespace CESP.Core.Contracts
         Task<List<SpeakingClubMeetingDto>> GetSpeakingClubMeetings(int? count);
 
         Task<SpeakingClubMeetingDto> GetSpeakingClubMeeting(string sysName);
+
+        Task<List<PartnerDto>> GetPartners(int? count);
+
+        Task<PartnerDto> GetPartner(string sysName);
+
+        Task<List<FileDto>> GetPartnerFiles(int partnerId);
+
+        Task<List<LanguageLevelDto>> GetLanguageLevels();
+
+        Task<LanguageLevelDto> GetLanguageLevel(string name);
+
+        Task<List<GroupBunchDto>> GetGroupBunches();
+        
+        Task<int?> GetGroupBunchIdBySysNameOrNull(string sysName);
     }
 }
