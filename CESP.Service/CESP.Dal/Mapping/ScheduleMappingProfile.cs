@@ -7,12 +7,12 @@ using CESP.Database.Context.StudentGroups.Models;
 
 namespace CESP.Dal.Mapping
 {
-    public class ScheduleMappingProfile: Profile
+    public class ScheduleMappingProfile : Profile
     {
         public ScheduleMappingProfile()
         {
             CreateMap<GroupBunchDto, GroupBunch>();
-            
+
             CreateMap<(StudentGroupDto group,
                     List<ScheduleDto> schedules,
                     List<PriceDto> prices,
@@ -30,7 +30,6 @@ namespace CESP.Dal.Mapping
                 .ForMember(dest => dest.Level,
                     opt => opt.MapFrom(
                         src => src.group.LanguageLevel.Name))
-                
                 .ForMember(dest => dest.Prices,
                     opt => opt.MapFrom(
                         src => src.prices))
@@ -40,7 +39,6 @@ namespace CESP.Dal.Mapping
                 .ForMember(dest => dest.LessonTimes,
                     opt => opt.MapFrom(
                         src => src.schedules))
-                
                 ;
         }
     }

@@ -5,7 +5,7 @@ namespace CESP.Core.Models
     public class SpeakingClubMeeting
     {
         public string Name { get; set; }
-        
+
         public string Info { get; set; }
 
         public DateTime Date { get; set; }

@@ -16,14 +16,13 @@ namespace CESP.Core.Managers
         public static IServiceCollection RegisterManagers(
             this IServiceCollection services, IConfiguration configuration)
         {
-
             services.AddScoped<ITeacherManager, TeacherManager>();
             services.AddScoped<ICourseManager, CourseManager>();
             services.AddScoped<IFeedbackManager, FeedbackManager>();
             services.AddScoped<IScheduleManager, ScheduleManager>();
             services.AddScoped<IEventManager, EventManager>();
             services.AddScoped<ISpeakingClubManager, SpeakingClubManager>();
-            
+
             services.AddScoped<IPartnerManager, PartnerManager>();
             services.AddScoped<ILevelManager, LevelManager>();
 

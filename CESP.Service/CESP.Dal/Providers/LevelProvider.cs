@@ -7,7 +7,7 @@ using CESP.Core.Models;
 
 namespace CESP.Dal.Providers
 {
-    public class LevelProvider: ILevelProvider
+    public class LevelProvider : ILevelProvider
     {
         private ICespRepository _cespRepository;
         private readonly IMapper _mapper;
@@ -23,7 +23,7 @@ namespace CESP.Dal.Providers
         public async Task<List<LevelShort>> GetLevels()
         {
             var levels = await _cespRepository.GetLanguageLevels();
-            
+
             return levels.Select(l => _mapper.Map<LevelShort>(l)).ToList();
         }
 

@@ -41,7 +41,7 @@ namespace CESP.Dal
                 .GetValue<string>("CespDb");
             services.AddDbContext<CespContext>(options =>
                 options.UseNpgsql(cespConnectionString));
-            
+
             services.Configure<FileStorage>(configuration.GetSection("FileStorage"));
             services.Configure<ResourceStorage>(configuration.GetSection("ResourceStorage"));
 
@@ -53,14 +53,14 @@ namespace CESP.Dal
             services.AddScoped<IScheduleProvider, ScheduleProvider>();
             services.AddScoped<IEventProvider, EventProvider>();
             services.AddScoped<ISpeakingClubProvider, SpeakingClubProvider>();
-            
+
             services.AddScoped<IPartnerProvider, PartnerProvider>();
             services.AddScoped<ILevelProvider, LevelProvider>();
 
             services.AddScoped<IFolderProvider, FolderProvider>();
             services.AddScoped<IFileProvider, FileProvider>();
             services.AddScoped<IFileRepository, FileRepository>();
-            
+
             return services;
         }
     }

@@ -5,18 +5,17 @@ using CESP.Core.Models;
 
 namespace CESP.Core.Managers.SpeakingClub
 {
-    public class SpeakingClubManager: ISpeakingClubManager
+    public class SpeakingClubManager : ISpeakingClubManager
     {
         private readonly ISpeakingClubProvider _speakingClubProvider;
         private readonly ICespResourceProvider _cespResourceProvider;
-        
+
         public SpeakingClubManager(
             ISpeakingClubProvider speakingClubProvider,
-            ICespResourceProvider resourceProvider )
+            ICespResourceProvider resourceProvider)
         {
             _speakingClubProvider = speakingClubProvider;
             _cespResourceProvider = resourceProvider;
-
         }
 
         public async Task<List<SpeakingClubMeetingShort>> GetList(int? count)
@@ -32,7 +31,7 @@ namespace CESP.Core.Managers.SpeakingClub
 
                 m.Photo = _cespResourceProvider.GetFullUrl(m.Photo);
             });
-            
+
             return meetings;
         }
 

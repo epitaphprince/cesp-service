@@ -13,9 +13,9 @@ namespace CESP.Core.Models
         public DateTime? StartDate { get; set; }
 
         public Price[] Prices { get; set; }
-        
+
         public bool IsAvailable { get; set; }
-        
+
         public GroupDuration[] Durations { get; set; }
     }
 }

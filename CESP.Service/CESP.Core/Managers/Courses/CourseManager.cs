@@ -6,18 +6,17 @@ using CESP.Core.Models;
 
 namespace CESP.Core.Managers.Courses
 {
-    public class CourseManager: ICourseManager
+    public class CourseManager : ICourseManager
     {
         private readonly ICourseProvider _courseProvider;
         private readonly ICespResourceProvider _cespResourceProvider;
-        
+
         public CourseManager(
             ICourseProvider courseProvider,
-            ICespResourceProvider resourceProvider )
+            ICespResourceProvider resourceProvider)
         {
             _courseProvider = courseProvider;
             _cespResourceProvider = resourceProvider;
-
         }
 
         public async Task<List<Course>> GetList(int? count)
@@ -25,11 +24,8 @@ namespace CESP.Core.Managers.Courses
             var courses = await _courseProvider.GetCourses(count);
 
             courses.ForEach(
-                c =>
-                {
-                    c.Photo = GetUrl(c.Photo);
-                });
-            
+                c => { c.Photo = GetUrl(c.Photo); });
+
             return courses;
         }
 

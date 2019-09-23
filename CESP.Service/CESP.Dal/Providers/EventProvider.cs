@@ -9,7 +9,7 @@ using CESP.Database.Context.Files.Models;
 
 namespace CESP.Dal.Providers
 {
-    public class EventProvider: IEventProvider
+    public class EventProvider : IEventProvider
     {
         private ICespRepository _cespRepository;
         private readonly IMapper _mapper;
@@ -35,8 +35,8 @@ namespace CESP.Dal.Providers
             var ev = await _cespRepository.GetEvent(sysName);
 
             var files = await _cespRepository.GetEventFiles(ev.Id);
-            
-            return _mapper.Map<(ActivityDto,List<FileDto>),Event>((ev, files));
+
+            return _mapper.Map<(ActivityDto, List<FileDto>), Event>((ev, files));
         }
     }
 }

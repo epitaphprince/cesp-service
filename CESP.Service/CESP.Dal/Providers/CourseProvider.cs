@@ -38,9 +38,9 @@ namespace CESP.Dal.Providers
                 var maxDiscount = prices.Max(pr => pr.DiscountPer);
 
                 var price =
-                    maxDiscount > 0 ?
-                    prices.FirstOrDefault(pr => pr.DiscountPer == maxDiscount)
-                    : prices.FirstOrDefault();
+                    maxDiscount > 0
+                        ? prices.FirstOrDefault(pr => pr.DiscountPer == maxDiscount)
+                        : prices.FirstOrDefault();
 
                 coursesWithPrice.Add((course, price));
             }

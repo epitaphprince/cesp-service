@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace CESP.Service.Controllers
 {
     [Route("courses")]
-    public class CourseController: Controller
+    public class CourseController : Controller
     {
         private readonly ICourseManager _courseManager;
-        private readonly IMapper _mapper;  
-        
+        private readonly IMapper _mapper;
+
         public CourseController(
             ICourseManager courseManager,
             IMapper mapper)
@@ -27,10 +27,10 @@ namespace CESP.Service.Controllers
         {
             if (count < 0)
                 count = 0;
-            
+
             var courses = await _courseManager.GetList(count);
 
-            return  Ok(courses.Select(t => _mapper.Map<CourseResponse>(t)));
+            return Ok(courses.Select(t => _mapper.Map<CourseResponse>(t)));
         }
     }
 }

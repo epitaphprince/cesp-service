@@ -7,14 +7,14 @@ using CESP.Database.Context.Partners.Models;
 
 namespace CESP.Dal.Mapping
 {
-    public class PartnerMappingProfile: Profile
+    public class PartnerMappingProfile : Profile
     {
         public PartnerMappingProfile()
         {
             CreateMap<PartnerDto, PartnerShort>()
                 .ForMember(dest => dest.Photo,
                     opt => opt.MapFrom(src => src.Photo.Name));
-            
+
             CreateMap<(PartnerDto partner, List<FileDto> files), Partner>()
                 .ForMember(dest => dest.Photo,
                     opt => opt.MapFrom(src => src.partner.Photo.Name))
@@ -34,7 +34,6 @@ namespace CESP.Dal.Mapping
                     opt => opt.MapFrom(src => src.partner.SocialNetwork))
                 .ForMember(dest => dest.Url,
                     opt => opt.MapFrom(src => src.partner.Url))
-                
                 .ForMember(dest => dest.Photos,
                     opt => opt.MapFrom(src => src.files.Select(f => f.Name)));
         }

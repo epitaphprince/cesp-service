@@ -7,14 +7,14 @@ using CESP.Database.Context.Files.Models;
 
 namespace CESP.Dal.Mapping
 {
-    public class EventMappingProfile: Profile
+    public class EventMappingProfile : Profile
     {
         public EventMappingProfile()
         {
             CreateMap<ActivityDto, EventShort>()
                 .ForMember(dest => dest.Photo,
                     opt => opt.MapFrom(src => src.Photo.Name));
-            
+
             CreateMap<(ActivityDto ev, List<FileDto> files), Event>()
                 .ForMember(dest => dest.Name,
                     opt => opt.MapFrom(src => src.ev.Name))

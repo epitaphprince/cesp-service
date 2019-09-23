@@ -9,11 +9,11 @@ using CESP.Database.Context.Payments.Models;
 
 namespace CESP.Dal.Providers
 {
-    public class TeacherProvider: ITeacherProvider
+    public class TeacherProvider : ITeacherProvider
     {
         private ICespRepository _cespRepository;
         private readonly IMapper _mapper;
-        
+
         public TeacherProvider(ICespRepository cespRepository, IMapper mapper)
         {
             _cespRepository = cespRepository;

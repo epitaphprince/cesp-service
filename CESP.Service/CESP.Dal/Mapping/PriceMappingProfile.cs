@@ -11,7 +11,7 @@ namespace CESP.Dal.Mapping
             CreateMap<PriceDto, Price>()
                 .ForMember(dest => dest.Period,
                     opt => opt.MapFrom(
-                        src =>  src.PaymentPeriod))
+                        src => src.PaymentPeriod))
                 .ForMember(dest => dest.Currency,
                     opt => opt.MapFrom(
                         src => src.Currency.Name));

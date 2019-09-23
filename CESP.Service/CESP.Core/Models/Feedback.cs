@@ -11,7 +11,7 @@ namespace CESP.Core.Models
         public string Signature { get; set; }
 
         public string Source { get; set; }
-        
+
         public string Photo { get; set; }
     }
 }

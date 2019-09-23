@@ -6,6 +6,6 @@ namespace CESP.Core.Contracts
 {
     public interface ICourseProvider
     {
-         Task<List<Course>> GetCourses(int? count);
+        Task<List<Course>> GetCourses(int? count);
     }
 }

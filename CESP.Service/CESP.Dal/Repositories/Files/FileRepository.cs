@@ -6,15 +6,15 @@ using Microsoft.Extensions.Options;
 
 namespace CESP.Dal.Repositories.Files
 {
-    public class FileRepository: IFileRepository
+    public class FileRepository : IFileRepository
     {
         public const string BaseFolder = "Files";
-        
+
         private readonly string _rootPath;
         private readonly IFolderProvider _folderProvider;
         private readonly IFileProvider _fileProvider;
 
-        public FileRepository(IOptions<FileStorage> options, 
+        public FileRepository(IOptions<FileStorage> options,
             IFolderProvider folderProvider,
             IFileProvider fileProvider)
         {
@@ -37,7 +37,7 @@ namespace CESP.Dal.Repositories.Files
                 await file.Content.CopyToAsync(f);
             }
         }
-        
+
         public Stream Get(string subFolderName, string name)
         {
             string folderPath = GetFolderPath(subFolderName);

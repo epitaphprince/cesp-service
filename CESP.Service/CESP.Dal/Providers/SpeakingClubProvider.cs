@@ -7,7 +7,7 @@ using CESP.Core.Models;
 
 namespace CESP.Dal.Providers
 {
-    public class SpeakingClubProvider: ISpeakingClubProvider
+    public class SpeakingClubProvider : ISpeakingClubProvider
     {
         private ICespRepository _cespRepository;
         private readonly IMapper _mapper;

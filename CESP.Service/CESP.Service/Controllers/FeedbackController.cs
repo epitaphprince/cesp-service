@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace CESP.Service.Controllers
 {
     [Route("feedbacks")]
-    public class FeedbackController: Controller
+    public class FeedbackController : Controller
     {
         private readonly IFeedbackManager _feedbackManager;
-        private readonly IMapper _mapper;  
-        
+        private readonly IMapper _mapper;
+
         public FeedbackController(
             IFeedbackManager feedbackManager,
             IMapper mapper)
@@ -27,10 +27,10 @@ namespace CESP.Service.Controllers
         {
             if (count < 0)
                 count = 0;
-            
+
             var feedbacks = await _feedbackManager.GetList(count);
 
-            return  Ok(feedbacks.Select(t => _mapper.Map<FeedbackResponse>(t)));
+            return Ok(feedbacks.Select(t => _mapper.Map<FeedbackResponse>(t)));
         }
     }
 }

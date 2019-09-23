@@ -4,7 +4,7 @@ using CESP.Database.Context.Education.Models;
 
 namespace CESP.Dal.Mapping
 {
-    public class LevelMappingProfile: Profile
+    public class LevelMappingProfile : Profile
     {
         public LevelMappingProfile()
         {

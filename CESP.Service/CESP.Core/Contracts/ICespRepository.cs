@@ -48,7 +48,7 @@ namespace CESP.Core.Contracts
         Task<LanguageLevelDto> GetLanguageLevel(string name);
 
         Task<List<GroupBunchDto>> GetGroupBunches();
-        
+
         Task<int?> GetGroupBunchIdBySysNameOrNull(string sysName);
     }
 }

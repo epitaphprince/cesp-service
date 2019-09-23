@@ -5,10 +5,10 @@ using Microsoft.Extensions.Options;
 
 namespace CESP.Dal.Repositories.Cesp
 {
-    public class CespResourceProvider: ICespResourceProvider
+    public class CespResourceProvider : ICespResourceProvider
     {
         private readonly string _resourceBaseUrl;
-        
+
         public CespResourceProvider(IOptions<ResourceStorage> resourceStorage)
         {
             _resourceBaseUrl = resourceStorage.Value.ResourceBaseUrl;
@@ -21,11 +21,11 @@ namespace CESP.Dal.Repositories.Cesp
 
         public string GetFullUrl(string resourcePartUrl)
         {
-            
             if (String.IsNullOrEmpty(resourcePartUrl))
             {
                 return null;
             }
+
             return GetImagesBasePath().TrimEnd('/') + "/" + resourcePartUrl.TrimStart('/');
         }
     }

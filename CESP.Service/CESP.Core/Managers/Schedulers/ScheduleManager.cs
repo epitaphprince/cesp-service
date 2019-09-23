@@ -5,7 +5,7 @@ using CESP.Core.Models;
 
 namespace CESP.Core.Managers.Schedulers
 {
-    public class ScheduleManager: IScheduleManager
+    public class ScheduleManager : IScheduleManager
     {
         private readonly IScheduleProvider _scheduleProvider;
 
@@ -18,7 +18,7 @@ namespace CESP.Core.Managers.Schedulers
         {
             return await _scheduleProvider.GetSchedulesByBunchId(bunchId);
         }
-        
+
         public async Task<List<Schedule>> GetList(string bunch)
         {
             return await _scheduleProvider.GetSchedulesByBunch(bunch);

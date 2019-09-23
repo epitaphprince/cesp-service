@@ -6,12 +6,12 @@ using CESP.Core.Models;
 
 namespace CESP.Core.Managers.Events
 {
-    public class EventManager: IEventManager
+    public class EventManager : IEventManager
     {
         private readonly IEventProvider _eventProvider;
         private readonly ICespResourceProvider _cespResourceProvider;
 
-        public EventManager(IEventProvider eventProvider, 
+        public EventManager(IEventProvider eventProvider,
             ICespResourceProvider cespResourceProvider)
         {
             _eventProvider = eventProvider;
@@ -21,12 +21,9 @@ namespace CESP.Core.Managers.Events
         public async Task<List<EventShort>> GetList(int? count)
         {
             var events = await _eventProvider.GetEvents(count);
-            
+
             events.ForEach(
-                c =>
-                {
-                    c.Photo = _cespResourceProvider.GetFullUrl(c.Photo);
-                });
+                c => { c.Photo = _cespResourceProvider.GetFullUrl(c.Photo); });
 
             return events;
         }
@@ -37,7 +34,7 @@ namespace CESP.Core.Managers.Events
 
             ev.Photos = ev.Photos.Select(
                 c => _cespResourceProvider.GetFullUrl(c)).ToList();
-            
+
             return ev;
         }
     }

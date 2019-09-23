@@ -10,7 +10,7 @@ using CESP.Database.Context.StudentGroups.Models;
 
 namespace CESP.Dal.Providers
 {
-    public class ScheduleProvider: IScheduleProvider
+    public class ScheduleProvider : IScheduleProvider
     {
         private ICespRepository _cespRepository;
         private readonly IMapper _mapper;
@@ -24,16 +24,16 @@ namespace CESP.Dal.Providers
         public async Task<List<Schedule>> GetSchedulesByBunch(string bunch)
         {
             var bunchId = await _cespRepository.GetGroupBunchIdBySysNameOrNull(bunch);
-            
-            return bunchId == null ? 
-                    new List<Schedule>()
-                 : await GetSchedulesByBunchId((int)bunchId);
+
+            return bunchId == null
+                ? new List<Schedule>()
+                : await GetSchedulesByBunchId((int) bunchId);
         }
 
         public async Task<List<Schedule>> GetSchedulesByBunchId(int bunchId)
         {
             var result = new List<Schedule>();
-            
+
             var groups = await _cespRepository.GetStudentGroupsByBunchId(bunchId);
 
             foreach (var group in groups)
@@ -47,19 +47,19 @@ namespace CESP.Dal.Providers
                 result.Add(_mapper.Map<(
                         StudentGroupDto,
                         List<ScheduleDto>,
-                        List<PriceDto>, 
-                        List<GroupDurationDto>), 
+                        List<PriceDto>,
+                        List<GroupDurationDto>),
                         Schedule>
                     ((group, schedules, prices, durations)));
             }
-            
+
             return result.OrderBy(r => r.LevelRang).ToList();
         }
 
 
         public async Task<List<GroupBunch>> GetBunches()
         {
-            var bunches =  await _cespRepository.GetGroupBunches();
+            var bunches = await _cespRepository.GetGroupBunches();
             return bunches.Select(b => _mapper.Map<GroupBunch>(b)).ToList();
         }
     }

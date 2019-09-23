@@ -7,7 +7,7 @@ using CESP.Core.Models;
 
 namespace CESP.Dal.Providers
 {
-    public class FeedbackProvider: IFeedbackProvider
+    public class FeedbackProvider : IFeedbackProvider
     {
         private ICespRepository _cespRepository;
         private readonly IMapper _mapper;

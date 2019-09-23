@@ -19,9 +19,9 @@ namespace CESP.Service.ViewModels
         public string Phone { get; set; }
 
         public string SocialNetwork { get; set; }
-        
+
         public string Photo { get; set; }
-        
+
         public List<string> Photos { get; set; }
     }
 }

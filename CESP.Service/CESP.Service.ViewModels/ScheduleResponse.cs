@@ -38,7 +38,7 @@ namespace CESP.Service.ViewModels
         public decimal Cost { get; set; }
 
         public string Period { get; set; }
-        
+
         public string Currency { get; set; }
     }
 }

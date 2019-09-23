@@ -4,11 +4,11 @@ using CESP.Service.ViewModels;
 
 namespace CESP.Service
 {
-    public class CespViewMappingProfile: Profile
+    public class CespViewMappingProfile : Profile
     {
         public CespViewMappingProfile()
         {
-            CreateMap<Teacher,TeacherResponse>();
+            CreateMap<Teacher, TeacherResponse>();
             CreateMap<Course, CourseResponse>();
             CreateMap<Feedback, FeedbackResponse>();
             CreateMap<Event, EventResponse>();

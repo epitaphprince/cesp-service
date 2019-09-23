@@ -7,7 +7,7 @@ namespace CESP.Core.Managers.Partners
     public interface IPartnerManager
     {
         Task<List<PartnerShort>> GetList(int? count);
-        
+
         Task<Partner> Get(string sysName);
     }
 }

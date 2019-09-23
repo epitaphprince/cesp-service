@@ -7,7 +7,7 @@ namespace CESP.Core.Contracts
     public interface ILevelProvider
     {
         Task<List<LevelShort>> GetLevels();
-        
+
         Task<Level> GetLevel(string name);
     }
 }

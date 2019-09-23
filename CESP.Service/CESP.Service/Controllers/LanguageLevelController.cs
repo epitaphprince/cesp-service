@@ -8,7 +8,7 @@ using System.Linq;
 namespace CESP.Service.Controllers
 {
     [Route("levels")]
-    public class LanguageLevelController: Controller
+    public class LanguageLevelController : Controller
     {
         private readonly ILevelManager _levelManager;
         private readonly IMapper _mapper;
@@ -18,7 +18,7 @@ namespace CESP.Service.Controllers
             _levelManager = levelManager;
             _mapper = mapper;
         }
-        
+
         [HttpGet]
         [Route("")]
         public async Task<IActionResult> GetList()
@@ -27,7 +27,7 @@ namespace CESP.Service.Controllers
 
             return Ok(levels.Select(t => _mapper.Map<LevelShortResponse>(t)));
         }
-        
+
         [HttpGet]
         [Route("{name}")]
         public async Task<IActionResult> Get([FromRoute] string name)

@@ -5,10 +5,10 @@ using CESP.Core.Models;
 
 namespace CESP.Core.Managers.LanguageLevels
 {
-    public class LevelManager: ILevelManager
+    public class LevelManager : ILevelManager
     {
         private readonly ILevelProvider _levelProvider;
-        
+
         public LevelManager(ILevelProvider levelProvider)
         {
             _levelProvider = levelProvider;

@@ -8,10 +8,8 @@ namespace CESP.Core
         public void Save(Stream content)
         {
             CheckFile(content);
-            
-            
         }
-        
+
         private void CheckFile(Stream content)
         {
             if (content == null || content.Length == 0)

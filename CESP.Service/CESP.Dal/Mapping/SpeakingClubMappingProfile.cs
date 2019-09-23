@@ -4,7 +4,7 @@ using CESP.Database.Context.Education.Models;
 
 namespace CESP.Dal.Mapping
 {
-    public class SpeakingClubMappingProfile: Profile
+    public class SpeakingClubMappingProfile : Profile
     {
         public SpeakingClubMappingProfile()
         {
@@ -17,7 +17,7 @@ namespace CESP.Dal.Mapping
                     opt => opt.MapFrom(src => src.MaxLanguageLevel.Name))
                 .ForMember(dest => dest.Teacher,
                     opt => opt.MapFrom(src => src.Teacher.Name));
-            
+
             CreateMap<SpeakingClubMeetingDto, SpeakingClubMeeting>()
                 .ForMember(dest => dest.MinLanguageLevel,
                     opt => opt.MapFrom(src => src.MinLanguageLevel.Name))

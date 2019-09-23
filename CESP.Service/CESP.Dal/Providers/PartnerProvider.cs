@@ -9,7 +9,7 @@ using CESP.Database.Context.Partners.Models;
 
 namespace CESP.Dal.Providers
 {
-    public class PartnerProvider: IPartnerProvider
+    public class PartnerProvider : IPartnerProvider
     {
         private ICespRepository _cespRepository;
         private readonly IMapper _mapper;
@@ -20,11 +20,11 @@ namespace CESP.Dal.Providers
             _cespRepository = cespRepository;
             _mapper = mapper;
         }
-        
+
         public async Task<List<PartnerShort>> GetPartners(int? count)
         {
             var partners = await _cespRepository.GetPartners(count);
-            
+
             return partners.Select(t => _mapper.Map<PartnerShort>(t)).ToList();
         }
 
@@ -33,8 +33,8 @@ namespace CESP.Dal.Providers
             var partner = await _cespRepository.GetPartner(sysName);
 
             var files = await _cespRepository.GetPartnerFiles(partner.Id);
-            
-            return _mapper.Map<(PartnerDto,List<FileDto>),Partner>((partner, files));
+
+            return _mapper.Map<(PartnerDto, List<FileDto>), Partner>((partner, files));
         }
     }
 }

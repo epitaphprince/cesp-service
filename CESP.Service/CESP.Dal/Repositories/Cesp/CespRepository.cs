@@ -15,7 +15,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CESP.Dal.Repositories.Cesp
 {
-    public class CespRepository: ICespRepository
+    public class CespRepository : ICespRepository
     {
         private readonly CespContext _context;
 
@@ -26,11 +26,10 @@ namespace CESP.Dal.Repositories.Cesp
 
         public async Task<List<TeacherDto>> GetTeachers(int? count)
         {
-            
             var teachers = count == null
                 ? _context.Teachers
-                : _context.Teachers.Take((int)count);
-            
+                : _context.Teachers.Take((int) count);
+
             return await teachers.Include(t => t.Photo).ToListAsync();
         }
 
@@ -38,7 +37,7 @@ namespace CESP.Dal.Repositories.Cesp
         {
             var feedbacks = count == null
                 ? _context.Feedbacks.OrderByDescending(f => f.Date)
-                : _context.Feedbacks.OrderByDescending(f => f.Date).Take((int)count);
+                : _context.Feedbacks.OrderByDescending(f => f.Date).Take((int) count);
 
             return await feedbacks
                 .Include(f => f.Photo)
@@ -71,7 +70,7 @@ namespace CESP.Dal.Repositories.Cesp
                 .Include(sch => sch.TimeUnit)
                 .ToListAsync();
         }
-        
+
         public async Task<List<GroupBunchDto>> GetGroupBunches()
         {
             return await _context
@@ -84,7 +83,7 @@ namespace CESP.Dal.Repositories.Cesp
             var bunch = await _context
                 .GroupBunches
                 .FirstOrDefaultAsync(gb => gb.SysName == sysName);
-            
+
             return bunch?.Id;
         }
 
@@ -92,8 +91,8 @@ namespace CESP.Dal.Repositories.Cesp
         {
             var courses = count == null
                 ? _context.Courses
-                : _context.Courses.Take((int)count);
-            
+                : _context.Courses.Take((int) count);
+
             return await courses.Include(c => c.Photo).ToListAsync();
         }
 
@@ -115,13 +114,13 @@ namespace CESP.Dal.Repositories.Cesp
         {
             var events = count == null
                 ? _context.Activities.OrderByDescending(f => f.Start)
-                : _context.Activities.OrderByDescending(f => f.Start).Take((int)count);
-            
+                : _context.Activities.OrderByDescending(f => f.Start).Take((int) count);
+
             return await events
                 .Include(e => e.Photo)
                 .ToListAsync();
         }
-        
+
         public async Task<ActivityDto> GetEvent(string sysName)
         {
             return await _context
@@ -129,10 +128,9 @@ namespace CESP.Dal.Repositories.Cesp
                 .Include(e => e.Photo)
                 .FirstOrDefaultAsync(e => e.SysName == sysName);
         }
-        
+
         public async Task<List<FileDto>> GetEventFiles(int eventId)
         {
-
             var files = from af in _context.ActivityFiles
                 join f in _context.Files on af.FileId equals f.Id
                 where af.ActivityId == eventId
@@ -140,18 +138,18 @@ namespace CESP.Dal.Repositories.Cesp
 
             return await files.ToListAsync();
         }
-        
+
         public async Task<List<PartnerDto>> GetPartners(int? count)
         {
             var partners = count == null
                 ? _context.Partners
-                : _context.Partners.Take((int)count);
-            
+                : _context.Partners.Take((int) count);
+
             return await partners
                 .Include(e => e.Photo)
                 .ToListAsync();
         }
-        
+
         public async Task<PartnerDto> GetPartner(string sysName)
         {
             return await _context
@@ -184,13 +182,13 @@ namespace CESP.Dal.Repositories.Cesp
                 .LanguageLevels
                 .FirstOrDefaultAsync(l => l.Name == name);
         }
-        
+
         public async Task<List<SpeakingClubMeetingDto>> GetSpeakingClubMeetings(int? count)
         {
             var meetings = count == null
                 ? _context.SpeakingClubMeetings.OrderByDescending(m => m.Date)
-                : _context.SpeakingClubMeetings.OrderByDescending(m => m.Date).Take((int)count);
-            
+                : _context.SpeakingClubMeetings.OrderByDescending(m => m.Date).Take((int) count);
+
             return await meetings
                 .Include(e => e.Photo)
                 .Include(e => e.MinLanguageLevel)
@@ -198,7 +196,7 @@ namespace CESP.Dal.Repositories.Cesp
                 .Include(e => e.Teacher)
                 .ToListAsync();
         }
-        
+
         public async Task<SpeakingClubMeetingDto> GetSpeakingClubMeeting(string sysName)
         {
             return await _context

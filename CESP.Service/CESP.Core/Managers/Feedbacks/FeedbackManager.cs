@@ -5,7 +5,7 @@ using CESP.Core.Models;
 
 namespace CESP.Core.Managers.Feedbacks
 {
-    public class FeedbackManager: IFeedbackManager
+    public class FeedbackManager : IFeedbackManager
     {
         private readonly IFeedbackProvider _feedbackProvider;
         private readonly ICespResourceProvider _cespResourceProvider;
@@ -21,11 +21,8 @@ namespace CESP.Core.Managers.Feedbacks
             var feedbacks = await _feedbackProvider.GetFeedbacks(count);
 
             feedbacks.ForEach(
-                c =>
-                {
-                    c.Photo = _cespResourceProvider.GetFullUrl(c.Photo);
-                });
-            
+                c => { c.Photo = _cespResourceProvider.GetFullUrl(c.Photo); });
+
             return feedbacks;
         }
     }
