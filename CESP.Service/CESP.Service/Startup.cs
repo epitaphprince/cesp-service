@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using CESP.Core.Managers;
 using CESP.Dal;
 using Microsoft.AspNetCore.Builder;
@@ -48,8 +49,19 @@ namespace CESP.Service
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseSwagger();
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "CESP.Service V1"); });
+            app.UseSwagger(c => c.PreSerializeFilters.Add((swagger, httpReq) => {
+                var paths = swagger.Paths.ToDictionary(entry => entry.Key,
+                    entry => entry.Value);
+                foreach(var path in paths)
+                {
+                    swagger.Paths.Remove(path.Key);
+                    swagger.Paths.Add($"/api{path.Key}", path.Value);
+                }
+            }));
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("v1/swagger.json", "CESP.Service V1");
+            });
             
             if (env.IsDevelopment())
             {
