@@ -52,6 +52,8 @@ namespace CESP.Service
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
+
             app.UseMvc();
         }
     }
