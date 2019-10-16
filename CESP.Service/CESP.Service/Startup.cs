@@ -3,14 +3,12 @@ using AutoMapper;
 using CESP.Core.Managers;
 using CESP.Core.Utils;
 using CESP.Dal;
-using CESP.Dal.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
-using IEmailSender = Microsoft.AspNetCore.Identity.UI.Services.IEmailSender;
 
 namespace CESP.Service
 {
@@ -58,6 +56,7 @@ namespace CESP.Service
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "CESP.Service", Version = "v1"}); });
             
             var emailSenderSettings = _configuration.GetSection("EmailSenderSettings");
+            
             services.AddSingleton<CESP.Core.Utils.IEmailSender>(
                     new EmailSender(emailSenderSettings.GetValue<string>("EmailAdmin"),
                         emailSenderSettings.GetValue<string>("PasswordEmailAdmin"),

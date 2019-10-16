@@ -1,4 +1,4 @@
-namespace CESP.Service.ViewModels
+namespace CESP.Service.ViewModels.Requests
 {
     public class EmailRequest
     {
@@ -8,5 +8,7 @@ namespace CESP.Service.ViewModels
         public string Contact { get; set; }
         
         public string Body { get; set; }
+
+        public string Source { get; set; }
     }
 }

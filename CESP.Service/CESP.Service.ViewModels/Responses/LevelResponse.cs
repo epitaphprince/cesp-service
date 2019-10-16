@@ -1,4 +1,4 @@
-namespace CESP.Service.ViewModels
+namespace CESP.Service.ViewModels.Responses
 {
     public class LevelResponse
     {

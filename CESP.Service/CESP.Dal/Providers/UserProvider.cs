@@ -16,12 +16,7 @@ namespace CESP.Dal.Providers
             _cespRepository = cespRepository;
             _mapper = mapper;
         }
-
-        public async Task<bool> IsExists(string contact)
-        {
-            return await _cespRepository.IsUserExists(contact);
-        }
-
+        
         public async Task Save(User user)
         {
             var userDb = _mapper.Map<UserDto>(user);

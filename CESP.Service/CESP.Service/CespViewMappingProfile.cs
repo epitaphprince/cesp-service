@@ -1,6 +1,7 @@
 using AutoMapper;
 using CESP.Core.Models;
 using CESP.Service.ViewModels;
+using CESP.Service.ViewModels.Responses;
 
 namespace CESP.Service
 {

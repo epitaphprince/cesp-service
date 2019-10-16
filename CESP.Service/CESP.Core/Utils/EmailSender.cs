@@ -1,4 +1,3 @@
-using System;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -17,12 +16,12 @@ namespace CESP.Core.Utils
             _adminToEmail = toEmail;
         }
 
-        public string SendMail(string subject, string body)
+        public void SendMail(string subject, string body)
         {
-            return SendMail(subject, body, _adminToEmail);
+            SendMail(subject, body, _adminToEmail);
         }
 
-        public string SendMail(string subject, string body, string to)
+        public void SendMail(string subject, string body, string to)
         {
             var result = string.Empty;
             var mailMessage = new MailMessage
@@ -42,16 +41,8 @@ namespace CESP.Core.Utils
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(_adminEmail, _adminEmailPassword)
             };
-            try
-            {
-                smtpClient.Send(mailMessage);
-            }
-            catch (Exception ex)
-            {
-                result = ex.Message;
-            }
 
-            return result;
+            smtpClient.Send(mailMessage);
         }
     }
 }

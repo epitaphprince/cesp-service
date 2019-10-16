@@ -1,6 +1,5 @@
 using AutoMapper;
 using CESP.Core.Contracts;
-using CESP.Core.Models;
 using CESP.Dal.Infrastructure;
 using CESP.Dal.Mapping;
 using CESP.Dal.Providers;
@@ -10,7 +9,6 @@ using CESP.Database.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace CESP.Dal
 {
@@ -22,7 +20,7 @@ namespace CESP.Dal
             var mappingConfig = new MapperConfiguration(
                 mc =>
                 {
-                    mc.AddProfile(new TeachetMappingProfile());
+                    mc.AddProfile(new TeacherMappingProfile());
                     mc.AddProfile(new CourseMappingProfile());
                     mc.AddProfile(new FeedbackMappingProfile());
                     mc.AddProfile(new ScheduleMappingProfile());
@@ -33,6 +31,7 @@ namespace CESP.Dal
                     mc.AddProfile(new SpeakingClubMappingProfile());
                     mc.AddProfile(new PartnerMappingProfile());
                     mc.AddProfile(new LevelMappingProfile());
+                    mc.AddProfile(new UserMappingProfile());
                 });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);

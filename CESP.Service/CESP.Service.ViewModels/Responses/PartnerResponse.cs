@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace CESP.Service.ViewModels
+namespace CESP.Service.ViewModels.Responses
 {
     public class PartnerResponse
     {

@@ -2,7 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using CESP.Core.Managers.Partners;
-using CESP.Service.ViewModels;
+using CESP.Service.ViewModels.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CESP.Service.Controllers

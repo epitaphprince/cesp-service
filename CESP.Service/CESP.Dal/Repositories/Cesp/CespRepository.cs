@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -208,7 +209,7 @@ namespace CESP.Dal.Repositories.Cesp
                 .FirstOrDefaultAsync(e => e.SysName == sysName);
         }
         
-        public async Task<bool> IsUserExists(string contact)
+        private async Task<bool> IsUserExists(string contact)
         {
             return await _context.Users
                        .FirstOrDefaultAsync(
@@ -217,7 +218,13 @@ namespace CESP.Dal.Repositories.Cesp
 
         public async Task SaveUser(UserDto user)
         {
-            throw new System.NotImplementedException();
+            if (await IsUserExists(user.Contact))
+            {
+                return;
+            }
+
+            _context.Users.Add(user);
+            _context.SaveChanges();
         }
     }
 }

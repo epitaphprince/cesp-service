@@ -7,10 +7,10 @@ namespace CESP.Core.Managers.Users
     public class UserManager: IUserManager
     {
         private readonly IUserProvider _userProvider;
-        
-        public async Task<bool> IsExists(string contact)
+
+        public UserManager(IUserProvider userProvider)
         {
-            return await _userProvider.IsExists(contact);
+            _userProvider = userProvider;
         }
 
         public async Task Save(User user)

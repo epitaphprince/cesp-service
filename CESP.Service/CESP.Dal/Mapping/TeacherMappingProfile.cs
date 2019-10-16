@@ -4,9 +4,9 @@ using CESP.Database.Context.Education.Models;
 
 namespace CESP.Dal.Mapping
 {
-    public class TeachetMappingProfile : Profile
+    public class TeacherMappingProfile : Profile
     {
-        public TeachetMappingProfile()
+        public TeacherMappingProfile()
         {
             CreateMap<TeacherDto, Teacher>()
                 .ForMember(dest => dest.Photo,

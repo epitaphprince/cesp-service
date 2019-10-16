@@ -51,9 +51,7 @@ namespace CESP.Core.Contracts
         Task<List<GroupBunchDto>> GetGroupBunches();
 
         Task<int?> GetGroupBunchIdBySysNameOrNull(string sysName);
-
-        Task<bool> IsUserExists(string contact);
-
+        
         Task SaveUser(UserDto user);
     }
 }

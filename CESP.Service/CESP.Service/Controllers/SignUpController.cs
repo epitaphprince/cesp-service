@@ -2,10 +2,10 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using CESP.Core.Utils;
-using CESP.Service.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using CESP.Core.Managers.Users;
 using CESP.Core.Models;
+using CESP.Service.ViewModels.Requests;
 
 namespace CESP.Service.Controllers
 {
@@ -30,32 +30,30 @@ namespace CESP.Service.Controllers
         public async Task<ActionResult> Send(EmailRequest request)
         {
             if (request == null 
-                || string.IsNullOrEmpty(request.Contact)
-                || await _userManager.IsExists(request.Contact))
+                || string.IsNullOrEmpty(request.Contact))
             {
                 return new BadRequestResult();
             }
 
-            SendEmail(request.Name, request.Contact, request.Body);
+            SendEmail(request.Name, request.Contact, request.Body, request.Source);
 
             await _userManager.Save(_mapper.Map<User>(request));
             
             return await Task.FromResult(new OkResult());
         }
 
-        private string SendEmail(string name, string contact, string body)
+        private void SendEmail(string name, string contact, string body, string source)
         {
             var stringBuilder = new StringBuilder();
             stringBuilder.AppendLine("Имя: " + name);
             stringBuilder.AppendLine("Контакт: " + contact);
-            
+            stringBuilder.AppendLine("Со страницы: " + source);
 
             stringBuilder.AppendLine();
             stringBuilder.AppendLine(body);
             stringBuilder.AppendLine();
-            var str = _emailSender.SendMail("Обратная связь с сайта centroespanol.ru",
+            _emailSender.SendMail("Обратная связь с сайта centroespanol.ru",
                 stringBuilder.ToString());
-            return str;
         }
     }
 }

@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using CESP.Core.Managers.LanguageLevels;
-using CESP.Service.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using CESP.Service.ViewModels.Responses;
 
 namespace CESP.Service.Controllers
 {

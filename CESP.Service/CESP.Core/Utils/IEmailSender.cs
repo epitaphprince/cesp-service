@@ -2,8 +2,8 @@ namespace CESP.Core.Utils
 {
     public interface IEmailSender
     {
-        string SendMail(string subject, string body);
+        void SendMail(string subject, string body);
         
-        string SendMail(string subject, string body, string to);
+        void SendMail(string subject, string body, string to);
     }
 }
