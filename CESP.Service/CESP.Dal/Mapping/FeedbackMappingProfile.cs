@@ -12,7 +12,9 @@ namespace CESP.Dal.Mapping
                 .ForMember(dest => dest.Photo,
                     opt => opt.MapFrom(src => src.Photo.Name))
                 .ForMember(dest => dest.Source,
-                    opt => opt.MapFrom(src => src.Source.Name));
+                    opt => opt.MapFrom(src => src.Source.Name))
+                .ForMember(dest => dest.Signature,
+                    opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}".Trim()));
         }
     }
 }
