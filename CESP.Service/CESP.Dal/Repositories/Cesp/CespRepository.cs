@@ -5,6 +5,7 @@ using CESP.Core.Contracts;
 using CESP.Database.Context;
 using CESP.Database.Context.Activities.Models;
 using CESP.Database.Context.Education.Models;
+using CESP.Database.Context.Feedbacks.Models;
 using CESP.Database.Context.Files.Models;
 using CESP.Database.Context.Partners.Models;
 using CESP.Database.Context.Payments.Models;
@@ -205,6 +206,18 @@ namespace CESP.Dal.Repositories.Cesp
                 .Include(e => e.MaxLanguageLevel)
                 .Include(e => e.Teacher)
                 .FirstOrDefaultAsync(e => e.SysName == sysName);
+        }
+        
+        public async Task<bool> IsUserExists(string contact)
+        {
+            return await _context.Users
+                       .FirstOrDefaultAsync(
+                       u => u.Contact == contact) != null;
+        }
+
+        public async Task SaveUser(UserDto user)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

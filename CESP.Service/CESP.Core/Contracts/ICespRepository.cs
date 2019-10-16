@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CESP.Database.Context.Activities.Models;
 using CESP.Database.Context.Education.Models;
+using CESP.Database.Context.Feedbacks.Models;
 using CESP.Database.Context.Files.Models;
 using CESP.Database.Context.Partners.Models;
 using CESP.Database.Context.Payments.Models;
@@ -50,5 +51,9 @@ namespace CESP.Core.Contracts
         Task<List<GroupBunchDto>> GetGroupBunches();
 
         Task<int?> GetGroupBunchIdBySysNameOrNull(string sysName);
+
+        Task<bool> IsUserExists(string contact);
+
+        Task SaveUser(UserDto user);
     }
 }

@@ -1,6 +1,6 @@
 using AutoMapper;
 using CESP.Core.Models;
-using CESP.Database.Context.Users.Models;
+using CESP.Database.Context.Feedbacks.Models;
 
 namespace CESP.Dal.Mapping
 {

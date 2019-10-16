@@ -8,7 +8,9 @@ namespace CESP.Core.Models
 
         public DateTime Date { get; set; }
 
-        public string Signature { get; set; }
+        public string FirstName { get; set; }
+        
+        public string LastName { get; set; }
 
         public string Source { get; set; }
 

@@ -6,6 +6,7 @@ using CESP.Core.Managers.Partners;
 using CESP.Core.Managers.Schedulers;
 using CESP.Core.Managers.SpeakingClub;
 using CESP.Core.Managers.Teachers;
+using CESP.Core.Managers.Users;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,6 +18,7 @@ namespace CESP.Core.Managers
             this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<ITeacherManager, TeacherManager>();
+            services.AddScoped<IUserManager, UserManager>();
             services.AddScoped<ICourseManager, CourseManager>();
             services.AddScoped<IFeedbackManager, FeedbackManager>();
             services.AddScoped<IScheduleManager, ScheduleManager>();

@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CESP.Core.Contracts;
 using CESP.Core.Models;
-using CESP.Database.Context.Education.Models;
-using CESP.Database.Context.Payments.Models;
 
 namespace CESP.Dal.Providers
 {

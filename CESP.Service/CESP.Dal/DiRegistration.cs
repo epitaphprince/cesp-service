@@ -1,5 +1,6 @@
 using AutoMapper;
 using CESP.Core.Contracts;
+using CESP.Core.Models;
 using CESP.Dal.Infrastructure;
 using CESP.Dal.Mapping;
 using CESP.Dal.Providers;
@@ -49,6 +50,7 @@ namespace CESP.Dal
             services.AddScoped<ICespRepository, CespRepository>();
             services.AddScoped<ICourseProvider, CourseProvider>();
             services.AddScoped<ITeacherProvider, TeacherProvider>();
+            services.AddScoped<IUserProvider, UserProvider>();
             services.AddScoped<IFeedbackProvider, FeedbackProvider>();
             services.AddScoped<IScheduleProvider, ScheduleProvider>();
             services.AddScoped<IEventProvider, EventProvider>();
