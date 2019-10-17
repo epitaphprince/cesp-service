@@ -27,7 +27,7 @@ namespace CESP.Service.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Send(EmailRequest request)
+        public async Task<ActionResult> Send([FromBody] EmailRequest request)
         {
             if (request == null 
                 || string.IsNullOrEmpty(request.Contact))
