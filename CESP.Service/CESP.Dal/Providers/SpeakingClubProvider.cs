@@ -4,12 +4,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CESP.Core.Contracts;
 using CESP.Core.Models;
+using CESP.Database.Context.Education.Models;
+using CESP.Database.Context.Files.Models;
 
 namespace CESP.Dal.Providers
 {
     public class SpeakingClubProvider : ISpeakingClubProvider
     {
-        private ICespRepository _cespRepository;
+        private readonly ICespRepository _cespRepository;
         private readonly IMapper _mapper;
 
         public SpeakingClubProvider(ICespRepository cespRepository, IMapper mapper)

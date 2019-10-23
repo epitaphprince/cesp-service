@@ -141,6 +141,12 @@ namespace CESP.Dal.Repositories.Cesp
             return await files.ToListAsync();
         }
 
+        public async Task AddSpeakingClubMeeting(SpeakingClubMeetingDto speakingClubMeetingDto)
+        {
+            await _context.SpeakingClubMeetings.AddAsync(speakingClubMeetingDto);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<List<PartnerDto>> GetPartners(int? count)
         {
             var partners = count == null

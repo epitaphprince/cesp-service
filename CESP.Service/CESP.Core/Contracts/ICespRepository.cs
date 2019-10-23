@@ -24,6 +24,7 @@ namespace CESP.Core.Contracts
         Task<List<FeedbackDto>> GetFeedbacks(int? count);
 
         Task<List<StudentGroupDto>> GetStudentGroupsByBunchId(int bunchId);
+        
         Task<List<ScheduleDto>> GetSchedulesByGroupId(int groupId);
 
         Task<List<GroupDurationDto>> GetDurationsByGroupId(int groupId);
@@ -37,6 +38,8 @@ namespace CESP.Core.Contracts
         Task<List<SpeakingClubMeetingDto>> GetSpeakingClubMeetings(int? count);
 
         Task<SpeakingClubMeetingDto> GetSpeakingClubMeeting(string sysName);
+
+        Task AddSpeakingClubMeeting(SpeakingClubMeetingDto speakingClubMeetingDto);
 
         Task<List<PartnerDto>> GetPartners(int? count);
 

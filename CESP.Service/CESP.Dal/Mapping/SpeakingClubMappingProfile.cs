@@ -1,6 +1,7 @@
 using AutoMapper;
 using CESP.Core.Models;
 using CESP.Database.Context.Education.Models;
+using CESP.Service.ViewModels.Requests;
 
 namespace CESP.Dal.Mapping
 {
@@ -25,6 +26,8 @@ namespace CESP.Dal.Mapping
                     opt => opt.MapFrom(src => src.MaxLanguageLevel.Name))
                 .ForMember(dest => dest.Teacher,
                     opt => opt.MapFrom(src => src.Teacher.Name));
+
+            CreateMap<AddSpeakingClubRequest, SpeakingClubMeetingDto>();
         }
     }
 }

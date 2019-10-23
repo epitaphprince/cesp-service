@@ -15,5 +15,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\CESP.Core\CESP.Core.csproj" />
+      <ProjectReference Include="..\CESP.Service.ViewModels\CESP.Service.ViewModels.csproj" />
     </ItemGroup>
 </Project>

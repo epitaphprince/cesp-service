@@ -3,6 +3,8 @@ using AutoMapper;
 using CESP.Core.Managers;
 using CESP.Core.Utils;
 using CESP.Dal;
+using CESP.Dal.Infrastructure;
+using CESP.Service.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,11 +16,11 @@ namespace CESP.Service
 {
     public class Startup
     {
-        private readonly IConfiguration _configuration;
+        public readonly IConfiguration Configuration;
 
         public Startup(IConfiguration configuration)
         {
-            _configuration = configuration;
+            Configuration = configuration;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -34,8 +36,8 @@ namespace CESP.Service
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-            services.RegisterRepositories(_configuration);
-            services.RegisterManagers(_configuration);
+            services.RegisterRepositories(Configuration);
+            services.RegisterManagers(Configuration);
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder =>
@@ -46,18 +48,26 @@ namespace CESP.Service
                 });
             });
 
-            services.AddMvc()
+            services.AddMvc(options => options.EnableEndpointRouting = false)
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.Formatting = Formatting.Indented;
                     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                 });
 
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "CESP.Service", Version = "v1"}); });
+            services.AddOptions();
+            services.Configure<Credentials>(Configuration.GetSection("Credentials"));
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info {Title = "CESP.Service", Version = "v1"});
+                c.OperationFilter<FormFileSwaggerFilter>();
+                c.OperationFilter<PasswordHeaderSwaggerFilter>();
+            });
             
-            var emailSenderSettings = _configuration.GetSection("EmailSenderSettings");
+            var emailSenderSettings = Configuration.GetSection("EmailSenderSettings");
             
-            services.AddSingleton<CESP.Core.Utils.IEmailSender>(
+            services.AddSingleton<IEmailSender>(
                     new EmailSender(emailSenderSettings.GetValue<string>("EmailAdmin"),
                         emailSenderSettings.GetValue<string>("PasswordEmailAdmin"),
                         emailSenderSettings.GetValue<string>("EmailManager"))
@@ -67,7 +77,6 @@ namespace CESP.Service
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseCors("CorsPolicy");
             app.UseSwagger(c => c.PreSerializeFilters.Add((swagger, httpReq) => {
                 var paths = swagger.Paths.ToDictionary(entry => entry.Key,
                     entry => entry.Value);
