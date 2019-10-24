@@ -1,6 +1,6 @@
 using AutoMapper;
 using CESP.Core.Models;
-using CESP.Service.ViewModels;
+using CESP.Service.ViewModels.Requests;
 using CESP.Service.ViewModels.Responses;
 
 namespace CESP.Service
@@ -22,6 +22,11 @@ namespace CESP.Service
             CreateMap<Price, PriceResponse>();
             CreateMap<GroupDuration, GroupDurationResponse>();
             CreateMap<LessonTime, LessonTimeResponse>();
+            
+            CreateMap<AddSpeakingClubRequest, SpeakingClubMeeting>()
+                .ForMember(dest => dest.FileInfo,
+                    opt => opt.MapFrom(src => src.Name
+                    ));
         }
     }
 }

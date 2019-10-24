@@ -4,9 +4,9 @@ using AutoMapper;
 using CESP.Core.Contracts;
 using CESP.Core.Managers.File;
 using CESP.Core.Managers.SpeakingClub;
+using CESP.Core.Models;
 using CESP.Dal.Infrastructure;
 using CESP.Database.Context.Education.Models;
-using CESP.Database.Context.Files.Models;
 using CESP.Service.Helpers;
 using CESP.Service.ViewModels.Requests;
 using CESP.Service.ViewModels.Responses;
@@ -66,13 +66,10 @@ namespace CESP.Service.Controllers
             if(Request.CheckPassword(_credentials.Password))
             {
                 await _fileManager.SaveImage(file, "club");
-                var speakingClubDto = _mapper.Map<SpeakingClubMeetingDto>(request);
-                speakingClubDto.Photo = new FileDto
-                {
-                    Info = request.Name,
-                    Name = $"club/{file.FileName}"
-                };
-                await _cespRepository.AddSpeakingClubMeeting(speakingClubDto);
+                var speakingClub = _mapper.Map<SpeakingClubMeeting>(request);
+                speakingClub.FileName = $"club/{file.FileName}";
+
+                await _cespRepository.AddSpeakingClubMeeting(_mapper.Map<SpeakingClubMeetingDto>(speakingClub));
                 return Ok();
             }
 
