@@ -70,7 +70,7 @@ namespace CESP.Service.Controllers
                 eventDto.Photo = new FileDto
                 {
                     Info = request.Name,
-                    Name = file.Name
+                    Name = $"activities/{file.FileName}"
                 };
                 await _eventProvider.AddEvent(eventDto);
             }
