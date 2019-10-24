@@ -32,7 +32,10 @@ namespace CESP.Dal.Repositories.Cesp
                 ? _context.Teachers
                 : _context.Teachers.Take((int) count);
 
-            return await teachers.Include(t => t.Photo).ToListAsync();
+            return await teachers
+                .OrderByDescending(t => t.Rang)
+                .Include(t => t.Photo)
+                .ToListAsync();
         }
 
         public async Task<List<FeedbackDto>> GetFeedbacks(int? count)

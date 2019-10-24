@@ -1,7 +1,7 @@
 using AutoMapper;
 using CESP.Core.Models;
 using CESP.Database.Context.Education.Models;
-using CESP.Service.ViewModels.Requests;
+using CESP.Database.Context.Files.Models;
 
 namespace CESP.Dal.Mapping
 {
@@ -27,7 +27,15 @@ namespace CESP.Dal.Mapping
                 .ForMember(dest => dest.Teacher,
                     opt => opt.MapFrom(src => src.Teacher.Name));
 
-            CreateMap<AddSpeakingClubRequest, SpeakingClubMeetingDto>();
+
+            CreateMap<SpeakingClubMeeting, SpeakingClubMeetingDto>()
+                .ForMember(dest => dest.Photo,
+                opt => opt.MapFrom(src => new FileDto 
+                    {
+                        Info = src.FileInfo,
+                        Name = src.FileName
+                    }
+                )); 
         }
     }
 }

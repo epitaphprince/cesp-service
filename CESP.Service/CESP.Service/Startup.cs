@@ -4,6 +4,7 @@ using CESP.Core.Managers;
 using CESP.Core.Utils;
 using CESP.Dal;
 using CESP.Dal.Infrastructure;
+using CESP.Dal.Mapping;
 using CESP.Service.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,8 +31,8 @@ namespace CESP.Service
             var mappingConfig = new MapperConfiguration(
                 mc =>
                 {
-                    mc.AddProfile(
-                        new CespViewMappingProfile());
+                    mc.AddProfile(new CespViewMappingProfile());
+                    mc.AddProfiles(MappingProfilesDto.GetProfiles());
                 });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
@@ -86,6 +87,7 @@ namespace CESP.Service
                     swagger.Paths.Add($"/api{path.Key}", path.Value);
                 }
             }));
+
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("v1/swagger.json", "CESP.Service V1");

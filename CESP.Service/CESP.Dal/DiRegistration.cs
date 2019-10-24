@@ -1,7 +1,5 @@
-using AutoMapper;
 using CESP.Core.Contracts;
 using CESP.Dal.Infrastructure;
-using CESP.Dal.Mapping;
 using CESP.Dal.Providers;
 using CESP.Dal.Repositories.Cesp;
 using CESP.Dal.Repositories.Files;
@@ -17,25 +15,6 @@ namespace CESP.Dal
         public static IServiceCollection RegisterRepositories(
             this IServiceCollection services, IConfiguration configuration)
         {
-            var mappingConfig = new MapperConfiguration(
-                mc =>
-                {
-                    mc.AddProfile(new TeacherMappingProfile());
-                    mc.AddProfile(new CourseMappingProfile());
-                    mc.AddProfile(new FeedbackMappingProfile());
-                    mc.AddProfile(new ScheduleMappingProfile());
-                    mc.AddProfile(new PriceMappingProfile());
-                    mc.AddProfile(new DurationMappingProfile());
-                    mc.AddProfile(new LessonTimeMappingProfile());
-                    mc.AddProfile(new EventMappingProfile());
-                    mc.AddProfile(new SpeakingClubMappingProfile());
-                    mc.AddProfile(new PartnerMappingProfile());
-                    mc.AddProfile(new LevelMappingProfile());
-                    mc.AddProfile(new UserMappingProfile());
-                });
-            IMapper mapper = mappingConfig.CreateMapper();
-            services.AddSingleton(mapper);
-
             var cespConnectionString = configuration
                 .GetSection("ConnectionStrings")
                 .GetValue<string>("CespDb");
