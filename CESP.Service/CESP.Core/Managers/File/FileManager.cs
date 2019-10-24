@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -23,6 +24,11 @@ namespace CESP.Core.Managers.File
                     await file.CopyToAsync(fileStream);
                 }
             }
+        }
+
+        public Task SaveImages(IFormFile[] files, string destinationFolder)
+        {
+            return Task.WhenAll(files.Select(file => SaveImage(file, destinationFolder)));
         }
 
         private readonly IHostingEnvironment _hostingEnvironment;

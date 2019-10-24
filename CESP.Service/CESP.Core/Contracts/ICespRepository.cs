@@ -33,6 +33,8 @@ namespace CESP.Core.Contracts
 
         Task<ActivityDto> GetEvent(string sysName);
 
+        Task AddEvent(ActivityDto eventDto);
+
         Task<List<FileDto>> GetEventFiles(int eventId);
 
         Task<List<SpeakingClubMeetingDto>> GetSpeakingClubMeetings(int? count);

@@ -11,7 +11,7 @@ namespace CESP.Dal.Providers
 {
     public class EventProvider : IEventProvider
     {
-        private ICespRepository _cespRepository;
+        private readonly ICespRepository _cespRepository;
         private readonly IMapper _mapper;
 
         public EventProvider(ICespRepository cespRepository,
@@ -37,6 +37,11 @@ namespace CESP.Dal.Providers
             var files = await _cespRepository.GetEventFiles(ev.Id);
 
             return _mapper.Map<(ActivityDto, List<FileDto>), Event>((ev, files));
+        }
+
+        public async Task AddEvent(ActivityDto eventDto)
+        {
+            await _cespRepository.AddEvent(eventDto);
         }
     }
 }

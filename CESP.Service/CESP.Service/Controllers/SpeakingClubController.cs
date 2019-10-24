@@ -7,6 +7,7 @@ using CESP.Core.Managers.SpeakingClub;
 using CESP.Dal.Infrastructure;
 using CESP.Database.Context.Education.Models;
 using CESP.Database.Context.Files.Models;
+using CESP.Service.Helpers;
 using CESP.Service.ViewModels.Requests;
 using CESP.Service.ViewModels.Responses;
 using Microsoft.AspNetCore.Http;
@@ -62,8 +63,7 @@ namespace CESP.Service.Controllers
         [Route("")]
         public async Task<IActionResult> Add([FromForm] IFormFile file, AddSpeakingClubRequest request)
         {
-            if (Request.Headers.Any(header => header.Key.Equals("Password")
-                                                          && header.Value.Equals(_credentials.Password)))
+            if(Request.CheckPassword(_credentials.Password))
             {
                 await _fileManager.SaveImage(file, "club");
                 var speakingClubDto = _mapper.Map<SpeakingClubMeetingDto>(request);

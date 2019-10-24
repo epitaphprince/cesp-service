@@ -131,6 +131,12 @@ namespace CESP.Dal.Repositories.Cesp
                 .FirstOrDefaultAsync(e => e.SysName == sysName);
         }
 
+        public async Task AddEvent(ActivityDto eventDto)
+        {
+            await _context.Activities.AddAsync(eventDto);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<List<FileDto>> GetEventFiles(int eventId)
         {
             var files = from af in _context.ActivityFiles

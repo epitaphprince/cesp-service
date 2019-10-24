@@ -4,6 +4,7 @@ using AutoMapper;
 using CESP.Core.Models;
 using CESP.Database.Context.Activities.Models;
 using CESP.Database.Context.Files.Models;
+using CESP.Service.ViewModels.Requests;
 
 namespace CESP.Dal.Mapping
 {
@@ -26,6 +27,8 @@ namespace CESP.Dal.Mapping
                     opt => opt.MapFrom(src => src.ev.End))
                 .ForMember(dest => dest.Photos,
                     opt => opt.MapFrom(src => src.files.Select(f => f.Name)));
+
+            CreateMap<AddEventRequest, ActivityDto>();
         }
     }
 }
