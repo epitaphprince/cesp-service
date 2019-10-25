@@ -28,12 +28,11 @@ namespace CESP.Dal.Repositories.Cesp
 
         public async Task<List<TeacherDto>> GetTeachers(int? count)
         {
-            var teachers = count == null
-                ? _context.Teachers
-                : _context.Teachers.Take((int) count);
+            var teachersQuery = count != null
+                ? _context.Teachers.OrderByDescending(t => t.Rang).Take((int) count)
+                : _context.Teachers.OrderByDescending(t => t.Rang);
 
-            return await teachers
-                .OrderByDescending(t => t.Rang)
+            return await teachersQuery
                 .Include(t => t.Photo)
                 .ToListAsync();
         }
