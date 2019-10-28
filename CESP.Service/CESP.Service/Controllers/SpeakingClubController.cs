@@ -67,7 +67,7 @@ namespace CESP.Service.Controllers
             if(Request.CheckPassword(_credentials.Password))
             {
                 var teacher = (await _cespRepository.GetTeachers())
-                    .FirstOrDefault(t => t.Name.Equals(request.Name, StringComparison.OrdinalIgnoreCase));
+                    .FirstOrDefault(t => t.Name.Equals(request.TeacherName, StringComparison.OrdinalIgnoreCase));
                 var languageLevel = (await _cespRepository.GetLanguageLevel(request.LanguageLevelName));
                 if (teacher == null || languageLevel == null)
                 {
