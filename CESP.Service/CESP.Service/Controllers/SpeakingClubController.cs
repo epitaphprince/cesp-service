@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -65,11 +66,21 @@ namespace CESP.Service.Controllers
         {
             if(Request.CheckPassword(_credentials.Password))
             {
+                var teacher = (await _cespRepository.GetTeachers())
+                    .FirstOrDefault(t => t.Name.Equals(request.Name, StringComparison.OrdinalIgnoreCase));
+                var languageLevel = (await _cespRepository.GetLanguageLevel(request.LanguageLevelName));
+                if (teacher == null || languageLevel == null)
+                {
+                    return BadRequest();
+                }
                 await _fileManager.SaveImage(file, "club");
                 var speakingClub = _mapper.Map<SpeakingClubMeeting>(request);
                 speakingClub.FileName = $"club/{file.FileName}";
+                var speakingClubDto = _mapper.Map<SpeakingClubMeetingDto>(speakingClub);
+                speakingClubDto.Teacher = teacher;
+                speakingClubDto.MinLanguageLevel = languageLevel;
 
-                await _cespRepository.AddSpeakingClubMeeting(_mapper.Map<SpeakingClubMeetingDto>(speakingClub));
+                await _cespRepository.AddSpeakingClubMeeting(speakingClubDto);
                 return Ok();
             }
 

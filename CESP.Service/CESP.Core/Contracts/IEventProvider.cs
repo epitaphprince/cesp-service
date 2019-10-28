@@ -12,5 +12,6 @@ namespace CESP.Core.Contracts
         Task<Event> GetEvent(string sysName);
 
         Task AddEvent(ActivityDto eventDto);
+        
     }
 }

@@ -72,6 +72,7 @@ namespace CESP.Service.Controllers
                     Info = request.Name,
                     Name = $"activities/{file.FileName}"
                 };
+
                 await _eventProvider.AddEvent(eventDto);
             }
         }

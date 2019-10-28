@@ -136,6 +136,12 @@ namespace CESP.Dal.Repositories.Cesp
         public async Task AddEvent(ActivityDto eventDto)
         {
             await _context.Activities.AddAsync(eventDto);
+            var activityFilesDto = new ActivityFilesDto
+            {
+                Activity = eventDto,
+                File = eventDto.Photo
+            };
+            await _context.ActivityFiles.AddAsync(activityFilesDto);
             await _context.SaveChangesAsync();
         }
 

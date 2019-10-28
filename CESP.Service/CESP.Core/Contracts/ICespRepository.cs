@@ -14,7 +14,7 @@ namespace CESP.Core.Contracts
 {
     public interface ICespRepository
     {
-        Task<List<TeacherDto>> GetTeachers(int? count);
+        Task<List<TeacherDto>> GetTeachers(int? count = null);
 
         Task<List<CourseDto>> GetCourses(int? count);
 

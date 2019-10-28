@@ -9,6 +9,7 @@ namespace CESP.Service.ViewModels.Requests
         public string ShortInfo { get; set; }
         public string Info { get; set; }
         public DateTime Date { get; set; }
-        public int? TeacherId { get; set; }
+        public string TeacherName { get; set; }
+        public string LanguageLevelName { get; set; }
     }
 }
