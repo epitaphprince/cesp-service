@@ -1,6 +1,7 @@
 using AutoMapper;
 using CESP.Core.Models;
 using CESP.Database.Context.Education.Models;
+using CESP.Service.ViewModels.Requests;
 
 namespace CESP.Dal.Mapping
 {
@@ -14,6 +15,7 @@ namespace CESP.Dal.Mapping
                 .ForMember(dest => dest.Position,
                     opt => opt.MapFrom(
                         src => src.Post));
+            CreateMap<AddTeacherRequest, TeacherDto>();
         }
     }
 }

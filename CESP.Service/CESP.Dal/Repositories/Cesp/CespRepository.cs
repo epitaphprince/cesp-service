@@ -37,6 +37,12 @@ namespace CESP.Dal.Repositories.Cesp
                 .ToListAsync();
         }
 
+        public async Task AddTeacher(TeacherDto teacherDto)
+        {
+            await _context.Teachers.AddAsync(teacherDto);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<List<FeedbackDto>> GetFeedbacks(int? count)
         {
             var feedbacks = count == null

@@ -16,9 +16,12 @@ namespace CESP.Core.Contracts
     {
         Task<List<TeacherDto>> GetTeachers(int? count = null);
 
+        Task AddTeacher(TeacherDto teacherDto);
+
         Task<List<CourseDto>> GetCourses(int? count);
 
         Task<List<StudentGroupDto>> GetStudentGroupsByCourseId(int courseId);
+        
         Task<List<PriceDto>> GetPricesByGroupId(int groupId);
 
         Task<List<FeedbackDto>> GetFeedbacks(int? count);
