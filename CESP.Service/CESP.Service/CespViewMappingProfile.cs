@@ -17,6 +17,7 @@ namespace CESP.Service
             CreateMap<SpeakingClubMeeting, SpeakingClubMeetingResponse>();
             CreateMap<SpeakingClubMeetingShort, SpeakingClubMeetingShortResponse>();
             CreateMap<Level, LevelResponse>();
+            CreateMap<Language, LanguageResponse>();
 
             CreateMap<Schedule, ScheduleResponse>();
             CreateMap<Price, PriceResponse>();

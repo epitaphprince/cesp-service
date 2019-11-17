@@ -53,16 +53,29 @@ namespace CESP.Service.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> Add([FromForm] IFormFile file, AddTeacherRequest request)
+        public async Task<IActionResult> Add([FromForm] IFormFile file, [FromForm] IFormFile fileSmall,
+            [FromForm] IFormFile fileLarge, AddTeacherRequest request)
         {
             if (Request.CheckPassword(_credentials.Password))
             {
                 await _fileManager.SaveImage(file, "teachers");
+                await _fileManager.SaveImage(fileSmall, "teachers");
+                await _fileManager.SaveImage(fileLarge, "teachers");
                 var teacherDto = _mapper.Map<TeacherDto>(request);
                 teacherDto.Photo = new FileDto
                 {
                     Info = request.Name,
                     Name = $"teachers/{file.FileName}"
+                };
+                teacherDto.SmallPhoto = new FileDto
+                {
+                    Info = request.Name,
+                    Name = $"teachers/{fileSmall.FileName}"
+                };
+                teacherDto.LargePhoto = new FileDto
+                {
+                    Info = request.Name,
+                    Name = $"teachers/{fileLarge.FileName}"
                 };
                 await _cespRepository.AddTeacher(teacherDto);
                 return Ok();

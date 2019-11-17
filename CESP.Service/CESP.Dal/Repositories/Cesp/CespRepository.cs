@@ -34,6 +34,9 @@ namespace CESP.Dal.Repositories.Cesp
 
             return await teachersQuery
                 .Include(t => t.Photo)
+                .Include(t => t.SmallPhoto)
+                .Include(t => t.LargePhoto)
+                .Include(t => t.Languages)
                 .ToListAsync();
         }
 

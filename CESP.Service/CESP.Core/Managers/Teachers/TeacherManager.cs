@@ -22,7 +22,12 @@ namespace CESP.Core.Managers.Teachers
         {
             var teachers = await _teacherProvider.GetTeachers(count);
 
-            teachers.ForEach(t => t.Photo = _cespResourceProvider.GetFullUrl(t.Photo));
+            teachers.ForEach(t =>
+            {
+                t.Photo = _cespResourceProvider.GetFullUrl(t.Photo);
+                t.SmallPhoto = _cespResourceProvider.GetFullUrl(t.SmallPhoto);
+                t.LargePhoto = _cespResourceProvider.GetFullUrl(t.LargePhoto);
+            });
 
             return teachers;
         }
