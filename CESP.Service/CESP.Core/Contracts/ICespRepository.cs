@@ -30,8 +30,6 @@ namespace CESP.Core.Contracts
         
         Task<List<ScheduleDto>> GetSchedulesByGroupId(int groupId);
 
-        Task<List<GroupDurationDto>> GetDurationsByGroupId(int groupId);
-
         Task<List<ActivityDto>> GetEvents(int? count);
 
         Task<ActivityDto> GetEvent(string sysName);

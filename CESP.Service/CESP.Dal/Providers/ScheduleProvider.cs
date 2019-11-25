@@ -1,9 +1,11 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using CESP.Core.Contracts;
 using CESP.Core.Models;
+using CESP.Database.Context.Education.Models;
 using CESP.Database.Context.Payments.Models;
 using CESP.Database.Context.Schedules.Models;
 using CESP.Database.Context.StudentGroups.Models;
@@ -21,39 +23,63 @@ namespace CESP.Dal.Providers
             _mapper = mapper;
         }
 
-        public async Task<List<Schedule>> GetSchedulesByBunch(string bunch)
+//        public async Task<List<Schedule>> GetSchedulesByBunch(string bunch)
+//        {
+//            var bunchId = await _cespRepository.GetGroupBunchIdBySysNameOrNull(bunch);
+//
+//            return bunchId == null
+//                ? new List<Schedule>()
+//                : await GetSchedulesByBunchId((int) bunchId);
+//        }
+
+        public async Task<List<ScheduleSection>> GetSchedules()
         {
-            var bunchId = await _cespRepository.GetGroupBunchIdBySysNameOrNull(bunch);
+            var result = new List<ScheduleSection>();
 
-            return bunchId == null
-                ? new List<Schedule>()
-                : await GetSchedulesByBunchId((int) bunchId);
-        }
+            var bunches = await _cespRepository.GetGroupBunches();
 
-        public async Task<List<Schedule>> GetSchedulesByBunchId(int bunchId)
-        {
-            var result = new List<Schedule>();
-
-            var groups = await _cespRepository.GetStudentGroupsByBunchId(bunchId);
-
-            foreach (var group in groups)
+            foreach (var bunch in bunches)
             {
-                var schedules = await _cespRepository.GetSchedulesByGroupId(group.Id);
+                var groups = await _cespRepository.GetStudentGroupsByBunchId(bunch.Id);
 
-                var prices = await _cespRepository.GetPricesByGroupId(group.Id);
+                var scheduleSegments = groups.GroupBy(gr => gr.LanguageLevelId);
 
-                var durations = await _cespRepository.GetDurationsByGroupId(group.Id);
+                var segments = new List<ScheduleSegment>();
+                foreach (var scheduleSegment in scheduleSegments)
+                {
+                    var items = new List<ScheduleItem>();
+                    foreach (var group in scheduleSegment)
+                    {
+                        var schedules = await _cespRepository
+                            .GetSchedulesByGroupId(group.Id);
+                        var prices = await _cespRepository
+                            .GetPricesByGroupId(group.Id);
+
+                        items.Add(_mapper.Map<(
+                                StudentGroupDto,
+                                TeacherDto,
+                                ScheduleDto,
+                                PriceDto),
+                                ScheduleItem>
+                            ((group, group.Teacher, schedules.FirstOrDefault(), prices.FirstOrDefault())));
+                    }
+
+                    var level = scheduleSegment.FirstOrDefault().LanguageLevel;
+                    segments.Add(_mapper.Map<(
+                            LanguageLevelDto, 
+                            IEnumerable<ScheduleItem>),
+                            ScheduleSegment>
+                            ((level, items)));
+                }
 
                 result.Add(_mapper.Map<(
-                        StudentGroupDto,
-                        List<ScheduleDto>,
-                        List<PriceDto>,
-                        List<GroupDurationDto>),
-                        Schedule>
-                    ((group, schedules, prices, durations)));
+                        GroupBunchDto,
+                        IEnumerable<ScheduleSegment>),
+                        ScheduleSection>
+                    ((bunch, segments.OrderBy(s => s.LevelRang))));
             }
 
-            return result.OrderBy(r => r.LevelRang).ToList();
+            return result.ToList(); //OrderBy(r => r.LevelRang).ToList();
         }
 
 

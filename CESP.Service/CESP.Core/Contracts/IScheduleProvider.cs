@@ -6,9 +6,7 @@ namespace CESP.Core.Contracts
 {
     public interface IScheduleProvider
     {
-        Task<List<Schedule>> GetSchedulesByBunchId(int bunchId);
-
-        Task<List<Schedule>> GetSchedulesByBunch(string bunch);
+        Task<List<ScheduleSection>> GetSchedules();
 
         Task<List<GroupBunch>> GetBunches();
     }

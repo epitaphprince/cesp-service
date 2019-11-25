@@ -14,7 +14,6 @@ namespace CESP.Dal.Mapping
                 new FeedbackMappingProfile(),
                 new ScheduleMappingProfile(),
                 new PriceMappingProfile(),
-                new DurationMappingProfile(),
                 new LessonTimeMappingProfile(),
                 new EventMappingProfile(),
                 new SpeakingClubMappingProfile(),

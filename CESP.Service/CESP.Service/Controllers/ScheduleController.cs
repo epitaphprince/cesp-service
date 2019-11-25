@@ -24,9 +24,9 @@ namespace CESP.Service.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetList(int bunchId)
+        public async Task<IActionResult> GetList()
         {
-            var schedules = await _scheduleManager.GetList(bunchId);
+            var schedules = await _scheduleManager.GetList();
 
             return Ok(schedules.Select(t => _mapper.Map<ScheduleResponse>(t)));
         }
@@ -40,13 +40,13 @@ namespace CESP.Service.Controllers
             return Ok(banches.Select(b => _mapper.Map<GroupBunchResponse>(b)));
         }
 
-        [HttpGet]
-        [Route("{bunch}")]
-        public async Task<IActionResult> GetList([FromRoute] string bunch)
-        {
-            var schedules = await _scheduleManager.GetList(bunch);
-
-            return Ok(schedules.Select(t => _mapper.Map<ScheduleResponse>(t)));
-        }
+//        [HttpGet]
+//        [Route("{bunch}")]
+//        public async Task<IActionResult> GetList([FromRoute] string bunch)
+//        {
+//            var schedules = await _scheduleManager.GetList(bunch);
+//
+//            return Ok(schedules.Select(t => _mapper.Map<ScheduleResponse>(t)));
+//        }
     }
 }
