@@ -42,7 +42,7 @@ namespace CESP.Dal.Mapping
                 .ForMember(dest => dest.ScheduleItems,
                     opt => opt.MapFrom(
                         src => src.items));
-            
+
             CreateMap<(StudentGroupDto group,
                     TeacherDto teacher,
                     ScheduleDto schedule,
@@ -85,7 +85,10 @@ namespace CESP.Dal.Mapping
                             src.price.DiscountPer == null
                                 ? src.price.Cost
                                 : src.price.CostFull
-                    ));
+                    ))
+                .ForMember(dest => dest.Discount,
+                    opt => opt.MapFrom(
+                        src => src.price.DiscountPer));
 
         }
     }
