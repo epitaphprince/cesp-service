@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CESP.Service.Controllers
 {
-    [Route("schedules")]
+    [Route("schedule")]
     public class ScheduleController : Controller
     {
         private readonly IScheduleManager _scheduleManager;

@@ -14,13 +14,15 @@ namespace CESP.Dal.Providers
 {
     public class ScheduleProvider : IScheduleProvider
     {
-        private ICespRepository _cespRepository;
+        private readonly ICespRepository _cespRepository;
+        private readonly ICespResourceProvider _cespResourceProvider;
         private readonly IMapper _mapper;
 
-        public ScheduleProvider(ICespRepository cespRepository, IMapper mapper)
+        public ScheduleProvider(ICespRepository cespRepository, IMapper mapper, ICespResourceProvider cespResourceProvider)
         {
             _cespRepository = cespRepository;
             _mapper = mapper;
+            _cespResourceProvider = cespResourceProvider;
         }
 
 //        public async Task<List<Schedule>> GetSchedulesByBunch(string bunch)
@@ -55,13 +57,16 @@ namespace CESP.Dal.Providers
                         var prices = await _cespRepository
                             .GetPricesByGroupId(group.Id);
 
-                        items.Add(_mapper.Map<(
+                        var scheduleItem = _mapper.Map<(
                                 StudentGroupDto,
                                 TeacherDto,
                                 ScheduleDto,
                                 PriceDto),
                                 ScheduleItem>
-                            ((group, group.Teacher, schedules.FirstOrDefault(), prices.FirstOrDefault())));
+                            ((group, group.Teacher, schedules.FirstOrDefault(), prices.FirstOrDefault()));
+                        scheduleItem.TeacherPhoto = _cespResourceProvider.GetFullUrl(scheduleItem.TeacherPhoto);
+
+                        items.Add(scheduleItem);
                     }
 
                     var level = scheduleSegment.FirstOrDefault().LanguageLevel;
