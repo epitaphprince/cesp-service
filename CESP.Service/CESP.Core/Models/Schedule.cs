@@ -26,25 +26,15 @@ namespace CESP.Core.Models
     public class ScheduleItem
     {
         public string TeacherPhoto { get; set; }
-
         public string TeacherName { get; set; }
-
         public string TeacherPost { get; set; }
-
         public string Days { get; set; }
-
         public TimeSpan StartTime { get; set; }
-
         public TimeSpan EndTime { get; set; }
-
         public DateTime? StartDate { get; set; }
-        
         public decimal Price { get; set; }
-        
         public decimal PriceWithoutDiscount { get; set; }
-        
         public decimal Discount { get; set; }
-
         public bool IsAvailable { get; set; }
     }
 }

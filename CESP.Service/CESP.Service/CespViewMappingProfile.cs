@@ -20,14 +20,18 @@ namespace CESP.Service
             CreateMap<Level, LevelResponse>();
             CreateMap<Language, LanguageResponse>();
 
-            
             CreateMap<ScheduleSegment, ScheduleSegmentResponse>()
                 .ForMember(dest => dest.Level,
                     opt => opt.MapFrom(
                         src => MapLevel(src.Level, src.LevelInfo)
                     ));
+            CreateMap<ScheduleItem, ScheduleItemResponse>()
+                .ForMember(dest => dest.StartTime,
+                    opt => opt.MapFrom(src => src.StartTime.ToString(@"hh\:mm")))
+                .ForMember(dest => dest.EndTime,
+                    opt => opt.MapFrom(src => src.EndTime.ToString(@"hh\:mm")));
+            
             CreateMap<IEnumerable<ScheduleSection>, ScheduleResponse>();
-
             
             CreateMap<AddSpeakingClubRequest, SpeakingClubMeeting>()
                 .ForMember(dest => dest.FileInfo,
