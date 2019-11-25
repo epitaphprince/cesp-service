@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -64,6 +63,8 @@ namespace CESP.Dal.Repositories.Cesp
                 .StudentGroups
                 .Where(sg => sg.GroupBunchId == bunchId)
                 .Include(sg => sg.LanguageLevel)
+                .Include(sg => sg.Teacher)
+                .Include(sg => sg.Teacher.SmallPhoto)
                 .ToListAsync();
         }
 
@@ -72,15 +73,6 @@ namespace CESP.Dal.Repositories.Cesp
             return await _context
                 .Schedules
                 .Where(sch => sch.StudentGroupId == groupId)
-                .ToListAsync();
-        }
-
-        public async Task<List<GroupDurationDto>> GetDurationsByGroupId(int groupId)
-        {
-            return await _context
-                .GroupDurations
-                .Where(sch => sch.StudentGroupId == groupId)
-                .Include(sch => sch.TimeUnit)
                 .ToListAsync();
         }
 
