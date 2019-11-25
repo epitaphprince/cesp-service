@@ -78,16 +78,6 @@ namespace CESP.Service
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseSwagger(c => c.PreSerializeFilters.Add((swagger, httpReq) => {
-                var paths = swagger.Paths.ToDictionary(entry => entry.Key,
-                    entry => entry.Value);
-                foreach(var path in paths)
-                {
-                    swagger.Paths.Remove(path.Key);
-                    swagger.Paths.Add($"/api{path.Key}", path.Value);
-                }
-            }));
-
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("v1/swagger.json", "CESP.Service V1");
@@ -96,6 +86,20 @@ namespace CESP.Service
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseCors("CorsPolicy");
+            }
+            if(env.IsProduction())
+            {
+                app.UseSwagger(c => c.PreSerializeFilters.Add((swagger, httpReq) => {
+                    var paths = swagger.Paths.ToDictionary(entry => entry.Key,
+                        entry => entry.Value);
+                    foreach(var path in paths)
+                    {
+                        swagger.Paths.Remove(path.Key);
+                        swagger.Paths.Add($"/api{path.Key}", path.Value);
+                    }
+                }));
             }
 
             app.UseStaticFiles();
