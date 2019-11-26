@@ -89,7 +89,7 @@ namespace CESP.Service
                 app.UseSwagger();
                 app.UseCors("CorsPolicy");
             }
-            if(env.IsProduction())
+            if(env.IsEnvironment("Release"))
             {
                 app.UseSwagger(c => c.PreSerializeFilters.Add((swagger, httpReq) => {
                     var paths = swagger.Paths.ToDictionary(entry => entry.Key,
