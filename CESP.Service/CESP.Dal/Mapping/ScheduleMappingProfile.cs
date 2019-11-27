@@ -83,7 +83,7 @@ namespace CESP.Dal.Mapping
                     opt => opt.MapFrom(
                         src =>
                             src.price.DiscountPer == null
-                                ? src.price.Cost
+                                ? null
                                 : src.price.CostFull
                     ))
                 .ForMember(dest => dest.Discount,
