@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,7 @@ namespace CESP.Dal.Providers
 //                : await GetSchedulesByBunchId((int) bunchId);
 //        }
 
+        // todo сделать нормально
         public async Task<List<ScheduleSection>> GetSchedules()
         {
             var result = new List<ScheduleSection>();
@@ -84,7 +86,60 @@ namespace CESP.Dal.Providers
                     ((bunch, segments.OrderBy(s => s.LevelRang))));
             }
 
-            return result.ToList(); //OrderBy(r => r.LevelRang).ToList();
+            return result.ToList(); 
+        }
+
+        public async Task<List<ScheduleSection>> GetSchedulesByLevels(string[] levelNames)
+        {
+            var result = new List<ScheduleSection>();
+
+            var bunches = await _cespRepository.GetGroupBunches();
+
+            foreach (var bunch in bunches)
+            {
+                var groups = await _cespRepository.GetStudentGroupsByBunchId(bunch.Id, levelNames);
+
+                var scheduleSegments = groups.GroupBy(gr => gr.LanguageLevelId);
+
+                var segments = new List<ScheduleSegment>();
+                foreach (var scheduleSegment in scheduleSegments)
+                {
+                    var items = new List<ScheduleItem>();
+                    foreach (var group in scheduleSegment)
+                    {
+                        var schedules = await _cespRepository
+                            .GetSchedulesByGroupId(group.Id);
+                        var prices = await _cespRepository
+                            .GetPricesByGroupId(group.Id);
+
+                        var scheduleItem = _mapper.Map<(
+                                StudentGroupDto,
+                                TeacherDto,
+                                ScheduleDto,
+                                PriceDto),
+                                ScheduleItem>
+                            ((group, group.Teacher, schedules.FirstOrDefault(), prices.FirstOrDefault()));
+                        scheduleItem.TeacherPhoto = _cespResourceProvider.GetFullUrl(scheduleItem.TeacherPhoto);
+
+                        items.Add(scheduleItem);
+                    }
+
+                    var level = scheduleSegment.FirstOrDefault().LanguageLevel;
+                    segments.Add(_mapper.Map<(
+                            LanguageLevelDto, 
+                            IEnumerable<ScheduleItem>),
+                            ScheduleSegment>
+                            ((level, items)));
+                }
+
+                result.Add(_mapper.Map<(
+                        GroupBunchDto,
+                        IEnumerable<ScheduleSegment>),
+                        ScheduleSection>
+                    ((bunch, segments.OrderBy(s => s.LevelRang))));
+            }
+
+            return result.ToList(); 
         }
 
 

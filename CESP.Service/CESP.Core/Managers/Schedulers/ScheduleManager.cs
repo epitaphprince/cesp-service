@@ -18,6 +18,11 @@ namespace CESP.Core.Managers.Schedulers
         {
             return await _scheduleProvider.GetSchedules();
         }
+        
+        public async Task<List<ScheduleSection>> GetListByLevels(string[] levelNames)
+        {
+            return await _scheduleProvider.GetSchedulesByLevels(levelNames);
+        }
 
         public async Task<List<GroupBunch>> GetBunches()
         {

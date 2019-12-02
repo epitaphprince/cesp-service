@@ -8,6 +8,8 @@ namespace CESP.Core.Contracts
     {
         Task<List<ScheduleSection>> GetSchedules();
 
+        Task<List<ScheduleSection>> GetSchedulesByLevels(string[] levelNames);
+
         Task<List<GroupBunch>> GetBunches();
     }
 }

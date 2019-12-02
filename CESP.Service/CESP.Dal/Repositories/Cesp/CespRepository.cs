@@ -13,6 +13,7 @@ using CESP.Database.Context.Schedules.Models;
 using CESP.Database.Context.StudentGroups.Models;
 using CESP.Database.Context.Users.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace CESP.Dal.Repositories.Cesp
 {
@@ -59,13 +60,24 @@ namespace CESP.Dal.Repositories.Cesp
 
         public async Task<List<StudentGroupDto>> GetStudentGroupsByBunchId(int bunchId)
         {
-            return await _context
+            return await GetQeuryByBunchId(bunchId)
+                .ToListAsync();
+        }
+        public async Task<List<StudentGroupDto>> GetStudentGroupsByBunchId(int bunchId, string[] levelNames)
+        {
+            return await GetQeuryByBunchId(bunchId)
+                .Where(sg => levelNames.Contains(sg.LanguageLevel.Name))
+                .ToListAsync();
+        }
+
+        private IIncludableQueryable<StudentGroupDto, FileDto> GetQeuryByBunchId(int bunchId)
+        {
+            return _context
                 .StudentGroups
                 .Where(sg => sg.GroupBunchId == bunchId)
                 .Include(sg => sg.LanguageLevel)
                 .Include(sg => sg.Teacher)
-                .Include(sg => sg.Teacher.SmallPhoto)
-                .ToListAsync();
+                .Include(sg => sg.Teacher.SmallPhoto);
         }
 
         public async Task<List<ScheduleDto>> GetSchedulesByGroupId(int groupId)
