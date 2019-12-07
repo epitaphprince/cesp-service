@@ -9,7 +9,5 @@ namespace CESP.Core.Managers.Schedulers
         Task<List<ScheduleSection>> GetList();
 
         Task<List<ScheduleSegment>> GetListByLevels(string[] levelNames);
-
-        Task<List<GroupBunch>> GetBunches();
     }
 }

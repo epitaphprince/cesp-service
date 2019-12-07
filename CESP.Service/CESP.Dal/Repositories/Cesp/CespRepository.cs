@@ -58,6 +58,12 @@ namespace CESP.Dal.Repositories.Cesp
                 .ToListAsync();
         }
 
+        public async Task<List<StudentGroupDto>> GetStudentGroups()
+        {
+            return await GetQeuryStudentGroups()
+                .ToListAsync();
+        }
+        
         public async Task<List<StudentGroupDto>> GetStudentGroupsByBunchId(int bunchId)
         {
             return await GetQeuryStudentGroups()

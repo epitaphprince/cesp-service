@@ -27,6 +27,8 @@ namespace CESP.Core.Contracts
         Task<List<FeedbackDto>> GetFeedbacks(int? count);
 
         Task<List<StudentGroupDto>> GetStudentGroupsByBunchId(int bunchId);
+
+        Task<List<StudentGroupDto>> GetStudentGroups();
         
         Task<List<ScheduleDto>> GetSchedulesByGroupId(int groupId);
 

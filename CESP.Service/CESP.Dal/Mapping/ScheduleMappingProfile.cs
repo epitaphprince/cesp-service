@@ -13,7 +13,7 @@ namespace CESP.Dal.Mapping
         public ScheduleMappingProfile()
         {
             CreateMap<GroupBunchDto, GroupBunch>();
-
+            
             CreateMap<(GroupBunchDto bunch,
                     IEnumerable<ScheduleSegment> segments),
                     ScheduleSection>()

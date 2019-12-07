@@ -32,15 +32,6 @@ namespace CESP.Service.Controllers
         }
 
         [HttpGet]
-        [Route("bunches")]
-        public async Task<IActionResult> GetBunches()
-        {
-            var banches = await _scheduleManager.GetBunches();
-
-            return Ok(banches.Select(b => _mapper.Map<GroupBunchResponse>(b)));
-        }
-
-        [HttpGet]
         [Route("levels")]
         public async Task<IActionResult> GetListByLevels(string[] levelNames)
         {
@@ -48,14 +39,5 @@ namespace CESP.Service.Controllers
 
             return Ok(schedules.Select(sh => _mapper.Map<ScheduleSegmentResponse>(sh)));
         }
-        
-//        [HttpGet]
-//        [Route("{bunch}")]
-//        public async Task<IActionResult> GetList([FromRoute] string bunch)
-//        {
-//            var schedules = await _scheduleManager.GetList(bunch);
-//
-//            return Ok(schedules.Select(t => _mapper.Map<ScheduleResponse>(t)));
-//        }
     }
 }
