@@ -30,7 +30,7 @@ namespace CESP.Core.Contracts
         
         Task<List<ScheduleDto>> GetSchedulesByGroupId(int groupId);
 
-        Task<List<StudentGroupDto>> GetStudentGroupsByBunchId(int bunchId, string[] levelNames);
+        Task<List<StudentGroupDto>> GetStudentGroupsByLevels(string[] levelNames);
 
         Task<List<ActivityDto>> GetEvents(int? count);
 

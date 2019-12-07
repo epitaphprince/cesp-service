@@ -60,21 +60,22 @@ namespace CESP.Dal.Repositories.Cesp
 
         public async Task<List<StudentGroupDto>> GetStudentGroupsByBunchId(int bunchId)
         {
-            return await GetQeuryByBunchId(bunchId)
+            return await GetQeuryStudentGroups()
+                .Where(sg => sg.GroupBunchId == bunchId)
                 .ToListAsync();
         }
-        public async Task<List<StudentGroupDto>> GetStudentGroupsByBunchId(int bunchId, string[] levelNames)
+
+        public async Task<List<StudentGroupDto>> GetStudentGroupsByLevels(string[] levelNames)
         {
-            return await GetQeuryByBunchId(bunchId)
+            return await GetQeuryStudentGroups()
                 .Where(sg => levelNames.Contains(sg.LanguageLevel.Name))
                 .ToListAsync();
         }
 
-        private IIncludableQueryable<StudentGroupDto, FileDto> GetQeuryByBunchId(int bunchId)
+        private IIncludableQueryable<StudentGroupDto, FileDto> GetQeuryStudentGroups()
         {
             return _context
                 .StudentGroups
-                .Where(sg => sg.GroupBunchId == bunchId)
                 .Include(sg => sg.LanguageLevel)
                 .Include(sg => sg.Teacher)
                 .Include(sg => sg.Teacher.SmallPhoto);
@@ -241,12 +242,12 @@ namespace CESP.Dal.Repositories.Cesp
                 .Include(e => e.Teacher)
                 .FirstOrDefaultAsync(e => e.SysName == sysName);
         }
-        
+
         private async Task<bool> IsUserExists(string contact)
         {
             return await _context.Users
                        .FirstOrDefaultAsync(
-                       u => u.Contact == contact) != null;
+                           u => u.Contact == contact) != null;
         }
 
         public async Task SaveUser(UserDto user)

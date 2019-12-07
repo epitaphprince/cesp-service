@@ -46,7 +46,7 @@ namespace CESP.Service.Controllers
         {
             var schedules = await _scheduleManager.GetListByLevels(levelNames);
 
-            return Ok(schedules.Select(sh => _mapper.Map<ScheduleResponse>(sh)));
+            return Ok(schedules.Select(sh => _mapper.Map<ScheduleSegmentResponse>(sh)));
         }
         
 //        [HttpGet]
