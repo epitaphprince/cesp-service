@@ -72,7 +72,7 @@ namespace CESP.Dal.Providers
                     ((level, items)));
             }
 
-            return segments.OrderBy(s => s.LevelRang).ToList();
+            return segments.ToList();
         }
 
 

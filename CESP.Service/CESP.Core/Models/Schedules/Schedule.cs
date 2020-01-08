@@ -18,7 +18,7 @@ namespace CESP.Core.Models
         
         public string LevelInfo { get; set; }
         
-        public int LevelRang { get; set; }
+        public int LevelPriority { get; set; }
 
         public IEnumerable<ScheduleItem> ScheduleItems { get; set; }
     }
@@ -36,5 +36,10 @@ namespace CESP.Core.Models
         public decimal PriceWithoutDiscount { get; set; }
         public decimal Discount { get; set; }
         public bool IsAvailable { get; set; }
+        public string BunchName { get; set; }
+
+        public BunchGroupEnum Bunch { get; set; }
+        public int BunchPriority { get; set; }
+        public int TimePriority { get; set; }
     }
 }

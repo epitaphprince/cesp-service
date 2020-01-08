@@ -84,6 +84,8 @@ namespace CESP.Dal.Repositories.Cesp
                 .StudentGroups
                 .Include(sg => sg.LanguageLevel)
                 .Include(sg => sg.Teacher)
+                .Include(sg => sg.Bunch)
+                .Include(sg => sg.GroupTime)
                 .Include(sg => sg.Teacher.SmallPhoto);
         }
 

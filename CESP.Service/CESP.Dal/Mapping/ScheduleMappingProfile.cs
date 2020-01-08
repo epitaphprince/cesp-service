@@ -13,7 +13,7 @@ namespace CESP.Dal.Mapping
         public ScheduleMappingProfile()
         {
             CreateMap<GroupBunchDto, GroupBunch>();
-            
+
             CreateMap<(GroupBunchDto bunch,
                     IEnumerable<ScheduleSegment> segments),
                     ScheduleSection>()
@@ -26,7 +26,7 @@ namespace CESP.Dal.Mapping
                 .ForMember(dest => dest.ScheduleSegments,
                     opt => opt.MapFrom(
                         src => src.segments));
-            
+
             CreateMap<(LanguageLevelDto level,
                     IEnumerable<ScheduleItem> items),
                     ScheduleSegment>()
@@ -36,7 +36,7 @@ namespace CESP.Dal.Mapping
                 .ForMember(dest => dest.LevelInfo,
                     opt => opt.MapFrom(
                         src => src.level.Info))
-                .ForMember(dest => dest.LevelRang,
+                .ForMember(dest => dest.LevelPriority,
                     opt => opt.MapFrom(
                         src => src.level.Rang))
                 .ForMember(dest => dest.ScheduleItems,
@@ -48,6 +48,15 @@ namespace CESP.Dal.Mapping
                     ScheduleDto schedule,
                     PriceDto price),
                     ScheduleItem>()
+
+                .ForMember(dest => dest.Bunch,
+                    opt => opt.MapFrom(
+                        src => BunchGroupEnumConverter
+                            .ParseBunchGroupEnum(src.group.GroupBunchId)
+                       ))
+                .ForMember(dest => dest.BunchName,
+                    opt => opt.MapFrom(
+                        src => src.group.Bunch.Name))
                 // Teacher info
                 .ForMember(dest => dest.TeacherPhoto,
                     opt => opt.MapFrom(
@@ -58,7 +67,13 @@ namespace CESP.Dal.Mapping
                 .ForMember(dest => dest.TeacherPost,
                     opt => opt.MapFrom(
                         src => src.teacher.Post))
-
+                // Priority info
+                .ForMember(dest => dest.BunchPriority,
+                    opt => opt.MapFrom(
+                        src => src.group.Bunch.Priority))
+                .ForMember(dest => dest.TimePriority,
+                    opt => opt.MapFrom(
+                        src => src.group.GroupTime.Priority))
                 // date-time info
                 .ForMember(dest => dest.Days,
                     opt => opt.MapFrom(
