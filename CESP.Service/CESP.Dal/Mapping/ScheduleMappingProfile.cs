@@ -58,6 +58,9 @@ namespace CESP.Dal.Mapping
                     opt => opt.MapFrom(
                         src => src.group.Bunch.Name))
                 // Teacher info
+                .ForMember(dest => dest.Teacher,
+                    opt => opt.MapFrom(
+                        src => src.teacher))
                 .ForMember(dest => dest.TeacherPhoto,
                     opt => opt.MapFrom(
                         src => src.teacher.SmallPhoto.Name))

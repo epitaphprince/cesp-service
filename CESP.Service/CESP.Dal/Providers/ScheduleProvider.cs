@@ -61,6 +61,16 @@ namespace CESP.Dal.Providers
                         ((groupDto, groupDto.Teacher, schedules.FirstOrDefault(), prices.FirstOrDefault()));
                     scheduleItem.TeacherPhoto = _cespResourceProvider.GetFullUrl(scheduleItem.TeacherPhoto);
 
+                    if (scheduleItem.Teacher != null)
+                    {
+                        scheduleItem.Teacher.Photo = 
+                            _cespResourceProvider.GetFullUrl(scheduleItem.Teacher.Photo);
+                        scheduleItem.Teacher.SmallPhoto =
+                            _cespResourceProvider.GetFullUrl(scheduleItem.Teacher.SmallPhoto);
+                        scheduleItem.Teacher.LargePhoto =
+                            _cespResourceProvider.GetFullUrl(scheduleItem.Teacher.LargePhoto);
+                    }
+
                     items.Add(scheduleItem);
                 }
 

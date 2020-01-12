@@ -86,6 +86,9 @@ namespace CESP.Dal.Repositories.Cesp
                 .Include(sg => sg.Teacher)
                 .Include(sg => sg.Bunch)
                 .Include(sg => sg.GroupTime)
+                .Include(sg => sg.Teacher.Photo)
+                .Include(sg => sg.Teacher.LargePhoto)
+                .Include(sg => sg.Teacher.Languages)
                 .Include(sg => sg.Teacher.SmallPhoto);
         }
 

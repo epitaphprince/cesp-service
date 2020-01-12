@@ -21,6 +21,8 @@ namespace CESP.Service.ViewModels.Responses
 
     public class ScheduleItemResponse
     {
+        public TeacherResponse Teacher { get; set; }
+        
         public string TeacherPhoto { get; set; }
 
         public string TeacherName { get; set; }
