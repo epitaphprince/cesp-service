@@ -6,7 +6,7 @@ namespace CESP.Core.Managers.Schedulers
 {
     public interface IScheduleManager
     {
-        Task<List<ScheduleSection>> GetList();
+        Task<List<ScheduleBlock>> GetList();
 
         Task<List<ScheduleSegment>> GetListByLevels(string[] levelNames);
     }

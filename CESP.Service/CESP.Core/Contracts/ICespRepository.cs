@@ -23,6 +23,8 @@ namespace CESP.Core.Contracts
         Task<List<StudentGroupDto>> GetStudentGroupsByCourseId(int courseId);
         
         Task<List<PriceDto>> GetPricesByGroupId(int groupId);
+        
+        Task<PriceDto> GetPriceByGroupIdFirstOrDefault(int groupId);
 
         Task<List<FeedbackDto>> GetFeedbacks(int? count);
 
@@ -30,7 +32,7 @@ namespace CESP.Core.Contracts
 
         Task<List<StudentGroupDto>> GetStudentGroups();
         
-        Task<List<ScheduleDto>> GetSchedulesByGroupId(int groupId);
+        Task<ScheduleDto> GetScheduleByGroupIdFirstOrDefault(int groupId);
 
         Task<List<StudentGroupDto>> GetStudentGroupsByLevels(string[] levelNames);
 

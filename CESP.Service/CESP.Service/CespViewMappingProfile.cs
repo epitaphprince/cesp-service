@@ -23,42 +23,22 @@ namespace CESP.Service
             CreateMap<ScheduleSegment, ScheduleSegmentResponse>()
                 .ForMember(dest => dest.Level,
                     opt => opt.MapFrom(
-                        src => MapLevel(src.Level, src.LevelInfo)
+                        src => src.Title
                     ));
             CreateMap<ScheduleItem, ScheduleItemResponse>()
                 .ForMember(dest => dest.StartTime,
-                    opt => opt.MapFrom(src => src.StartTime.ToString(@"hh\:mm")))
+                    opt => opt.MapFrom(
+                        src => src.StartTime.ToString(@"hh\:mm")))
                 .ForMember(dest => dest.EndTime,
-                    opt => opt.MapFrom(src => src.EndTime.ToString(@"hh\:mm")));
+                    opt => opt.MapFrom(src => 
+                        src.EndTime.ToString(@"hh\:mm")));
             
-            CreateMap<IEnumerable<ScheduleSection>, ScheduleResponse>();
+            CreateMap<IEnumerable<ScheduleBlock>, ScheduleResponse>();
             
             CreateMap<AddSpeakingClubRequest, SpeakingClubMeeting>()
                 .ForMember(dest => dest.FileInfo,
                     opt => opt.MapFrom(src => src.Name
                     ));
-        }
-
-
-        private string MapLevel(string level, string info)
-        {
-            if (string.IsNullOrWhiteSpace(level) 
-                && string.IsNullOrWhiteSpace(info))
-            {
-                return null;
-            }
-
-            if (string.IsNullOrWhiteSpace(level))
-            {
-                return info;
-            }
-
-            if (string.IsNullOrWhiteSpace(info))
-            {
-                return level;
-            }
-
-            return $"{level}, {info}";
         }
     }
 }

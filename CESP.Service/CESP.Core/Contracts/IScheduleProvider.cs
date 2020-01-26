@@ -9,5 +9,7 @@ namespace CESP.Core.Contracts
         Task<List<ScheduleSegment>> GetSchedules();
 
         Task<List<ScheduleSegment>> GetSchedulesByLevels(string[] levelNames);
+
+        Task<List<ScheduleItem>> GetScheduleItems();
     }
 }

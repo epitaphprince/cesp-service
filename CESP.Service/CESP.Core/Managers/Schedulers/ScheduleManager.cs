@@ -10,157 +10,129 @@ namespace CESP.Core.Managers.Schedulers
     {
         private readonly IScheduleProvider _scheduleProvider;
         private const string title = "Группы уровня";
-        private const string childrenTitle = "Дети";
-        private const string catalanTitle = "Каталанский";
         
         public ScheduleManager(IScheduleProvider scheduleProvider)
         {
             _scheduleProvider = scheduleProvider;
+            _splitRuleByBunch = new SplitRuleByBunch();
+            _splitRuleByLevel = new SplitRuleByLevel();
         }
 
-        public async Task<List<ScheduleSection>> GetList()
-        {
-            var result = new List<ScheduleSection>();
-            var segments = await _scheduleProvider.GetSchedules();
-            
-            result.Add(SetSection(segments,
+        public async Task<List<ScheduleBlock>> GetList()
+        { 
+            var items = await _scheduleProvider.GetScheduleItems();
+
+            var result = new List<ScheduleBlock>();
+            result.Add(SetBlockByLevelLanguage(items,
                 LanguageLevelPriorityEnum.A1,
                 LanguageLevelPriorityEnum.A2,
                 $"{title} A1"));
             
-            result.Add(SetSection(segments,
+            result.Add(SetBlockByLevelLanguage(items,
                 LanguageLevelPriorityEnum.A2,
                 LanguageLevelPriorityEnum.B1,
                 $"{title} A2"));
             
-            result.Add(SetSection(segments,
+            result.Add(SetBlockByLevelLanguage(items,
                 LanguageLevelPriorityEnum.B1,
                 LanguageLevelPriorityEnum.C1,
                 $"{title} B"));
             
-            result.Add(SetSection(segments,
+            result.Add(SetBlockByLevelLanguage(items,
                 LanguageLevelPriorityEnum.C1,
                 $"{title} C"));
             
             return result;
         }
 
-        private ScheduleSection SetSection(List<ScheduleSegment> segmentsAll,
+        private ScheduleBlock SetBlockByLevelLanguage(List<ScheduleItem> itemsAll,
             LanguageLevelPriorityEnum startPriority,
             string name)
         {
-            var segments = GetSegmentsByLevelPriority(segmentsAll, startPriority);
-            return SetSectionBySegments(segments, name);
+            var items = itemsAll
+                .Where(s => s.LanguageLevel.Rang >= (int) startPriority)
+                .ToList();
+
+            return BuildLanguageLevelBlock(items, name);
         }
 
-        private ScheduleSection SetSection(List<ScheduleSegment> segmentsAll,
+        private ScheduleBlock SetBlockByLevelLanguage(List<ScheduleItem> itemsAll,
             LanguageLevelPriorityEnum startPriority,
             LanguageLevelPriorityEnum endPriority,
             string name)
         {
-            var segments = GetSegmentsByLevelPriorities(segmentsAll, startPriority, endPriority);
-            return SetSectionBySegments(segments, name);
-        }
-        
-        private List<ScheduleSegment> GetSegmentsByLevelPriority(List<ScheduleSegment> segmentsAll,
-            LanguageLevelPriorityEnum startPriority)
-        {
-           return segmentsAll
-                .Where(s => s.LevelPriority >= (int) startPriority)
+            var items = itemsAll
+                .Where(s => s.LanguageLevel.Rang >= (int) startPriority
+                            && s.LanguageLevel.Rang < (int) endPriority)
                 .ToList();
+            
+            return BuildLanguageLevelBlock(items, name);
         }
 
-        private List<ScheduleSegment> GetSegmentsByLevelPriorities(List<ScheduleSegment> segmentsAll,
-            LanguageLevelPriorityEnum startPriority,
-            LanguageLevelPriorityEnum endPriority)
+        private ScheduleBlock BuildLanguageLevelBlock(List<ScheduleItem> items, string name)
         {
-            return segmentsAll
-                .Where(s => s.LevelPriority >= (int) startPriority
-                            && s.LevelPriority < (int) endPriority)
-                .ToList();
-        }
-
-        private ScheduleSection SetSectionBySegments(List<ScheduleSegment> segments, string name)
-        {
-            if (segments.Count == 0)
+            if (items.Count == 0)
             {
                 return null;
             }
 
-            var section = new ScheduleSection
+            var llBlock = CreateLanguageLevelBlock(items, name);
+            llBlock = SeparateSection(llBlock, _splitRuleByLevel);
+            llBlock = SeparateSection(llBlock, _splitRuleByBunch);
+            llBlock = Order(llBlock);
+            return llBlock;
+        }
+
+        private ScheduleBlock CreateLanguageLevelBlock(List<ScheduleItem> items, string name)
+        {
+            var baseSegment = new ScheduleSegment
             {
-                ScheduleSegments = segments,
-                Name = name
+                ScheduleItems = items,
             };
             
-            return Order(PutChildrenToSeparateSection(section));
+            return new ScheduleBlock
+            {
+                ScheduleSegments = new []{baseSegment} ,
+                Name = name
+            };
         }
-
-        private ScheduleSection PutChildrenToSeparateSection(ScheduleSection section)
+        
+        private ScheduleBlock SeparateSection(ScheduleBlock block, ISplitRule splitRule)
         {
             var segments = new List<ScheduleSegment>();
-            foreach (var segment in section.ScheduleSegments)
+            foreach (var segment in block.ScheduleSegments)
             {
-                segments.AddRange(SplitSegmentByChildren(segment));
+                segments.AddRange(splitRule.Split(segment));
             }
 
-            section.ScheduleSegments = segments;
-            return section;
+            block.ScheduleSegments = segments;
+            return block;
         }
-
-        private List<ScheduleSegment> SplitSegmentByChildren(ScheduleSegment segment)
+        
+        
+        private ScheduleBlock Order(ScheduleBlock block)
         {
-            var groups = segment
-                .ScheduleItems
-                .GroupBy(it => it.Bunch)
-                .Where(gr => gr.Any())
-                .ToArray();
-
-            var result = new List<ScheduleSegment>();
-
-            foreach (var gr in groups)
-            {
-                
-                result.Add(new ScheduleSegment
-                    {
-                        Level = segment.Level,
-                        LevelInfo = GetLevelInfo(gr.Key, segment.LevelInfo),
-                        LevelPriority = segment.LevelPriority,
-                        ScheduleItems = gr
-                    });
-            }
+            // sort segments
+            block.ScheduleSegments = block
+                .ScheduleSegments
+                .OrderBy(s => s.SortPriority);
             
-            return result;
-        }
-
-        private string GetLevelInfo(BunchGroupEnum bunch, string info)
-        {
-            switch (bunch)
-            {
-                case BunchGroupEnum.Catalan :
-                    return $"{info}, {catalanTitle}";
-                case BunchGroupEnum.Children :
-                    return $"{info}, {childrenTitle}";
-                default: return info;
-            }
-        }
-
-        private ScheduleSection Order(ScheduleSection section)
-        {
-            section.ScheduleSegments = section.ScheduleSegments.OrderBy(s => s.LevelPriority);
-            foreach (var segment in section.ScheduleSegments)
-            {
+            // sort items
+            foreach (var segment in block.ScheduleSegments){
                 segment.ScheduleItems = segment
                     .ScheduleItems
                     .OrderBy(sch => sch.BunchPriority)
                     .ThenBy(sch => sch.TimePriority);
             }
-            return section;
+            return block;
         }
 
         public async Task<List<ScheduleSegment>> GetListByLevels(string[] levelNames)
         {
             return await _scheduleProvider.GetSchedulesByLevels(levelNames);
         }
+
+        private SplitRuleByBunch _splitRuleByBunch;
+        private SplitRuleByLevel _splitRuleByLevel;
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CESP.Core.Models
 {
-    public class ScheduleSection
+    public class ScheduleBlock
     {
         public string Name { get; set; }
 
@@ -14,11 +14,9 @@ namespace CESP.Core.Models
 
     public class ScheduleSegment
     {
-        public string Level { get; set; }
-        
-        public string LevelInfo { get; set; }
-        
-        public int LevelPriority { get; set; }
+        public string Title { get; set; }
+
+        public int SortPriority { get; set; }
 
         public IEnumerable<ScheduleItem> ScheduleItems { get; set; }
     }
@@ -42,5 +40,7 @@ namespace CESP.Core.Models
         public BunchGroupEnum Bunch { get; set; }
         public int BunchPriority { get; set; }
         public int TimePriority { get; set; }
+
+        public Level LanguageLevel { get; set; }
     }
 }

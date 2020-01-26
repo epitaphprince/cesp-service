@@ -4,9 +4,9 @@ namespace CESP.Core.Models
 {
     public enum BunchGroupEnum
     {
-        Children = 1,
         Catalan = 3,
-        Other = 0
+        Other = 0,
+        Children = 1,
     }
 
     public static class BunchGroupEnumConverter

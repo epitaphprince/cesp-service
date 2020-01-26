@@ -16,7 +16,7 @@ namespace CESP.Dal.Mapping
 
             CreateMap<(GroupBunchDto bunch,
                     IEnumerable<ScheduleSegment> segments),
-                    ScheduleSection>()
+                    ScheduleBlock>()
                 .ForMember(dest => dest.Name,
                     opt => opt.MapFrom(
                         src => src.bunch.Name))
@@ -27,28 +27,17 @@ namespace CESP.Dal.Mapping
                     opt => opt.MapFrom(
                         src => src.segments));
 
-            CreateMap<(LanguageLevelDto level,
-                    IEnumerable<ScheduleItem> items),
-                    ScheduleSegment>()
-                .ForMember(dest => dest.Level,
-                    opt => opt.MapFrom(
-                        src => src.level.Name))
-                .ForMember(dest => dest.LevelInfo,
-                    opt => opt.MapFrom(
-                        src => src.level.Info))
-                .ForMember(dest => dest.LevelPriority,
-                    opt => opt.MapFrom(
-                        src => src.level.Rang))
-                .ForMember(dest => dest.ScheduleItems,
-                    opt => opt.MapFrom(
-                        src => src.items));
-
             CreateMap<(StudentGroupDto group,
                     TeacherDto teacher,
                     ScheduleDto schedule,
-                    PriceDto price),
+                    PriceDto price,
+                    LanguageLevelDto level),
                     ScheduleItem>()
 
+                .ForMember(dest => dest.LanguageLevel,
+                    opt => opt.MapFrom(
+                        src => src.level
+                    ))
                 .ForMember(dest => dest.Bunch,
                     opt => opt.MapFrom(
                         src => BunchGroupEnumConverter
@@ -107,7 +96,6 @@ namespace CESP.Dal.Mapping
                 .ForMember(dest => dest.Discount,
                     opt => opt.MapFrom(
                         src => src.price.DiscountPer));
-
         }
     }
 }

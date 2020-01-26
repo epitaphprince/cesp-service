@@ -30,6 +30,12 @@ namespace CESP.Dal.Providers
             var groups = await _cespRepository.GetStudentGroups();
             return await GetSchedules(groups);
         }
+        
+        public async Task<List<ScheduleItem>> GetScheduleItems()
+        {
+            var groups = await _cespRepository.GetStudentGroups();
+            return await GetAllItems(groups);
+        }
 
         public async Task<List<ScheduleSegment>> GetSchedulesByLevels(string[] levelNames)
         {
@@ -44,35 +50,7 @@ namespace CESP.Dal.Providers
             var segments = new List<ScheduleSegment>();
             foreach (var scheduleSegmentDto in scheduleSegmentsDto)
             {
-                var items = new List<ScheduleItem>();
-                foreach (var groupDto in scheduleSegmentDto)
-                {
-                    var schedules = await _cespRepository
-                        .GetSchedulesByGroupId(groupDto.Id);
-                    var prices = await _cespRepository
-                        .GetPricesByGroupId(groupDto.Id);
-
-                    var scheduleItem = _mapper.Map<(
-                            StudentGroupDto,
-                            TeacherDto,
-                            ScheduleDto,
-                            PriceDto),
-                            ScheduleItem>
-                        ((groupDto, groupDto.Teacher, schedules.FirstOrDefault(), prices.FirstOrDefault()));
-                    scheduleItem.TeacherPhoto = _cespResourceProvider.GetFullUrl(scheduleItem.TeacherPhoto);
-
-                    if (scheduleItem.Teacher != null)
-                    {
-                        scheduleItem.Teacher.Photo = 
-                            _cespResourceProvider.GetFullUrl(scheduleItem.Teacher.Photo);
-                        scheduleItem.Teacher.SmallPhoto =
-                            _cespResourceProvider.GetFullUrl(scheduleItem.Teacher.SmallPhoto);
-                        scheduleItem.Teacher.LargePhoto =
-                            _cespResourceProvider.GetFullUrl(scheduleItem.Teacher.LargePhoto);
-                    }
-
-                    items.Add(scheduleItem);
-                }
+                var items = await GetAllItems(scheduleSegmentDto);
 
                 var level = scheduleSegmentDto.FirstOrDefault().LanguageLevel;
                 segments.Add(_mapper.Map<(
@@ -85,6 +63,45 @@ namespace CESP.Dal.Providers
             return segments.ToList();
         }
 
+        private async Task<List<ScheduleItem>> GetAllItems(IEnumerable<StudentGroupDto> studentGroups)
+        {
+            var items = new List<ScheduleItem>();
+            foreach (StudentGroupDto groupDto in studentGroups)
+            {
+                
+                    var schedule = await _cespRepository
+                        .GetScheduleByGroupIdFirstOrDefault(groupDto.Id);
+
+                    var price = await _cespRepository
+                        .GetPriceByGroupIdFirstOrDefault(groupDto.Id);
+                    
+                    var scheduleItem = _mapper.Map<(
+                            StudentGroupDto,
+                            TeacherDto,
+                            ScheduleDto,
+                            PriceDto,
+                            LanguageLevelDto),
+                            ScheduleItem>
+                        ((groupDto, groupDto.Teacher, schedule, price, groupDto.LanguageLevel));
+                    
+                    scheduleItem.TeacherPhoto = _cespResourceProvider
+                        .GetFullUrl(scheduleItem.TeacherPhoto);
+
+                    if (scheduleItem.Teacher != null)
+                    {
+                        scheduleItem.Teacher.Photo = 
+                            _cespResourceProvider.GetFullUrl(scheduleItem.Teacher.Photo);
+                        scheduleItem.Teacher.SmallPhoto =
+                            _cespResourceProvider.GetFullUrl(scheduleItem.Teacher.SmallPhoto);
+                        scheduleItem.Teacher.LargePhoto =
+                            _cespResourceProvider.GetFullUrl(scheduleItem.Teacher.LargePhoto);
+                    }
+
+                    items.Add(scheduleItem);
+            }
+
+            return items;
+        }
 
         public async Task<List<GroupBunch>> GetBunches()
         {

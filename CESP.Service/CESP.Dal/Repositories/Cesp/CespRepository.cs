@@ -25,7 +25,7 @@ namespace CESP.Dal.Repositories.Cesp
         {
             _context = cespContext;
         }
-
+        
         public async Task<List<TeacherDto>> GetTeachers(int? count)
         {
             var teachersQuery = count != null
@@ -91,15 +91,15 @@ namespace CESP.Dal.Repositories.Cesp
                 .Include(sg => sg.Teacher.Languages)
                 .Include(sg => sg.Teacher.SmallPhoto);
         }
-
-        public async Task<List<ScheduleDto>> GetSchedulesByGroupId(int groupId)
+        
+        public async Task<ScheduleDto> GetScheduleByGroupIdFirstOrDefault(int groupId)
         {
             return await _context
                 .Schedules
                 .Where(sch => sch.StudentGroupId == groupId)
-                .ToListAsync();
+                .FirstOrDefaultAsync();
         }
-
+        
         public async Task<List<GroupBunchDto>> GetGroupBunches()
         {
             return await _context
@@ -137,6 +137,15 @@ namespace CESP.Dal.Repositories.Cesp
                 .Where(pr => pr.StudentGroupId == groupId)
                 .Include(pr => pr.Currency)
                 .ToListAsync();
+        }
+        
+        public async Task<PriceDto> GetPriceByGroupIdFirstOrDefault(int groupId)
+        {
+            return await _context
+                .Prices
+                .Where(pr => pr.StudentGroupId == groupId)
+                .Include(pr => pr.Currency)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<List<ActivityDto>> GetEvents(int? count)
