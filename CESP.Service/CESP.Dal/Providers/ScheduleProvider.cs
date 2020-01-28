@@ -24,45 +24,19 @@ namespace CESP.Dal.Providers
             _mapper = mapper;
             _cespResourceProvider = cespResourceProvider;
         }
-
-        public async Task<List<ScheduleSegment>> GetSchedules()
-        {
-            var groups = await _cespRepository.GetStudentGroups();
-            return await GetSchedules(groups);
-        }
         
         public async Task<List<ScheduleItem>> GetScheduleItems()
         {
             var groups = await _cespRepository.GetStudentGroups();
             return await GetAllItems(groups);
         }
-
-        public async Task<List<ScheduleSegment>> GetSchedulesByLevels(string[] levelNames)
+        
+        public async Task<List<ScheduleItem>> GetScheduleItemsByLevels(string[] levelNames)
         {
             var groups = await _cespRepository.GetStudentGroupsByLevels(levelNames);
-            return await GetSchedules(groups);
+            return await GetAllItems(groups);
         }
         
-        private async Task<List<ScheduleSegment>> GetSchedules(IEnumerable<StudentGroupDto> groups)
-        {
-            var scheduleSegmentsDto = groups.GroupBy(gr => gr.LanguageLevelId);
-
-            var segments = new List<ScheduleSegment>();
-            foreach (var scheduleSegmentDto in scheduleSegmentsDto)
-            {
-                var items = await GetAllItems(scheduleSegmentDto);
-
-                var level = scheduleSegmentDto.FirstOrDefault().LanguageLevel;
-                segments.Add(_mapper.Map<(
-                        LanguageLevelDto,
-                        IEnumerable<ScheduleItem>),
-                        ScheduleSegment>
-                    ((level, items)));
-            }
-
-            return segments.ToList();
-        }
-
         private async Task<List<ScheduleItem>> GetAllItems(IEnumerable<StudentGroupDto> studentGroups)
         {
             var items = new List<ScheduleItem>();

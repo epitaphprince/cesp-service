@@ -44,7 +44,16 @@ namespace CESP.Core.Managers.Schedulers
             
             return result;
         }
+        
+        public async Task<List<ScheduleSegment>> GetListByLevels(string[] levelNames)
+        {
+            var items = await _scheduleProvider.GetScheduleItemsByLevels(levelNames);
+            
+            var result = BuildLanguageLevelBlock(items, "");
 
+            return result.ScheduleSegments.ToList();
+        }
+        
         private ScheduleBlock SetBlockByLevelLanguage(List<ScheduleItem> itemsAll,
             LanguageLevelPriorityEnum startPriority,
             string name)
@@ -125,11 +134,6 @@ namespace CESP.Core.Managers.Schedulers
                     .ThenBy(sch => sch.TimePriority);
             }
             return block;
-        }
-
-        public async Task<List<ScheduleSegment>> GetListByLevels(string[] levelNames)
-        {
-            return await _scheduleProvider.GetSchedulesByLevels(levelNames);
         }
 
         private SplitRuleByBunch _splitRuleByBunch;

@@ -6,9 +6,7 @@ namespace CESP.Core.Contracts
 {
     public interface IScheduleProvider
     {
-        Task<List<ScheduleSegment>> GetSchedules();
-
-        Task<List<ScheduleSegment>> GetSchedulesByLevels(string[] levelNames);
+        Task<List<ScheduleItem>> GetScheduleItemsByLevels(string[] levelNames);
 
         Task<List<ScheduleItem>> GetScheduleItems();
     }
