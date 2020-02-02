@@ -16,6 +16,12 @@ namespace CESP.Service.ViewModels.Responses
         public string Level { get; set; }
         
         public ScheduleItemResponse[] ScheduleItems { get; set; }
+
+        public string Duration { get; set; }
+
+        public decimal MaxPrice { get; set; }
+
+        public decimal MinPrice { get; set; }
     }
     
 

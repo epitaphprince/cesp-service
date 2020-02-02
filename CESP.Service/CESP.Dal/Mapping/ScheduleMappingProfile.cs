@@ -42,10 +42,14 @@ namespace CESP.Dal.Mapping
                     opt => opt.MapFrom(
                         src => BunchGroupEnumConverter
                             .ParseBunchGroupEnum(src.group.GroupBunchId)
-                       ))
+                    ))
                 .ForMember(dest => dest.BunchName,
                     opt => opt.MapFrom(
                         src => src.group.Bunch.Name))
+                .ForMember(dest => dest.Duration,
+                    opt => opt.MapFrom(
+                        src => src.group.Bunch.Duration))
+
                 // Teacher info
                 .ForMember(dest => dest.Teacher,
                     opt => opt.MapFrom(
@@ -95,7 +99,12 @@ namespace CESP.Dal.Mapping
                     ))
                 .ForMember(dest => dest.Discount,
                     opt => opt.MapFrom(
-                        src => src.price.DiscountPer));
+                        src => src.price.DiscountPer))
+                .ForMember(dest => dest.PaymentPeriod,
+                    opt => opt.MapFrom(
+                        src => PaymentPeriodEnumConverter
+                            .ParsePaymentPeriodEnum(src.price.PaymentPeriod)
+                    ));
         }
     }
 }
