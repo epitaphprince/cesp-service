@@ -7,6 +7,8 @@ namespace CESP.Core.Models
         Catalan = 3,
         Other = 0,
         Children = 1,
+        Children58 = 4,
+        Children914 = 5,
     }
 
     public static class BunchGroupEnumConverter

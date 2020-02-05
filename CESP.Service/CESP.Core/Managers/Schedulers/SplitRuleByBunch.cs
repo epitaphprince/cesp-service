@@ -10,6 +10,8 @@ namespace CESP.Core.Managers.Schedulers
         private const int coefPriority = 10;
         
         private const string childrenTitle = "Дети";
+        private const string childrenTitle58 = "Дети 5-8 лет";
+        private const string childrenTitle914 = "Дети 9-14 лет";
         private const string catalanTitle = "Каталанский";
         
         public List<ScheduleSegment> Split(ScheduleSegment  segment)
@@ -27,7 +29,8 @@ namespace CESP.Core.Managers.Schedulers
                 result.Add(new ScheduleSegment
                 {
                     Title = GetTitle(gr.Key, segment.Title),
-                    SortPriority = segment.SortPriority + gr.FirstOrDefault().BunchPriority * coefPriority,
+                    SortPriority = segment.SortPriority 
+                                   + gr.FirstOrDefault().BunchPriority * coefPriority,
                     ScheduleItems = gr
                 });
             }
@@ -43,6 +46,10 @@ namespace CESP.Core.Managers.Schedulers
                     return $"{info}, {catalanTitle}";
                 case BunchGroupEnum.Children :
                     return $"{info}, {childrenTitle}";
+                case BunchGroupEnum.Children58 :
+                    return $"{info}, {childrenTitle58}";
+                case BunchGroupEnum.Children914 :
+                    return $"{info}, {childrenTitle914}";
                 default: return info;
             }
         }
