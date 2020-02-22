@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using CESP.Core.Models;
 using CESP.Service.ViewModels.Requests;
@@ -10,7 +11,18 @@ namespace CESP.Service
     {
         public CespViewMappingProfile()
         {
-            CreateMap<Teacher, TeacherResponse>();
+            CreateMap<Teacher, TeacherResponse>()
+                .ForMember(dest => dest.Position,
+                    opt => opt.MapFrom(
+                        src => src.Post));
+            CreateMap<UpdateTeacherRequest, Teacher>()
+                .ForMember(dest => dest.Languages,
+                    opt => opt.MapFrom(
+                        src => src
+                            .Languages
+                            .Select(l => new Language(l))
+                    ));
+            
             CreateMap<Course, CourseResponse>();
             CreateMap<Feedback, FeedbackResponse>();
             CreateMap<Event, EventResponse>();

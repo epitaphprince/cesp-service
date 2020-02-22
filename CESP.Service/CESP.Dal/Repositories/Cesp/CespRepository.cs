@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CESP.Core.Contracts;
+using CESP.Dal.Infrastructure;
 using CESP.Database.Context;
 using CESP.Database.Context.Activities.Models;
 using CESP.Database.Context.Education.Models;
@@ -40,9 +42,45 @@ namespace CESP.Dal.Repositories.Cesp
                 .ToListAsync();
         }
 
+        public async Task<TeacherDto> GetTeacher(int teacherId)
+        {
+            return await _context
+                .Teachers
+                .FirstAsync(t => t.Id == teacherId);
+        }
+
         public async Task AddTeacher(TeacherDto teacherDto)
         {
             await _context.Teachers.AddAsync(teacherDto);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateTeacher(TeacherDto teacherDto)
+        {
+            var teacherFromDb = await _context
+                .Teachers
+                .FirstOrDefaultAsync(t => t.Id == teacherDto.Id);
+
+            MapHelper.SetValues(teacherDto, teacherFromDb);
+            if (!string.IsNullOrEmpty(teacherDto.Name))
+                teacherFromDb.Name = teacherDto.Name;
+            if (!string.IsNullOrEmpty(teacherDto.Post))
+                teacherFromDb.Post = teacherDto.Post;
+            if (!string.IsNullOrEmpty(teacherDto.Info))
+                teacherFromDb.Info = teacherDto.Info;
+            if (!string.IsNullOrEmpty(teacherDto.ShortInfo))
+                teacherFromDb.ShortInfo = teacherDto.ShortInfo;
+            if (!string.IsNullOrEmpty(teacherDto.City))
+                teacherFromDb.City = teacherDto.City;
+            if (teacherDto.Rang != 0)
+                teacherFromDb.Rang = teacherDto.Rang;
+            if (teacherDto.Photo != null)
+                teacherFromDb.Photo = teacherDto.Photo;
+            if (teacherDto.LargePhoto != null)
+                teacherFromDb.LargePhoto = teacherDto.LargePhoto;
+            if (teacherDto.SmallPhoto != null)
+                teacherFromDb.SmallPhoto = teacherDto.SmallPhoto;
+            
             await _context.SaveChangesAsync();
         }
 
@@ -187,6 +225,32 @@ namespace CESP.Dal.Repositories.Cesp
                 select f;
 
             return await files.ToListAsync();
+        }
+
+        public async Task UpdateFile(string fileNameOld, string fileNameNew, string info)
+        {
+            var file = await _context
+                .Files
+                .FirstOrDefaultAsync(f => string.Equals(f.Name,
+                    fileNameOld,
+                    StringComparison.OrdinalIgnoreCase));
+            file.Name = fileNameNew;
+            file.Info = info;
+            
+            _context.SaveChanges();
+        }
+
+        public async Task AddFile(FileDto file)
+        {
+            await _context.Files.AddAsync(file);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<FileDto> GetFile(string name)
+        {
+            return await _context
+                .Files
+                .FirstAsync(f => string.Equals(f.Name, name, StringComparison.OrdinalIgnoreCase));
         }
 
         public async Task AddSpeakingClubMeeting(SpeakingClubMeetingDto speakingClubMeetingDto)

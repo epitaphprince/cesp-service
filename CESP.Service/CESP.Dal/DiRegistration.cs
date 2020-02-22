@@ -36,6 +36,7 @@ namespace CESP.Dal
 
             services.AddScoped<IPartnerProvider, PartnerProvider>();
             services.AddScoped<ILevelProvider, LevelProvider>();
+            services.AddScoped<IFileInfoProvider, FileInfoProvider>();
 
             services.AddScoped<IFolderProvider, FolderProvider>();
             services.AddScoped<IFileProvider, FileProvider>();

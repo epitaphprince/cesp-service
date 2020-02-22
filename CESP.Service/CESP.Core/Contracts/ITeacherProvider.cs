@@ -6,6 +6,8 @@ namespace CESP.Core.Contracts
 {
     public interface ITeacherProvider
     {
-        Task<List<Teacher>> GetTeachers(int? count);
+        Task<List<Teacher>> GetList(int? count);
+
+        Task Update(Teacher teacher);
     }
 }

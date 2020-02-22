@@ -15,6 +15,8 @@ namespace CESP.Core.Contracts
     public interface ICespRepository
     {
         Task<List<TeacherDto>> GetTeachers(int? count = null);
+        Task<TeacherDto> GetTeacher(int teacherId);
+        Task UpdateTeacher(TeacherDto teacherDto);
 
         Task AddTeacher(TeacherDto teacherDto);
 
@@ -43,6 +45,12 @@ namespace CESP.Core.Contracts
         Task AddEvent(ActivityDto eventDto);
 
         Task<List<FileDto>> GetEventFiles(int eventId);
+
+        Task UpdateFile(string fileNameOld, string fileNameNew, string info);
+
+        Task AddFile(FileDto file);
+
+        Task<FileDto> GetFile(string name);
 
         Task<List<SpeakingClubMeetingDto>> GetSpeakingClubMeetings(int? count);
 

@@ -73,7 +73,7 @@ namespace CESP.Service.Controllers
                 {
                     return BadRequest();
                 }
-                await _fileManager.SaveImage(file, "club");
+                await _fileManager.SaveContent(file, "club");
                 var speakingClub = _mapper.Map<SpeakingClubMeeting>(request);
                 speakingClub.FileName = $"club/{file.FileName}";
                 var speakingClubDto = _mapper.Map<SpeakingClubMeetingDto>(speakingClub);

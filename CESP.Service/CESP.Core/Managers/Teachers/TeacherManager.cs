@@ -20,7 +20,7 @@ namespace CESP.Core.Managers.Teachers
 
         public async Task<List<Teacher>> GetList(int? count)
         {
-            var teachers = await _teacherProvider.GetTeachers(count);
+            var teachers = await _teacherProvider.GetList(count);
 
             teachers.ForEach(t =>
             {
@@ -30,6 +30,11 @@ namespace CESP.Core.Managers.Teachers
             });
 
             return teachers;
+        }
+
+        public async Task Update(Teacher teacher)
+        {
+            await _teacherProvider.Update(teacher);
         }
     }
 }

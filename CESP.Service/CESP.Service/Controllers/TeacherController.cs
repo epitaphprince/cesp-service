@@ -4,6 +4,7 @@ using AutoMapper;
 using CESP.Core.Contracts;
 using CESP.Core.Managers.File;
 using CESP.Core.Managers.Teachers;
+using CESP.Core.Models;
 using CESP.Dal.Infrastructure;
 using CESP.Database.Context.Education.Models;
 using CESP.Database.Context.Files.Models;
@@ -19,6 +20,8 @@ namespace CESP.Service.Controllers
     [Route("teachers")]
     public class TeacherController : Controller
     {
+        private readonly string FileFolder = "teachers";
+        
         private readonly ITeacherManager _teacherManager;
         private readonly IMapper _mapper;
         private readonly Credentials _credentials;
@@ -52,30 +55,70 @@ namespace CESP.Service.Controllers
         }
 
         [HttpPost]
+        [Route("update")]
+        public async Task<IActionResult> Update([FromForm] IFormFile file,
+            [FromForm] IFormFile fileSmall,
+            [FromForm] IFormFile fileLarge,
+            UpdateTeacherRequest request)
+        {
+            if (Request.CheckPassword(_credentials.Password))
+            {
+                if (file != null)
+                {
+                    await _fileManager.UpdateFile(file, request.Photo, FileFolder, request.Name);
+                    request.Photo = AddFileFolder(file.Name);
+                }
+
+                if (fileSmall != null)
+                {
+                    await _fileManager.UpdateFile(fileSmall, request.SmallPhoto, FileFolder, request.Name);
+                    request.SmallPhoto = AddFileFolder(fileSmall.Name);
+                }
+
+                if (fileLarge != null)
+                {
+                    await _fileManager.UpdateFile(fileLarge, request.LargePhoto, FileFolder, request.Name);
+                    request.LargePhoto = AddFileFolder(fileLarge.Name);
+                }
+                
+                var teacher = _mapper.Map<Teacher>(request);
+                await _teacherManager.Update(teacher);
+                
+                return Ok();
+            }
+            return BadRequest();
+        }
+
+        private string AddFileFolder(string source)
+        {
+            return _fileManager.GetFilePath(FileFolder, source);
+        }
+        
+        [HttpPost]
         [Route("")]
         public async Task<IActionResult> Add([FromForm] IFormFile file, [FromForm] IFormFile fileSmall,
             [FromForm] IFormFile fileLarge, AddTeacherRequest request)
         {
             if (Request.CheckPassword(_credentials.Password))
             {
-                await _fileManager.SaveImage(file, "teachers");
-                await _fileManager.SaveImage(fileSmall, "teachers");
-                await _fileManager.SaveImage(fileLarge, "teachers");
+                await _fileManager.SaveContent(file, FileFolder);
+                await _fileManager.SaveContent(fileSmall, FileFolder);
+                await _fileManager.SaveContent(fileLarge, FileFolder);
                 var teacherDto = _mapper.Map<TeacherDto>(request);
                 teacherDto.Photo = new FileDto
                 {
                     Info = request.Name,
-                    Name = $"teachers/{file.FileName}"
+                    Name = AddFileFolder(file.FileName)
                 };
                 teacherDto.SmallPhoto = new FileDto
                 {
                     Info = request.Name,
-                    Name = $"teachers/{fileSmall.FileName}"
+                    Name = AddFileFolder(fileSmall.FileName)
                 };
                 teacherDto.LargePhoto = new FileDto
                 {
                     Info = request.Name,
-                    Name = $"teachers/{fileLarge.FileName}"
+                    Name = AddFileFolder(fileLarge.FileName)
                 };
                 await _cespRepository.AddTeacher(teacherDto);
                 return Ok();

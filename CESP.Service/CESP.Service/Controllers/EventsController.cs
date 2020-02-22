@@ -65,7 +65,7 @@ namespace CESP.Service.Controllers
         {
             if (Request.CheckPassword(_credentials.Password))
             {
-                await _fileManager.SaveImage(file, "activities");
+                await _fileManager.SaveContent(file, "activities");
                 var eventDto = _mapper.Map<ActivityDto>(request);
                 eventDto.Photo = new FileDto
                 {
