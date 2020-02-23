@@ -1,7 +1,14 @@
+using System;
+
 namespace CESP.Core.Models
 {
     public class Course
     {
+        public Course()
+        {
+            Prices = new decimal[0];
+        }
+
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -12,9 +19,13 @@ namespace CESP.Core.Models
 
         public int? DiscountPercent { get; set; }
 
-        public decimal Price { get; set; }
+        public string Price { get; set; }
+        
+        public string PriceInfo { get; set; }
 
-        public string CostInfo { get; set; }
+        public string CurrencyName { get; set; }
+
+        public decimal[] Prices { get; set; }
 
         public string[] Icons { get; set; }
     }

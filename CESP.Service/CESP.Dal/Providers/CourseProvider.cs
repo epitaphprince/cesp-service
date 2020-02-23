@@ -23,30 +23,31 @@ namespace CESP.Dal.Providers
 
         public async Task<List<Course>> GetCourses(int? count)
         {
-            var courses = await _cespRepository.GetCourses(count);
-
-            var coursesWithPrice = new List<(CourseDto, PriceDto)>();
-            foreach (var course in courses)
+            var coursesDto = await _cespRepository.GetCourses(count);
+            
+            var coursesFulled = new List<Course>();
+            
+            foreach (var courseDto in coursesDto)
             {
-                var groups = await _cespRepository.GetStudentGroupsByCourseId(course.Id);
-
+                var course = _mapper.Map<CourseDto, Course>(courseDto);
+                
+                var groups = await _cespRepository.GetStudentGroupsByCourseId(courseDto.Id);
                 var groupPricesTasks = groups.Select(gr => _cespRepository.GetPricesByGroupId(gr.Id));
-
                 var pricesList = await Task.WhenAll(groupPricesTasks);
+                
+                if (pricesList.Any())
+                {
+                    var prices = pricesList.SelectMany(pr => pr).Where(pr => pr.PaymentPeriod == null);
+                    var maxDiscount = prices.Max(pr => pr.DiscountPer);
+                    course.Prices = prices.Select(pr => pr.Cost).ToArray();
+                    course.DiscountPercent = maxDiscount;
+                    course.CurrencyName = prices.First().Currency?.Name;
+                }
 
-                var prices = pricesList.SelectMany(pr => pr);
-
-                var maxDiscount = prices.Max(pr => pr.DiscountPer);
-
-                var price =
-                    maxDiscount > 0
-                        ? prices.FirstOrDefault(pr => pr.DiscountPer == maxDiscount)
-                        : prices.FirstOrDefault();
-
-                coursesWithPrice.Add((course, price));
+                coursesFulled.Add(course);
             }
 
-            return coursesWithPrice.Select(c => _mapper.Map<(CourseDto, PriceDto), Course>(c)).ToList();
+            return coursesFulled;
         }
 
         public async Task SaveCourseFile(string fileName, int courseId, CourseFileTypeEnum fileType)

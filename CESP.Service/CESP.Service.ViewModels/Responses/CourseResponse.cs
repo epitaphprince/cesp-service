@@ -12,9 +12,7 @@ namespace CESP.Service.ViewModels.Responses
 
         public int? DiscountPercent { get; set; }
 
-        public string CostInfo { get; set; }
-
-        public decimal Price { get; set; }
+        public string Price { get; set; }
 
         public string[] Icons { get; set; }
     }
