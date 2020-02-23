@@ -22,6 +22,8 @@ namespace CESP.Core.Contracts
 
         Task<List<CourseDto>> GetCourses(int? count);
 
+        Task SaveCourseFile(CourseFileDto courseFile);
+
         Task<List<StudentGroupDto>> GetStudentGroupsByCourseId(int courseId);
         
         Task<List<PriceDto>> GetPricesByGroupId(int groupId);
@@ -51,6 +53,8 @@ namespace CESP.Core.Contracts
         Task AddFile(FileDto file);
 
         Task<FileDto> GetFile(string name);
+
+        Task<FileDto> GetFile(int id);
 
         Task<List<SpeakingClubMeetingDto>> GetSpeakingClubMeetings(int? count);
 

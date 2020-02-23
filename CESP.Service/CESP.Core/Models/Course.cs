@@ -12,6 +12,10 @@ namespace CESP.Core.Models
 
         public int? DiscountPercent { get; set; }
 
+        public decimal Price { get; set; }
+
         public string CostInfo { get; set; }
+
+        public string[] Icons { get; set; }
     }
 }

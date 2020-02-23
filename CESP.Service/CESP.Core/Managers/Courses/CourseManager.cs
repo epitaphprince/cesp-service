@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CESP.Core.Contracts;
 using CESP.Core.Models;
+using CESP.Database.Context.Education.Models;
 
 namespace CESP.Core.Managers.Courses
 {
@@ -23,9 +25,18 @@ namespace CESP.Core.Managers.Courses
             var courses = await _courseProvider.GetCourses(count);
 
             courses.ForEach(
-                c => { c.Photo = GetUrl(c.Photo); });
+                c =>
+                {
+                    c.Photo = GetUrl(c.Photo);
+                    c.Icons = c.Icons.Select(GetUrl).ToArray();
+                });
 
             return courses;
+        }
+        
+        public async Task SaveCourseFile(string fileName, int courseId, CourseFileTypeEnum fileType)
+        {
+            await _courseProvider.SaveCourseFile(fileName, courseId, fileType);
         }
 
         private string GetUrl(string urlPart)

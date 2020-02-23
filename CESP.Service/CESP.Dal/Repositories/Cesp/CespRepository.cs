@@ -160,7 +160,17 @@ namespace CESP.Dal.Repositories.Cesp
                 ? _context.Courses
                 : _context.Courses.Take((int) count);
 
-            return await courses.Include(c => c.Photo).ToListAsync();
+            return await courses
+                .Include(c => c.Photo)
+                  .Include(p => p.CourseFiles)
+                  .ThenInclude(courseFile => courseFile.File)
+                .ToListAsync();
+        }
+
+        public async Task SaveCourseFile(CourseFileDto courseFile)
+        {
+            await _context.CourseFiles.AddAsync(courseFile);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<List<StudentGroupDto>> GetStudentGroupsByCourseId(int courseId)
@@ -251,6 +261,13 @@ namespace CESP.Dal.Repositories.Cesp
             return await _context
                 .Files
                 .FirstAsync(f => string.Equals(f.Name, name, StringComparison.OrdinalIgnoreCase));
+        }
+        
+        public async Task<FileDto> GetFile(int id)
+        {
+            return await _context
+                .Files
+                .FirstAsync(f => f.Id == id);
         }
 
         public async Task AddSpeakingClubMeeting(SpeakingClubMeetingDto speakingClubMeetingDto)

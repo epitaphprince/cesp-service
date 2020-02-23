@@ -5,6 +5,7 @@ using AutoMapper;
 using CESP.Core.Contracts;
 using CESP.Core.Models;
 using CESP.Database.Context.Education.Models;
+using CESP.Database.Context.Files.Models;
 using CESP.Database.Context.Payments.Models;
 
 namespace CESP.Dal.Providers
@@ -46,6 +47,21 @@ namespace CESP.Dal.Providers
             }
 
             return coursesWithPrice.Select(c => _mapper.Map<(CourseDto, PriceDto), Course>(c)).ToList();
+        }
+
+        public async Task SaveCourseFile(string fileName, int courseId, CourseFileTypeEnum fileType)
+        {
+            var courseFile = new CourseFileDto
+            {
+                CourseId =  courseId,
+                File = new FileDto
+                {
+                    Name = fileName,
+                    FileType = (int)fileType,
+                }
+            };
+
+            await _cespRepository.SaveCourseFile(courseFile);
         }
     }
 }
