@@ -61,7 +61,6 @@ namespace CESP.Dal.Repositories.Cesp
                 .Teachers
                 .FirstOrDefaultAsync(t => t.Id == teacherDto.Id);
 
-            MapHelper.SetValues(teacherDto, teacherFromDb);
             if (!string.IsNullOrEmpty(teacherDto.Name))
                 teacherFromDb.Name = teacherDto.Name;
             if (!string.IsNullOrEmpty(teacherDto.Post))
