@@ -30,9 +30,6 @@ namespace CESP.Core.Models
     public class ScheduleItem
     {
         public Teacher Teacher { get; set; }
-        public string TeacherPhoto { get; set; }
-        public string TeacherName { get; set; }
-        public string TeacherPost { get; set; }
         public string Days { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }

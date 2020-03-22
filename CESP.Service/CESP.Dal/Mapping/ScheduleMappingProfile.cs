@@ -54,15 +54,6 @@ namespace CESP.Dal.Mapping
                 .ForMember(dest => dest.Teacher,
                     opt => opt.MapFrom(
                         src => src.teacher))
-                .ForMember(dest => dest.TeacherPhoto,
-                    opt => opt.MapFrom(
-                        src => src.teacher.SmallPhoto.Name))
-                .ForMember(dest => dest.TeacherName,
-                    opt => opt.MapFrom(
-                        src => src.teacher.Name))
-                .ForMember(dest => dest.TeacherPost,
-                    opt => opt.MapFrom(
-                        src => src.teacher.Post))
                 // Priority info
                 .ForMember(dest => dest.BunchPriority,
                     opt => opt.MapFrom(

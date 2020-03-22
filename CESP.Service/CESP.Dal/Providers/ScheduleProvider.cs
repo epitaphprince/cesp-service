@@ -57,10 +57,7 @@ namespace CESP.Dal.Providers
                         LanguageLevelDto),
                         ScheduleItem>
                     ((groupDto, groupDto.Teacher, schedule, price, groupDto.LanguageLevel));
-
-                scheduleItem.TeacherPhoto = _cespResourceProvider
-                    .GetFullUrl(scheduleItem.TeacherPhoto);
-
+                
                 if (scheduleItem.Teacher != null)
                 {
                     scheduleItem.Teacher.Photo =
