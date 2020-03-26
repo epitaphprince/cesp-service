@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,8 +33,15 @@ namespace CESP.Dal.Providers
                 var course = _mapper.Map<CourseDto, Course>(courseDto);
                 
                 var groups = await _cespRepository.GetStudentGroupsByCourseId(courseDto.Id);
+
+                List<List<PriceDto>> pricesList = new List<List<PriceDto>>();
+
                 var groupPricesTasks = groups.Select(gr => _cespRepository.GetPricesByGroupId(gr.Id));
-                var pricesList = await Task.WhenAll(groupPricesTasks);
+
+                foreach (var groupPricesTask in groupPricesTasks)
+                {
+                    pricesList.Add(await groupPricesTask);
+                }
                 
                 if (pricesList.Any())
                 {

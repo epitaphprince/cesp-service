@@ -156,14 +156,13 @@ namespace CESP.Dal.Repositories.Cesp
         public async Task<List<CourseDto>> GetCourses(int? count)
         {
             var courses = count == null
-                ? _context.Courses
-                : _context.Courses.Take((int) count);
+                ? _context.Courses.OrderBy(c => c.Priority)
+                : _context.Courses.OrderBy(c => c.Priority).Take((int) count);
 
             return await courses
                 .Include(c => c.Photo)
                   .Include(p => p.CourseFiles)
                   .ThenInclude(courseFile => courseFile.File)
-                    .OrderBy(c => c.Priority)
                 .ToListAsync();
         }
 
