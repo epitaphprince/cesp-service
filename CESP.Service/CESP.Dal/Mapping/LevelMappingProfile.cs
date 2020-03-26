@@ -12,6 +12,8 @@ namespace CESP.Dal.Mapping
                 .ForMember(dest => dest.SysName,
                     opt => opt.MapFrom(
                         src => string.IsNullOrEmpty(src.Description) ? null : src.Name));
+            
+            CreateMap<LanguageLevelDto, Level>();
         }
     }
 }

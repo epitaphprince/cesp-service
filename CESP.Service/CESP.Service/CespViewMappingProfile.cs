@@ -45,7 +45,7 @@ namespace CESP.Service
                     opt => opt.MapFrom(src => 
                         src.EndTime.ToString(@"hh\:mm")));
             
-            CreateMap<IEnumerable<ScheduleBlock>, ScheduleResponse>();
+            CreateMap<ScheduleBlock, ScheduleResponse>();
             
             CreateMap<AddSpeakingClubRequest, SpeakingClubMeeting>()
                 .ForMember(dest => dest.FileInfo,
