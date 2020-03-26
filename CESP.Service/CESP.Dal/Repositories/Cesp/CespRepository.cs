@@ -163,6 +163,7 @@ namespace CESP.Dal.Repositories.Cesp
                 .Include(c => c.Photo)
                   .Include(p => p.CourseFiles)
                   .ThenInclude(courseFile => courseFile.File)
+                    .OrderBy(c => c.Priority)
                 .ToListAsync();
         }
 
