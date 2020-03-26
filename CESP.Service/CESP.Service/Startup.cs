@@ -10,7 +10,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace CESP.Service
@@ -52,8 +53,8 @@ namespace CESP.Service
             services.AddMvc(options => options.EnableEndpointRouting = false)
                 .AddJsonOptions(options =>
                 {
-                    options.SerializerSettings.Formatting = Formatting.Indented;
-                    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    options.JsonSerializerOptions.WriteIndented = true;
+                    options.JsonSerializerOptions.IgnoreNullValues = true;
                 });
 
             services.AddOptions();
@@ -61,9 +62,9 @@ namespace CESP.Service
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info {Title = "CESP.Service", Version = "v1"});
-                c.OperationFilter<FormFileSwaggerFilter>();
-                c.OperationFilter<PasswordHeaderSwaggerFilter>();
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CESP.Service", Version = "v1" });
+                // c.OperationFilter<FormFileSwaggerFilter>();
+                // c.OperationFilter<PasswordHeaderSwaggerFilter>();
             });
             
             var emailSenderSettings = Configuration.GetSection("EmailSenderSettings");
@@ -76,7 +77,7 @@ namespace CESP.Service
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseSwaggerUI(c =>
             {

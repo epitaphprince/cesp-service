@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Microsoft.AspNetCore.Http;
-using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace CESP.Service.Helpers
@@ -13,7 +13,7 @@ namespace CESP.Service.Helpers
         private static readonly string[] FormFilePropertyNames =
             typeof(IFormFile).GetTypeInfo().DeclaredProperties.Select(p => p.Name).ToArray();
 
-        public void Apply(Operation operation, OperationFilterContext context)
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             var parameters = operation.Parameters;
             if (parameters == null || parameters.Count == 0) return;
@@ -42,25 +42,22 @@ namespace CESP.Service.Helpers
             
             if (!formFileParameterNames.Any()) return;
  
-            var consumes = operation.Consumes;
-            consumes.Clear();
-            consumes.Add(FormDataMimeType);
- 
             foreach (var parameter in parameters.ToArray())
             {
-                if (!(parameter is NonBodyParameter) || parameter.In != "formData") continue;
- 
                 if (formFileSubParameterNames.Any(p => parameter.Name.StartsWith(p + "."))
                     || FormFilePropertyNames.Contains(parameter.Name))
                     parameters.Remove(parameter);
             }
             foreach (var formFileParameter in formFileParameterNames)
             {
-                parameters.Add(new NonBodyParameter()
+                parameters.Add(new OpenApiParameter
                 {
                     Name = formFileParameter,
-                    Type = "file",
-                    In = "formData"
+                    Schema = new OpenApiSchema
+                    {
+                        Type = "file"
+                    },
+                    In = ParameterLocation.Query
                 });
             }
         }

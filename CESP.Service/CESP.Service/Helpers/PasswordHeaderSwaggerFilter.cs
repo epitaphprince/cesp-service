@@ -1,21 +1,24 @@
 using System.Collections.Generic;
-using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace CESP.Service.Helpers
 {
-    public class PasswordHeaderSwaggerFilter : IOperationFilter
+    public abstract class PasswordHeaderSwaggerFilter : IOperationFilter
     {
-        public void Apply(Operation operation, OperationFilterContext context)
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             if (operation.Parameters == null)
-                operation.Parameters = new List<IParameter>();
+                operation.Parameters = new List<OpenApiParameter>();
  
-            operation.Parameters.Add(new NonBodyParameter
+            operation.Parameters.Add(new OpenApiParameter
             {
                 Name = "Password",
-                In = "header",
-                Type = "string",
+                In = ParameterLocation.Header,
+                Schema = new OpenApiSchema
+                {
+                    Type = "string"
+                },
                 Required = false
             });
         }
