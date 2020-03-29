@@ -16,6 +16,7 @@ using Microsoft.Extensions.Options;
 
 namespace CESP.Service.Controllers
 {
+    [ApiController]
     [Route("events")]
     public class EventsController : Controller
     {
@@ -39,7 +40,6 @@ namespace CESP.Service.Controllers
         }
 
         [HttpGet]
-        [Route("")]
         public async Task<IActionResult> GetList(int? count)
         {
             if (count < 0)
@@ -60,7 +60,6 @@ namespace CESP.Service.Controllers
         }
 
         [HttpPost]
-        [Route("")]
         public async Task Add([FromForm] IFormFile file, AddEventRequest request)
         {
             if (Request.CheckPassword(_credentials.Password))

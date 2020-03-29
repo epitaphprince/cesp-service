@@ -60,7 +60,9 @@ namespace CESP.Core.Managers.Schedulers
             string name)
         {
             var items = itemsAll
-                .Where(s => s.LanguageLevel.Rang >= (int) startPriority)
+                .Where(s => 
+                    s.LanguageLevel != null
+                    && s.LanguageLevel.Rang >= (int) startPriority)
                 .ToList();
 
             return BuildLanguageLevelBlock(items, name);
@@ -72,7 +74,8 @@ namespace CESP.Core.Managers.Schedulers
             string name)
         {
             var items = itemsAll
-                .Where(s => s.LanguageLevel.Rang >= (int) startPriority
+                .Where(s => s.LanguageLevel != null
+                            && s.LanguageLevel.Rang >= (int) startPriority
                             && s.LanguageLevel.Rang < (int) endPriority)
                 .ToList();
 

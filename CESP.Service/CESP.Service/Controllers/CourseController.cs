@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 
 namespace CESP.Service.Controllers
 {
+    [ApiController]
     [Route("courses")]
     public class CourseController : Controller
     {
@@ -36,7 +37,6 @@ namespace CESP.Service.Controllers
         }
 
         [HttpGet]
-        [Route("")]
         public async Task<IActionResult> GetList(int? count)
         {
             if (count < 0)

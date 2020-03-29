@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CESP.Service.Controllers
 {
+    [ApiController]
     [Route("feedbacks")]
     public class FeedbackController : Controller
     {
@@ -22,7 +23,6 @@ namespace CESP.Service.Controllers
         }
 
         [HttpGet]
-        [Route("")]
         public async Task<IActionResult> GetList(int? count)
         {
             if (count < 0)

@@ -30,7 +30,10 @@ namespace CESP.Service
             CreateMap<SpeakingClubMeeting, SpeakingClubMeetingResponse>();
             CreateMap<SpeakingClubMeetingShort, SpeakingClubMeetingShortResponse>();
             CreateMap<Level, LevelResponse>();
+            CreateMap<LevelShort, LevelShortResponse>();
             CreateMap<Language, LanguageResponse>();
+            CreateMap<PartnerShort, PartnerShortResponse>();
+            CreateMap<Partner, PartnerResponse>();
 
             CreateMap<ScheduleSegment, ScheduleSegmentResponse>()
                 .ForMember(dest => dest.Level,

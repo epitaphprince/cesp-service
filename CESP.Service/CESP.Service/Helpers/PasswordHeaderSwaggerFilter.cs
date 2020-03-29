@@ -4,7 +4,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace CESP.Service.Helpers
 {
-    public abstract class PasswordHeaderSwaggerFilter : IOperationFilter
+    public class PasswordHeaderSwaggerFilter : IOperationFilter
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {

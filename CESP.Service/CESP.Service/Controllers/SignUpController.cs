@@ -9,6 +9,7 @@ using CESP.Service.ViewModels.Requests;
 
 namespace CESP.Service.Controllers
 {
+    [ApiController]
     [Route("sendemail")]
     public class SignUpController: Controller
     {

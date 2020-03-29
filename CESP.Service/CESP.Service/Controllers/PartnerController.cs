@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CESP.Service.Controllers
 {
+    [ApiController]
     [Route("partners")]
     public class PartnerController : Controller
     {
@@ -21,7 +22,6 @@ namespace CESP.Service.Controllers
         }
 
         [HttpGet]
-        [Route("")]
         public async Task<IActionResult> GetList(int? count)
         {
             if (count < 0)

@@ -12,11 +12,10 @@ namespace CESP.Service.Helpers
         private const string FormDataMimeType = "multipart/form-data";
         private static readonly string[] FormFilePropertyNames =
             typeof(IFormFile).GetTypeInfo().DeclaredProperties.Select(p => p.Name).ToArray();
-
+        
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             var parameters = operation.Parameters;
-            if (parameters == null || parameters.Count == 0) return;
  
             var formFileParameterNames = new List<string>();
             var formFileSubParameterNames = new List<string>();

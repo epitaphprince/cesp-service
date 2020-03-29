@@ -17,6 +17,7 @@ using Microsoft.Extensions.Options;
 
 namespace CESP.Service.Controllers
 {
+    [ApiController]
     [Route("teachers")]
     public class TeacherController : Controller
     {
@@ -43,7 +44,6 @@ namespace CESP.Service.Controllers
         }
 
         [HttpGet]
-        [Route("")]
         public async Task<IActionResult> GetList(int? count)
         {
             if (count < 0)
@@ -95,7 +95,6 @@ namespace CESP.Service.Controllers
         }
         
         [HttpPost]
-        [Route("")]
         public async Task<IActionResult> Add([FromForm] IFormFile file, [FromForm] IFormFile fileSmall,
             [FromForm] IFormFile fileLarge, AddTeacherRequest request)
         {

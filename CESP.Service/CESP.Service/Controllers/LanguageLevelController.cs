@@ -7,6 +7,7 @@ using CESP.Service.ViewModels.Responses;
 
 namespace CESP.Service.Controllers
 {
+    [ApiController]
     [Route("levels")]
     public class LanguageLevelController : Controller
     {
@@ -20,7 +21,6 @@ namespace CESP.Service.Controllers
         }
 
         [HttpGet]
-        [Route("")]
         public async Task<IActionResult> GetList()
         {
             var levels = await _levelManager.GetList();

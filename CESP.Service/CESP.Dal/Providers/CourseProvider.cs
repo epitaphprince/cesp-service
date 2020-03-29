@@ -46,10 +46,13 @@ namespace CESP.Dal.Providers
                 if (pricesList.Any())
                 {
                     var prices = pricesList.SelectMany(pr => pr).Where(pr => pr.PaymentPeriod == null);
-                    var maxDiscount = prices.Max(pr => pr.DiscountPer);
-                    course.Prices = prices.Select(pr => pr.Cost).ToArray();
-                    course.DiscountPercent = maxDiscount;
-                    course.CurrencyName = prices.First().Currency?.Name;
+                    if (prices.Any())
+                    {
+                        var maxDiscount = prices.Max(pr => pr.DiscountPer);
+                        course.Prices = prices.Select(pr => pr.Cost).ToArray();
+                        course.DiscountPercent = maxDiscount;
+                        course.CurrencyName = prices.First().Currency?.Name;
+                    }
                 }
 
                 coursesFulled.Add(course);

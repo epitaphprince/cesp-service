@@ -17,6 +17,7 @@ using Microsoft.Extensions.Options;
 
 namespace CESP.Service.Controllers
 {
+    [ApiController]
     [Route("club")]
     public class SpeakingClubController : Controller
     {
@@ -40,7 +41,6 @@ namespace CESP.Service.Controllers
         }
 
         [HttpGet]
-        [Route("")]
         public async Task<IActionResult> GetList(int? count)
         {
             if (count < 0)
@@ -61,7 +61,6 @@ namespace CESP.Service.Controllers
         }
 
         [HttpPost]
-        [Route("")]
         public async Task<IActionResult> Add([FromForm] IFormFile file, AddSpeakingClubRequest request)
         {
             if(Request.CheckPassword(_credentials.Password))

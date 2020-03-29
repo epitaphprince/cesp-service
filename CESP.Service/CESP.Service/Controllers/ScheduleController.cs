@@ -2,12 +2,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using CESP.Core.Managers.Schedulers;
-using CESP.Service.ViewModels;
 using CESP.Service.ViewModels.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CESP.Service.Controllers
-{
+{ 
+    [ApiController]
     [Route("schedule")]
     public class ScheduleController : Controller
     {
@@ -23,7 +23,6 @@ namespace CESP.Service.Controllers
         }
 
         [HttpGet]
-        [Route("")]
         public async Task<IActionResult> GetList()
         {
             var schedules = await _scheduleManager.GetList();
@@ -33,7 +32,7 @@ namespace CESP.Service.Controllers
 
         [HttpGet]
         [Route("levels")]
-        public async Task<IActionResult> GetListByLevels(string[] levelNames)
+        public async Task<IActionResult> GetListByLevels([FromQuery]string[] levelNames)
         {
             var schedules = await _scheduleManager.GetListByLevels(levelNames);
 
